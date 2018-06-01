@@ -3,6 +3,9 @@
 
 #import os
 import sys
+import statux.ram as ram
+import statux.cpu2 as cpu
+import statux.temp as temp
 
 from os import makedirs, getcwd
 from os.path import join, exists
@@ -12,9 +15,7 @@ from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import QDateTime, QTimer
 from enums import *
 from statux.net import get_interfaces
-from statux.ram import used_percent, available_percent
-from statux.cpu import cpu_load
-from statux.thermald import x86_pkg_temp
+
 
 config_file = join(getcwd(), "config.cfg")
 
@@ -26,22 +27,30 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui = Ui_SetForm()
         self.ui.setupUi(self)
 
+        # Section: Widgets parameters
+        # self.ui.dateTimeEdit.setDateTime(QDateTime.currentDateTime().addSecs(10))  # TODO Change addSecs
+        self.ui.tabWidget.setCurrentIndex(0)
+        self.ui.comboBoxNetworkInterface.addItems(get_interfaces())
+
         # Section: Variables
         self.delay = 0
         self.action = Action.Shutdown
         self.condition = Condition.AtTime
+        self.cpu_load1 = None
+        self.cpu_load2 = None
+        self.alarm_count_sl = None
+        self.alarm_count_net = None
+        self.count_bytes = None
 
         # Section: Declarations
-        self.timer1 = QTimer()
-        self.timer2 = QTimer()
+        self.timer_mon = QTimer()   # SysLoad TabWidget monitoring
+        self.timer_temp = QTimer()  # Countdown and AtTime
+        self.timer_sl = QTimer()    # System Load
+        self.timer_net = QTimer()   # Network
+
         self.config = ConfigParser()
         self.set_config()
         self.set_sys_load()
-
-        # Section: Widgets parameters
-        # self.ui.dateTimeEdit.setDateTime(QDateTime.currentDateTime().addSecs(10))  # TODO Change addSecs
-        self.ui.radioButtonExecute.checkStateSet()
-        self.ui.comboBoxNetworkAdapter.addItems(get_interfaces())
 
         # Section: Events
         self.ui.pushButtonStart.clicked.connect(self.pushbutton_start_clicked)
@@ -57,8 +66,23 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.comboBoxSystemLoad.currentIndexChanged.connect(self.combo_sl_index_changed)
         self.ui.spinBoxSystemLoadMinutes.valueChanged.connect(self.spinbox_minutes_sl_value_changed)
         self.ui.spinBoxSystemLoadUnit.valueChanged.connect(self.spinbox_unit_sl_value_changed)
-        self.timer1.timeout.connect(self.timer1_tick)
-        self.timer2.timeout.connect(self.timer_sl_tick)
+        self.ui.checkBoxSystemLoadFor.stateChanged.connect(self.check_sl_for_state_changed)
+        self.ui.buttonGroupNetwork.buttonClicked.connect(self.button_group_network_clicked)
+        self.ui.comboBoxNetworkInterface.currentIndexChanged.connect(self.combo_net_interface_index_changed)
+        self.ui.comboBoxNetworkSpeed.currentIndexChanged.connect(self.combo_net_speed_index_changed)
+        self.ui.comboBoxNetworkMoreLess.currentIndexChanged.connect(self.combo_net_more_less_index_changed)
+        self.ui.comboBoxNetworkUnitSpeed.currentIndexChanged.connect(self.combo_net_unit_speed_index_changed)
+        self.ui.comboBoxNetworkFinished.currentIndexChanged.connect(self.combo_net_finished_index_changed)
+        self.ui.comboBoxNetworkUnit.currentIndexChanged.connect(self.combo_net_unit_index_changed)
+        self.ui.spinBoxNetworkUnitSpeed.valueChanged.connect(self.spin_net_unit_speed_value_changed)
+        self.ui.spinBoxNetworkMinutes.valueChanged.connect(self.spin_net_minutes_value_changed)
+        self.ui.spinBoxNetworkUnit.valueChanged.connect(self.spin_net_unit_value_changed)
+        self.ui.checkBoxNetworkFor.stateChanged.connect(self.check_net_for_state_changed)
+        self.timer_temp.timeout.connect(self.timer_temp_tick)
+        self.timer_mon.timeout.connect(self.timer_mon_tick)
+        self.timer_sl.timeout.connect(self.timer_sl_tick)
+        self.timer_net.timeout.connect(self.timer_net_tick)
+
 
     # TEST
     def test_event(self):
@@ -117,7 +141,7 @@ class SetForm(QtWidgets.QMainWindow):
             if sli == 0:
                 self.ui.radioButtonLoadRAMUsed.setChecked(True)
             elif sli == 1:
-                self.ui.radioButtonLoadRAMAvailable.setChecked(True)
+                self.ui.radioButtonCPUFrequency.setChecked(True)
             elif sli == 2:
                 self.ui.radioButtonLoadCPU.setChecked(True)
             else:
@@ -125,6 +149,24 @@ class SetForm(QtWidgets.QMainWindow):
             self.ui.comboBoxSystemLoad.setCurrentIndex(self.config.getboolean("SystemLoad", "combo"))
             self.ui.spinBoxSystemLoadMinutes.setValue(self.config.getint("SystemLoad", "spin_min"))
             self.ui.spinBoxSystemLoadUnit.setValue(self.config.getint("SystemLoad", "spin_unit"))
+            self.ui.checkBoxSystemLoadFor.setChecked(self.config.getboolean("SystemLoad", "check_for"))
+            self.button_group_sys_load_clicked()
+
+            # Section Network
+            if self.config.getboolean("Network", "group_index"):
+                self.ui.radioButtonNetworkUploadDownloadSpeed.setChecked(True)
+            else:
+                self.ui.radioButtonNetworkIsUpDownloading.setChecked(True)
+            self.ui.comboBoxNetworkInterface.setCurrentIndex(self.config.getint("Network", "combo_interface"))
+            self.ui.comboBoxNetworkSpeed.setCurrentIndex(self.config.getboolean("Network", "combo_speed"))
+            self.ui.comboBoxNetworkMoreLess.setCurrentIndex(self.config.getboolean("Network", "combo_more_less"))
+            self.ui.comboBoxNetworkUnitSpeed.setCurrentIndex(self.config.getint("Network", "combo_unit_speed"))
+            self.ui.comboBoxNetworkFinished.setCurrentIndex(self.config.getboolean("Network", "combo_finished"))
+            self.ui.comboBoxNetworkUnit.setCurrentIndex(self.config.getint("Network", "combo_unit"))
+            self.ui.checkBoxNetworkFor.setChecked(self.config.getboolean("Network", "check_for"))
+            self.ui.spinBoxNetworkUnitSpeed.setValue(self.config.getint("Network", "spin_unit_speed"))
+            self.ui.spinBoxNetworkMinutes.setValue(self.config.getint("Network", "spin_minutes"))
+            self.ui.spinBoxNetworkUnit.setValue(self.config.getint("Network", "spin_unit"))
         else:
             folder = config_file.replace("config.cfg", "")
             if not exists(folder):
@@ -145,15 +187,30 @@ class SetForm(QtWidgets.QMainWindow):
             self.config.set("SystemLoad", "combo", "False")
             self.config.set("SystemLoad", "spin_min", "0")
             self.config.set("SystemLoad", "spin_unit", "0")
+            self.config.set("SystemLoad", "check_for", "False")
+            self.config.add_section("Network")
+            self.config.set("Network", "group_index", "False")
+            self.config.set("Network", "combo_interface", "0")
+            self.config.set("Network", "combo_speed", "False")
+            self.config.set("Network", "combo_more_less", "False")
+            self.config.set("Network", "combo_unit_speed", "0")
+            self.config.set("Network", "combo_finished", "False")
+            self.config.set("Network", "combo_unit", "0")
+            self.config.set("Network", "spin_unit_speed", "0")
+            self.config.set("Network", "spin_minutes", "0")
+            self.config.set("Network", "spin_unit", "0")
+            self.config.set("Network", "check_for", "False")
 
     def set_sys_load(self):
-        self.timer2.start(1000)
+        self.timer_mon.start(1000)
+        self.cpu_load1 = cpu.Load()
 
-    def timer_sl_tick(self):
-        self.ui.labelRAMUsed.setText("%.2f %%" % used_percent())
-        self.ui.labelRAMAvailable.setText("%.2f %%" % available_percent())
-        self.ui.labelCPULoad.setText("%.2f %%" % cpu_load())
-        self.ui.labelCPUTemp.setText("%.2f °C" % x86_pkg_temp(scale="celsius"))
+    def timer_mon_tick(self):
+        self.ui.labelRAMUsed.setText("%.2f %%" % ram.used_percent())
+        self.ui.labelCPUFrequency.setText("%.2f %%" % cpu.frequency_percent(False))
+        self.ui.labelCPULoad.setText("%.2f %%" % self.cpu_load1.next_value())
+        self.ui.labelCPUTemp.setText("%.2f °C" % temp.x86_pkg("celsius"))
+        # self.ui.labelCPUTemp.setText("%.2f °C" % temp.x86_pkg(scale="celsius"))
 
     def closeEvent(self, a0: QtGui.QCloseEvent):
         try:
@@ -216,15 +273,22 @@ class SetForm(QtWidgets.QMainWindow):
         self.config.set("AtTime", "date_time", str(self.ui.dateTimeEdit.dateTime().toString("yyyy/MM/dd hh:mm:ss")))
 
     def button_group_sys_load_clicked(self):
+        def get_title(control):
+            return control.text().split("(")[0].replace("&", "")
         if self.ui.radioButtonLoadRAMUsed.isChecked():
             index = 0
-        elif self.ui.radioButtonLoadRAMAvailable.isChecked():
+            title = get_title(self.ui.radioButtonLoadRAMUsed)
+        elif self.ui.radioButtonCPUFrequency.isChecked():
             index = 1
+            title = get_title(self.ui.radioButtonCPUFrequency)
         elif self.ui.radioButtonLoadCPU.isChecked():
             index = 2
+            title = get_title(self.ui.radioButtonLoadCPU)
         else:
             index = 3
+            title = get_title(self.ui.radioButtonCPUTemp)
         self.ui.labelSystemLoadUnitSymbol.setText("%" if not index == 3 else "°C")
+        self.ui.labelSystemLoadTitle.setText("%s is" % title)
         self.config.set("SystemLoad", "group_index", str(index))
 
     def spinbox_hours_value_changed(self):
@@ -238,13 +302,50 @@ class SetForm(QtWidgets.QMainWindow):
 
     def combo_sl_index_changed(self):
         self.config.set("SystemLoad", "combo", str(self.ui.comboBoxSystemLoad.currentIndex()))
-        print(bool(self.ui.comboBoxSystemLoad.currentIndex()))
+        # print("Debug", bool(self.ui.comboBoxSystemLoad.currentIndex()))
 
     def spinbox_minutes_sl_value_changed(self):
         self.config.set("SystemLoad", "spin_min", str(self.ui.spinBoxSystemLoadMinutes.value()))
 
     def spinbox_unit_sl_value_changed(self):
         self.config.set("SystemLoad", "spin_unit", str(self.ui.spinBoxSystemLoadUnit.value()))
+
+    def check_sl_for_state_changed(self):
+        self.config.set("SystemLoad", "check_for", str(self.ui.checkBoxSystemLoadFor.isChecked()))
+
+    def button_group_network_clicked(self):
+        self.config.set("Network", "group_index",
+                        "False" if self.ui.radioButtonNetworkIsUpDownloading.isChecked() else "True")
+
+    def combo_net_interface_index_changed(self):
+        self.config.set("Network", "combo_interface", str(self.ui.comboBoxNetworkInterface.currentIndex()))
+
+    def combo_net_speed_index_changed(self):
+        self.config.set("Network", "combo_speed", str(bool(self.ui.comboBoxNetworkSpeed.currentIndex())))
+
+    def combo_net_more_less_index_changed(self):
+        self.config.set("Network", "combo_more_less", str(bool(self.ui.comboBoxNetworkMoreLess.currentIndex())))
+
+    def combo_net_unit_speed_index_changed(self):
+        self.config.set("Network", "combo_unit_speed", str(self.ui.comboBoxNetworkUnitSpeed.currentIndex()))
+
+    def combo_net_finished_index_changed(self):
+        self.config.set("Network", "combo_finished", str(bool(self.ui.comboBoxNetworkFinished.currentIndex())))
+
+    def combo_net_unit_index_changed(self):
+        self.config.set("Network", "combo_unit", str(self.ui.comboBoxNetworkUnit.currentIndex()))
+
+    def spin_net_unit_speed_value_changed(self):
+        self.config.set("Network", "spin_unit_speed", str(self.ui.spinBoxNetworkUnitSpeed.value()))
+
+    def spin_net_minutes_value_changed(self):
+        self.config.set("Network", "spin_minutes", str(self.ui.spinBoxNetworkMinutes.value()))
+
+    def spin_net_unit_value_changed(self):
+        self.config.set("Network", "spin_unit", str(self.ui.spinBoxNetworkUnit.value()))
+
+    def check_net_for_state_changed(self):
+        self.config.set("Network", "check_for", str(self.ui.checkBoxNetworkFor.isChecked()))
 
     # </editor-fold>
 
