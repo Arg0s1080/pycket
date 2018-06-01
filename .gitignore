@@ -8,6 +8,7 @@ config.cfg
 ui/compile_ui.py
 ui/pycket.ui.old
 /.directory
+/statux/
 
 __pycache__/
 *$py.class
