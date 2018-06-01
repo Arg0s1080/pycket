@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Created by: PyQt5 UI code generator 5.10.1
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_SetForm(object):
