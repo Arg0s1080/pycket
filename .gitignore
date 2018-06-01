@@ -9,6 +9,7 @@ ui/compile_ui.py
 ui/pycket.ui.old
 /.directory
 /statux/
+ProgramatorCS/
 
 __pycache__/
 *$py.class
