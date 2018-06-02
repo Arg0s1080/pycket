@@ -49,7 +49,8 @@ class MainForm(SetForm):
 
 
     def pushbutton_cancel_clicked(self):
-        self.ui.tabWidget.setEnabled(self.ui.tabWidget.isEnabled() ^ True)
+        self.ui.lcdNumber.display("")
+        print(self.ui.lcdNumber.value())
 
     def pushbutton_pause_clicked(self):
         print(self.config.get("AtTime", "date_time"))
@@ -86,22 +87,26 @@ class MainForm(SetForm):
             value = self.cpu_load2.next_value()
         elif self.ui.radioButtonCPUTemp.isChecked():
             value = temp.x86_pkg("celsius")
+        # DEBUG:
         print("timer sl", "Value", value)
+        index = self.ui.comboBoxSystemLoad.currentIndex()
+        spin_value = self.ui.spinBoxSystemLoadUnit.value()
 
-        if self.ui.comboBoxSystemLoad.currentIndex() == 0:  # More
-            self.alarm_count_sl += 1 if value > self.ui.spinBoxSystemLoadUnit.value() else self.alarm_count_sl * -1
-        else:  # Less
-            if value < self.ui.spinBoxSystemLoadUnit.value():
+        if (index == 0 and value < spin_value) or (index == 1 and value > spin_value):
+            if self.ui.checkBoxSystemLoadFor.isChecked():
                 self.alarm_count_sl += 1
+                if self.alarm_count_sl >= self.ui.spinBoxSystemLoadMinutes.value():  # TODO: Multiply by 60
+                    self.timer_sl.stop()
+                    self.alarm_count_sl = 0  # TODO: Delete
+                    execute(self.action)
             else:
-                self.alarm_count_sl = 0
-
-        print("timer_sl", "alarm_count", self.alarm_count_sl)
-        # TODO: Multiply by 60 below
-        if self.alarm_count_sl >= self.ui.spinBoxSystemLoadMinutes.value() + 1:  # spin.value() * 60 + 1
-            self.timer_sl.stop()
+                self.timer_sl.stop()
+                self.alarm_count_sl = 0  # TODO: Delete
+                execute(self.action)
+        else:
             self.alarm_count_sl = 0
-            execute(self.action)
+        # DEBUG:
+        print("timer_sl", "alarm_count", self.alarm_count_sl)
 
     def timer_net_tick(self):
         value = self.get_net_value()  # - self.count_bytes
@@ -127,18 +132,21 @@ class MainForm(SetForm):
                 self.timer_net.stop()
                 execute(self.action)
 
+    def timer_pow_tick(self):
+        pass
+
     def get_net_value(self):
         if self.ui.radioButtonNetworkUploadDownloadSpeed.isChecked():
             return down_up_speed(self.ui.comboBoxNetworkInterface.currentText(), 0,
                                  self.ui.comboBoxNetworkUnitSpeed.currentText().split("/")[0])[
-                                 int(self.ui.comboBoxNetworkSpeed.currentIndex())]
+                                 self.ui.comboBoxNetworkSpeed.currentIndex()]
         elif self.ui.radioButtonNetworkIsUpDownloading.isChecked():
             return down_up_bytes(self.ui.comboBoxNetworkInterface.currentText(),
                                  self.ui.comboBoxNetworkUnit.currentText())[
-                                 int(self.ui.comboBoxNetworkFinished.currentIndex())]
+                                 self.ui.comboBoxNetworkFinished.currentIndex()]
+
 
 if __name__ == '__main__':
-
     app = QtWidgets.QApplication(sys.argv)
     application = MainForm()
     application.show()

@@ -47,6 +47,7 @@ class SetForm(QtWidgets.QMainWindow):
         self.timer_temp = QTimer()  # Countdown and AtTime
         self.timer_sl = QTimer()    # System Load
         self.timer_net = QTimer()   # Network
+        self.timer_pow = QTimer()   # Power
 
         self.config = ConfigParser()
         self.set_config()
@@ -78,10 +79,12 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.spinBoxNetworkMinutes.valueChanged.connect(self.spin_net_minutes_value_changed)
         self.ui.spinBoxNetworkUnit.valueChanged.connect(self.spin_net_unit_value_changed)
         self.ui.checkBoxNetworkFor.stateChanged.connect(self.check_net_for_state_changed)
+        self.ui.buttonGroupPowerMain.buttonClicked.connect(self.button_group_pow_main)
         self.timer_temp.timeout.connect(self.timer_temp_tick)
         self.timer_mon.timeout.connect(self.timer_mon_tick)
         self.timer_sl.timeout.connect(self.timer_sl_tick)
         self.timer_net.timeout.connect(self.timer_net_tick)
+        self.timer_pow.timeout.connect(self.timer_pow_tick)
 
 
     # TEST
@@ -200,6 +203,16 @@ class SetForm(QtWidgets.QMainWindow):
             self.config.set("Network", "spin_minutes", "0")
             self.config.set("Network", "spin_unit", "0")
             self.config.set("Network", "check_for", "False")
+            self.config.add_section("Power")
+            self.config.set("Power", "group_index_1", "False")
+            self.config.set("Power", "group_index_2", "False")
+            self.config.set("Power", "combo_acdc", "False")
+            self.config.set("Power", "combo_more_less", "False")
+            self.config.set("Power", "spin_minutes", "0")
+            self.config.set("Power", "spin_percent", "0")
+            self.config.set("Power", "check_for", "False")
+            self.config.set("Power", "time_edit", "0:00")
+
 
     def set_sys_load(self):
         self.timer_mon.start(1000)
@@ -346,6 +359,9 @@ class SetForm(QtWidgets.QMainWindow):
 
     def check_net_for_state_changed(self):
         self.config.set("Network", "check_for", str(self.ui.checkBoxNetworkFor.isChecked()))
+
+    def button_group_pow_main(self):
+        pass
 
     # </editor-fold>
 
