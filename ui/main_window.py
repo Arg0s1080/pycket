@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+#
 # Created by: PyQt5 UI code generator 5.10.1
-
+#
+# WARNING! All changes made in this file will be lost!
+#
+# (ɔ) Iván Rincón 2018
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -149,7 +153,7 @@ class Ui_SetForm(object):
         self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
         self.progressBar.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.progressBar.setLocale(QtCore.QLocale(QtCore.QLocale.Spanish, QtCore.QLocale.Spain))
-        self.progressBar.setProperty("value", 24)
+        self.progressBar.setProperty("value", 0)
         self.progressBar.setTextVisible(False)
         self.progressBar.setTextDirection(QtWidgets.QProgressBar.TopToBottom)
         self.progressBar.setObjectName("progressBar")
@@ -615,9 +619,9 @@ class Ui_SetForm(object):
         self.radioButtonPowerIs.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
         self.radioButtonPowerIs.setChecked(True)
         self.radioButtonPowerIs.setObjectName("radioButtonPowerIs")
-        self.buttonPowerPpal = QtWidgets.QButtonGroup(SetForm)
-        self.buttonPowerPpal.setObjectName("buttonPowerPpal")
-        self.buttonPowerPpal.addButton(self.radioButtonPowerIs)
+        self.buttonGroupPowerMain = QtWidgets.QButtonGroup(SetForm)
+        self.buttonGroupPowerMain.setObjectName("buttonGroupPowerMain")
+        self.buttonGroupPowerMain.addButton(self.radioButtonPowerIs)
         self.horizontalLayout_6.addWidget(self.radioButtonPowerIs)
         self.comboBoxPowerACDC = QtWidgets.QComboBox(self.tabPower)
         font = QtGui.QFont()
@@ -673,7 +677,7 @@ class Ui_SetForm(object):
         self.radioButtonPowerTheBatteryHas.setFont(font)
         self.radioButtonPowerTheBatteryHas.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
         self.radioButtonPowerTheBatteryHas.setObjectName("radioButtonPowerTheBatteryHas")
-        self.buttonPowerPpal.addButton(self.radioButtonPowerTheBatteryHas)
+        self.buttonGroupPowerMain.addButton(self.radioButtonPowerTheBatteryHas)
         self.horizontalLayout_9.addWidget(self.radioButtonPowerTheBatteryHas)
         self.comboBoxPowerMoreLess = QtWidgets.QComboBox(self.tabPower)
         font = QtGui.QFont()
@@ -711,14 +715,6 @@ class Ui_SetForm(object):
         self.buttonGroupPowerSnd.setObjectName("buttonGroupPowerSnd")
         self.buttonGroupPowerSnd.addButton(self.radioButtonPowerBatteryMinutes)
         self.gridLayout_10.addWidget(self.radioButtonPowerBatteryMinutes, 0, 1, 1, 1)
-        self.spinBoxPowerBatteryMinutes = QtWidgets.QSpinBox(self.tabPower)
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.spinBoxPowerBatteryMinutes.setFont(font)
-        self.spinBoxPowerBatteryMinutes.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
-        self.spinBoxPowerBatteryMinutes.setMaximum(600)
-        self.spinBoxPowerBatteryMinutes.setObjectName("spinBoxPowerBatteryMinutes")
-        self.gridLayout_10.addWidget(self.spinBoxPowerBatteryMinutes, 0, 2, 1, 1)
         self.labelPowerMinutes2 = QtWidgets.QLabel(self.tabPower)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -754,6 +750,12 @@ class Ui_SetForm(object):
         self.labelBatteryRemainingTime.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
         self.labelBatteryRemainingTime.setObjectName("labelBatteryRemainingTime")
         self.gridLayout_10.addWidget(self.labelBatteryRemainingTime, 1, 3, 1, 2)
+        self.timeEdit = QtWidgets.QTimeEdit(self.tabPower)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.timeEdit.setFont(font)
+        self.timeEdit.setObjectName("timeEdit")
+        self.gridLayout_10.addWidget(self.timeEdit, 0, 2, 1, 1)
         self.gridLayout_13.addLayout(self.gridLayout_10, 3, 0, 1, 1)
         spacerItem36 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_13.addItem(spacerItem36, 2, 0, 1, 1)
@@ -874,7 +876,7 @@ class Ui_SetForm(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(SetForm)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(SetForm)
 
     def retranslateUi(self, SetForm):
@@ -909,8 +911,8 @@ class Ui_SetForm(object):
         self.radioButtonCPUTemp.setText(_translate("SetForm", "CPU Temp (&ºC)"))
         self.labelCPUTemp.setText(_translate("SetForm", "00.00 ºC"))
         self.labelSystemLoadTitle.setText(_translate("SetForm", "RAM Load is"))
-        self.comboBoxSystemLoad.setItemText(0, _translate("SetForm", "more"))
-        self.comboBoxSystemLoad.setItemText(1, _translate("SetForm", "less"))
+        self.comboBoxSystemLoad.setItemText(0, _translate("SetForm", "less"))
+        self.comboBoxSystemLoad.setItemText(1, _translate("SetForm", "more"))
         self.labelSystemLoadThan.setText(_translate("SetForm", "than"))
         self.labelSystemLoadUnitSymbol.setText(_translate("SetForm", "%"))
         self.labelSystemLoadMin.setText(_translate("SetForm", "min."))
@@ -939,19 +941,19 @@ class Ui_SetForm(object):
         self.checkBoxPowerFor.setText(_translate("SetForm", "for"))
         self.labelPowerMinutes1.setText(_translate("SetForm", "min."))
         self.radioButtonPowerTheBatteryHas.setText(_translate("SetForm", "The &battery has"))
-        self.comboBoxPowerMoreLess.setItemText(0, _translate("SetForm", "more"))
-        self.comboBoxPowerMoreLess.setItemText(1, _translate("SetForm", "less"))
+        self.comboBoxPowerMoreLess.setItemText(0, _translate("SetForm", "less"))
+        self.comboBoxPowerMoreLess.setItemText(1, _translate("SetForm", "more"))
         self.labelPowerThan.setText(_translate("SetForm", "than"))
-        self.labelPowerMinutes2.setText(_translate("SetForm", "minutes"))
-        self.labelBatteryRemainingTime.setText(_translate("SetForm", "% remaining time"))
+        self.labelPowerMinutes2.setText(_translate("SetForm", "remaining time"))
+        self.labelBatteryRemainingTime.setText(_translate("SetForm", "% "))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabPower), _translate("SetForm", "Power"))
         self.labelDrivesWhenDisk.setText(_translate("SetForm", "When disk:"))
         self.labelDrivesIs.setText(_translate("SetForm", "is"))
         self.comboBoxDrivesUnMounted.setItemText(0, _translate("SetForm", "mounted"))
         self.comboBoxDrivesUnMounted.setItemText(1, _translate("SetForm", "unmounted"))
         self.checkBoxDrivesIfSizeIs.setText(_translate("SetForm", "If it\'s size is"))
-        self.comboBoxDrivesBiggerSmaller.setItemText(0, _translate("SetForm", "bigger than"))
-        self.comboBoxDrivesBiggerSmaller.setItemText(1, _translate("SetForm", "smaller than"))
+        self.comboBoxDrivesBiggerSmaller.setItemText(0, _translate("SetForm", "smaller than"))
+        self.comboBoxDrivesBiggerSmaller.setItemText(1, _translate("SetForm", "bigger than"))
         self.comboBoxDrivesBytes.setItemText(0, _translate("SetForm", "MB"))
         self.comboBoxDrivesBytes.setItemText(1, _translate("SetForm", "GB"))
         self.comboBoxDrivesBytes.setItemText(2, _translate("SetForm", "TB"))

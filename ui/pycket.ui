@@ -294,7 +294,7 @@
          <locale language="Spanish" country="Spain"/>
         </property>
         <property name="value">
-         <number>24</number>
+         <number>0</number>
         </property>
         <property name="textVisible">
          <bool>false</bool>
@@ -945,12 +945,12 @@
               </property>
               <item>
                <property name="text">
-                <string>more</string>
+                <string>less</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>less</string>
+                <string>more</string>
                </property>
               </item>
              </widget>
@@ -1347,14 +1347,8 @@
               <property name="locale">
                <locale language="English" country="UnitedStates"/>
               </property>
-              <property name="minimum">
-               <number>0</number>
-              </property>
               <property name="maximum">
                <number>300</number>
-              </property>
-              <property name="value">
-               <number>0</number>
               </property>
              </widget>
             </item>
@@ -1537,7 +1531,7 @@
                  <bool>true</bool>
                 </property>
                 <attribute name="buttonGroup">
-                 <string notr="true">buttonPowerPpal</string>
+                 <string notr="true">buttonGroupPowerMain</string>
                 </attribute>
                </widget>
               </item>
@@ -1686,7 +1680,7 @@
                  <string>The &amp;battery has</string>
                 </property>
                 <attribute name="buttonGroup">
-                 <string notr="true">buttonPowerPpal</string>
+                 <string notr="true">buttonGroupPowerMain</string>
                 </attribute>
                </widget>
               </item>
@@ -1702,12 +1696,12 @@
                 </property>
                 <item>
                  <property name="text">
-                  <string>more</string>
+                  <string>less</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>less</string>
+                  <string>more</string>
                  </property>
                 </item>
                </widget>
@@ -1783,21 +1777,6 @@
               </attribute>
              </widget>
             </item>
-            <item row="0" column="2">
-             <widget class="QSpinBox" name="spinBoxPowerBatteryMinutes">
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="locale">
-               <locale language="English" country="UnitedStates"/>
-              </property>
-              <property name="maximum">
-               <number>600</number>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="3">
              <widget class="QLabel" name="labelPowerMinutes2">
               <property name="font">
@@ -1809,7 +1788,7 @@
                <locale language="English" country="UnitedStates"/>
               </property>
               <property name="text">
-               <string>minutes</string>
+               <string>remaining time</string>
               </property>
              </widget>
             </item>
@@ -1883,7 +1862,16 @@
                <locale language="English" country="UnitedStates"/>
               </property>
               <property name="text">
-               <string>% remaining time</string>
+               <string>% </string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QTimeEdit" name="timeEdit">
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
               </property>
              </widget>
             </item>
@@ -2047,12 +2035,12 @@
               </property>
               <item>
                <property name="text">
-                <string>bigger than</string>
+                <string>smaller than</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>smaller than</string>
+                <string>bigger than</string>
                </property>
               </item>
              </widget>
@@ -2188,10 +2176,10 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonPowerPpal"/>
+  <buttongroup name="buttonGroupPowerMain"/>
   <buttongroup name="buttonGroupActions"/>
-  <buttongroup name="buttonGroupPowerSnd"/>
   <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupNetwork"/>
+  <buttongroup name="buttonGroupPowerSnd"/>
  </buttongroups>
 </ui>
