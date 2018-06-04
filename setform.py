@@ -177,6 +177,22 @@ class SetForm(QtWidgets.QMainWindow):
             self.ui.spinBoxNetworkUnitSpeed.setValue(self.config.getint("Network", "spin_unit_speed"))
             self.ui.spinBoxNetworkMinutes.setValue(self.config.getint("Network", "spin_minutes"))
             self.ui.spinBoxNetworkUnit.setValue(self.config.getint("Network", "spin_unit"))
+
+            # Section Power
+            if self.config.getboolean("Power", "group_index_1"):
+                self.ui.radioButtonPowerTheBatteryHas.setChecked(True)
+            else:
+                self.ui.radioButtonPowerIs.setChecked(True) # TODO Try delete (only 2 options)
+            if self.config.getboolean("Power", "group_index_2"):
+                self.ui.radioButtonPowerBatteryPercent.setChecked(True)
+            else:
+                self.ui.radioButtonPowerBatteryTime.setChecked(True)  # TODO Try Delete
+            self.ui.comboBoxPowerMoreLess.setCurrentIndex(self.config.getboolean("Power", "combo_more_less"))
+            self.ui.comboBoxPowerACDC.setCurrentIndex(self.config.getboolean("Power", "combo_acdc"))
+            self.ui.spinBoxPowerMinutes.setValue(self.config.getint("Power", "spin_minutes"))
+            self.ui.spinBoxPowerPercent.setValue(self.config.getint("Power", "spin_percent"))
+            self.ui.checkBoxPowerFor.setChecked(self.config.getboolean("Power", "check_for"))
+            self.ui.timeEditPower.setDateTime(QDateTime.fromString(self.config.get("Power", "time_edit"), "h:mm"))
         else:
             folder = config_file.replace("config.cfg", "")
             if not exists(folder):
@@ -290,7 +306,8 @@ class SetForm(QtWidgets.QMainWindow):
         self.config.set("Main", "conditions", str(self.condition.name))
 
     def datetime_edit_at_time_changed(self):
-        self.config.set("AtTime", "date_time", str(self.ui.dateTimeEditAtTime.dateTime().toString("yyyy/MM/dd hh:mm:ss")))
+        self.config.set("AtTime", "date_time",
+                        str(self.ui.dateTimeEditAtTime.dateTime().toString("yyyy/MM/dd hh:mm:ss")))
 
     def button_group_sl_clicked(self):
         def get_title(control):
@@ -368,28 +385,29 @@ class SetForm(QtWidgets.QMainWindow):
         self.config.set("Network", "check_for", str(self.ui.checkBoxNetworkFor.isChecked()))
 
     def button_group_pow_main(self):
-        pass
+        self.config.set("Power", "group_index_1", str("False" if self.ui.radioButtonPowerIs.isChecked() else "True"))
 
     def button_group_pow_snd(self):
-        pass
+        self.config.set("Power", "group_index_2",
+                        str("False" if self.ui.radioButtonPowerBatteryTime.isChecked() else "True"))
 
     def combo_pow_acdc_index_changed(self):
-        pass
+        self.config.set("Power", "combo_acdc", str(bool(self.ui.comboBoxPowerACDC.currentIndex())))
 
     def combo_pow_more_less_index_changed(self):
-        pass
+        self.config.set("Power", "combo_more_less", str(bool(self.ui.comboBoxPowerMoreLess.currentIndex())))
 
     def spin_pow_minutes_value_changed(self):
-        pass
+        self.config.set("Power", "spin_minutes", str(self.ui.spinBoxPowerMinutes.value()))
 
     def spin_pow_percent_value_changed(self):
-        pass
+        self.config.set("Power", "spin_percent", str(self.ui.spinBoxPowerPercent.value()))
 
     def check_pow_for_state_changed(self):
-        pass
+        self.config.set("Power", "check_for", str(self.ui.checkBoxPowerFor.isChecked()))
 
     def time_edit_pow_time_changed(self):
-        pass
+        self.config.set("Power", "time_edit", self.ui.timeEditPower.time().toString("h:mm"))
 
     # </editor-fold>
 
