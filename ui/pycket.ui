@@ -325,7 +325,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>4</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideNone</enum>
@@ -1757,7 +1757,7 @@
              </spacer>
             </item>
             <item row="0" column="1">
-             <widget class="QRadioButton" name="radioButtonPowerBatteryMinutes">
+             <widget class="QRadioButton" name="radioButtonPowerBatteryTime">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -1778,7 +1778,7 @@
              </widget>
             </item>
             <item row="0" column="3">
-             <widget class="QLabel" name="labelPowerMinutes2">
+             <widget class="QLabel" name="labelPowerRemainingTim">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -1819,7 +1819,7 @@
              </spacer>
             </item>
             <item row="1" column="1">
-             <widget class="QRadioButton" name="radioButtonPowerBatteryRemainingTime">
+             <widget class="QRadioButton" name="radioButtonPowerBatteryPercent">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -1852,7 +1852,7 @@
              </widget>
             </item>
             <item row="1" column="3" colspan="2">
-             <widget class="QLabel" name="labelBatteryRemainingTime">
+             <widget class="QLabel" name="labelPowerPercent">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
