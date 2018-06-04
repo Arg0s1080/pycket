@@ -57,12 +57,12 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.pushButtonStart.clicked.connect(self.pushbutton_start_clicked)
         self.ui.pushButtonPause.clicked.connect(self.pushbutton_pause_clicked)
         self.ui.pushButtonCancel.clicked.connect(self.pushbutton_cancel_clicked)
-        self.ui.dateTimeEdit.dateTimeChanged.connect(self.datetime_edit_changed)
-        self.ui.spinBoxHours.valueChanged.connect(self.spinbox_hours_value_changed)
-        self.ui.spinBoxMinutes.valueChanged.connect(self.spinbox_minutes_value_changed)
-        self.ui.spinBoxSeconds.valueChanged.connect(self.spinbox_seconds_value_changed)
+        self.ui.dateTimeEditAtTime.dateTimeChanged.connect(self.datetime_edit_at_time_changed)
+        self.ui.spinBoxCountdownHours.valueChanged.connect(self.spinbox_cd_hours_value_changed)
+        self.ui.spinBoxCountdownMinutes.valueChanged.connect(self.spinbox_cd_minutes_value_changed)
+        self.ui.spinBoxCountdownSeconds.valueChanged.connect(self.spinbox_cd_seconds_value_changed)
         self.ui.buttonGroupActions.buttonClicked.connect(self.button_group_actions_clicked)
-        self.ui.buttonGroupSystemLoad.buttonClicked.connect(self.button_group_sys_load_clicked)
+        self.ui.buttonGroupSystemLoad.buttonClicked.connect(self.button_group_sl_clicked)
         self.ui.tabWidget.currentChanged.connect(self.tab_widget_changed)
         self.ui.comboBoxSystemLoad.currentIndexChanged.connect(self.combo_sl_index_changed)
         self.ui.spinBoxSystemLoadMinutes.valueChanged.connect(self.spinbox_minutes_sl_value_changed)
@@ -80,6 +80,13 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.spinBoxNetworkUnit.valueChanged.connect(self.spin_net_unit_value_changed)
         self.ui.checkBoxNetworkFor.stateChanged.connect(self.check_net_for_state_changed)
         self.ui.buttonGroupPowerMain.buttonClicked.connect(self.button_group_pow_main)
+        self.ui.buttonGroupPowerSnd.buttonClicked.connect(self.button_group_pow_snd) #
+        self.ui.comboBoxPowerACDC.currentIndexChanged.connect(self.combo_pow_acdc_index_changed) #
+        self.ui.comboBoxPowerMoreLess.currentIndexChanged.connect(self.combo_pow_more_less_index_changed) #
+        self.ui.spinBoxPowerMinutes.valueChanged.connect(self.spin_pow_minutes_value_changed) #
+        self.ui.spinBoxPowerPercent.valueChanged.connect(self.spin_pow_percent_value_changed) #
+        self.ui.checkBoxPowerFor.stateChanged.connect(self.check_pow_for_state_changed) #
+        self.ui.timeEditPower.timeChanged.connect(self.time_edit_pow_time_changed) #
         self.timer_temp.timeout.connect(self.timer_temp_tick)
         self.timer_mon.timeout.connect(self.timer_mon_tick)
         self.timer_sl.timeout.connect(self.timer_sl_tick)
@@ -132,28 +139,28 @@ class SetForm(QtWidgets.QMainWindow):
 
             # Section: SystemLoad
             d = QDateTime.fromString(self.config.get("AtTime", "date_time"), "yyyy/MM/dd hh:mm:ss")
-            self.ui.dateTimeEdit.setDateTime(d)
+            self.ui.dateTimeEditAtTime.setDateTime(d)
 
             # Section: CountDown
-            self.ui.spinBoxHours.setValue(self.config.getint("CountDown", "hours"))
-            self.ui.spinBoxMinutes.setValue(self.config.getint("CountDown", "minutes"))
-            self.ui.spinBoxSeconds.setValue(self.config.getint("CountDown", "seconds"))
+            self.ui.spinBoxCountdownHours.setValue(self.config.getint("CountDown", "hours"))
+            self.ui.spinBoxCountdownMinutes.setValue(self.config.getint("CountDown", "minutes"))
+            self.ui.spinBoxCountdownSeconds.setValue(self.config.getint("CountDown", "seconds"))
 
             # Section SystemLoad
             sli = int(self.config.get("SystemLoad", "group_index"))
             if sli == 0:
-                self.ui.radioButtonLoadRAMUsed.setChecked(True)
+                self.ui.radioButtonSystemLoadRAMUsed.setChecked(True)
             elif sli == 1:
-                self.ui.radioButtonCPUFrequency.setChecked(True)
+                self.ui.radioButtonSystemLoadCPUFrequency.setChecked(True)
             elif sli == 2:
-                self.ui.radioButtonLoadCPU.setChecked(True)
+                self.ui.radioButtonSystemLoadCPU.setChecked(True)
             else:
-                self.ui.radioButtonCPUTemp.setChecked(True)
+                self.ui.radioButtonSystemLoadCPUTemp.setChecked(True)
             self.ui.comboBoxSystemLoad.setCurrentIndex(self.config.getboolean("SystemLoad", "combo"))
             self.ui.spinBoxSystemLoadMinutes.setValue(self.config.getint("SystemLoad", "spin_min"))
             self.ui.spinBoxSystemLoadUnit.setValue(self.config.getint("SystemLoad", "spin_unit"))
             self.ui.checkBoxSystemLoadFor.setChecked(self.config.getboolean("SystemLoad", "check_for"))
-            self.button_group_sys_load_clicked()
+            self.button_group_sl_clicked()
 
             # Section Network
             if self.config.getboolean("Network", "group_index"):
@@ -219,10 +226,10 @@ class SetForm(QtWidgets.QMainWindow):
         self.cpu_load1 = cpu.Load()
 
     def timer_mon_tick(self):
-        self.ui.labelRAMUsed.setText("%.2f %%" % ram.used_percent())
-        self.ui.labelCPUFrequency.setText("%.2f %%" % cpu.frequency_percent(False))
-        self.ui.labelCPULoad.setText("%.2f %%" % self.cpu_load1.next_value())
-        self.ui.labelCPUTemp.setText("%.2f °C" % temp.x86_pkg("celsius"))
+        self.ui.labelSystemLoadRAMUsed.setText("%.2f %%" % ram.used_percent())
+        self.ui.labelSystemLoadCPUFrequency.setText("%.2f %%" % cpu.frequency_percent(False))
+        self.ui.labelSystemLoadCPULoad.setText("%.2f %%" % self.cpu_load1.next_value())
+        self.ui.labelSystemLoadCPUTemp.setText("%.2f °C" % temp.x86_pkg("celsius"))
         # self.ui.labelCPUTemp.setText("%.2f °C" % temp.x86_pkg(scale="celsius"))
 
     def closeEvent(self, a0: QtGui.QCloseEvent):
@@ -282,36 +289,36 @@ class SetForm(QtWidgets.QMainWindow):
             print("ERROR")
         self.config.set("Main", "conditions", str(self.condition.name))
 
-    def datetime_edit_changed(self):
-        self.config.set("AtTime", "date_time", str(self.ui.dateTimeEdit.dateTime().toString("yyyy/MM/dd hh:mm:ss")))
+    def datetime_edit_at_time_changed(self):
+        self.config.set("AtTime", "date_time", str(self.ui.dateTimeEditAtTime.dateTime().toString("yyyy/MM/dd hh:mm:ss")))
 
-    def button_group_sys_load_clicked(self):
+    def button_group_sl_clicked(self):
         def get_title(control):
             return control.text().split("(")[0].replace("&", "")
-        if self.ui.radioButtonLoadRAMUsed.isChecked():
+        if self.ui.radioButtonSystemLoadRAMUsed.isChecked():
             index = 0
-            title = get_title(self.ui.radioButtonLoadRAMUsed)
-        elif self.ui.radioButtonCPUFrequency.isChecked():
+            title = get_title(self.ui.radioButtonSystemLoadRAMUsed)
+        elif self.ui.radioButtonSystemLoadCPUFrequency.isChecked():
             index = 1
-            title = get_title(self.ui.radioButtonCPUFrequency)
-        elif self.ui.radioButtonLoadCPU.isChecked():
+            title = get_title(self.ui.radioButtonSystemLoadCPUFrequency)
+        elif self.ui.radioButtonSystemLoadCPU.isChecked():
             index = 2
-            title = get_title(self.ui.radioButtonLoadCPU)
+            title = get_title(self.ui.radioButtonSystemLoadCPU)
         else:
             index = 3
-            title = get_title(self.ui.radioButtonCPUTemp)
+            title = get_title(self.ui.radioButtonSystemLoadCPUTemp)
         self.ui.labelSystemLoadUnitSymbol.setText("%" if not index == 3 else "°C")
         self.ui.labelSystemLoadTitle.setText("%s is" % title)
         self.config.set("SystemLoad", "group_index", str(index))
 
-    def spinbox_hours_value_changed(self):
-        self.config.set("CountDown", "hours", str(self.ui.spinBoxHours.value()))
+    def spinbox_cd_hours_value_changed(self):
+        self.config.set("CountDown", "hours", str(self.ui.spinBoxCountdownHours.value()))
 
-    def spinbox_minutes_value_changed(self):
-        self.config.set("CountDown", "minutes", str(self.ui.spinBoxMinutes.value()))
+    def spinbox_cd_minutes_value_changed(self):
+        self.config.set("CountDown", "minutes", str(self.ui.spinBoxCountdownMinutes.value()))
 
-    def spinbox_seconds_value_changed(self):
-        self.config.set("CountDown", "seconds", str(self.ui.spinBoxSeconds.value()))
+    def spinbox_cd_seconds_value_changed(self):
+        self.config.set("CountDown", "seconds", str(self.ui.spinBoxCountdownSeconds.value()))
 
     def combo_sl_index_changed(self):
         self.config.set("SystemLoad", "combo", str(self.ui.comboBoxSystemLoad.currentIndex()))
@@ -361,6 +368,27 @@ class SetForm(QtWidgets.QMainWindow):
         self.config.set("Network", "check_for", str(self.ui.checkBoxNetworkFor.isChecked()))
 
     def button_group_pow_main(self):
+        pass
+
+    def button_group_pow_snd(self):
+        pass
+
+    def combo_pow_acdc_index_changed(self):
+        pass
+
+    def combo_pow_more_less_index_changed(self):
+        pass
+
+    def spin_pow_minutes_value_changed(self):
+        pass
+
+    def spin_pow_percent_value_changed(self):
+        pass
+
+    def check_pow_for_state_changed(self):
+        pass
+
+    def time_edit_pow_time_changed(self):
         pass
 
     # </editor-fold>

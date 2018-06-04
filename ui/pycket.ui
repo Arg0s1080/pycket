@@ -325,7 +325,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>4</number>
+         <number>2</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideNone</enum>
@@ -376,7 +376,7 @@
              </spacer>
             </item>
             <item row="1" column="1" rowspan="2">
-             <widget class="QDateTimeEdit" name="dateTimeEdit">
+             <widget class="QDateTimeEdit" name="dateTimeEditAtTime">
               <property name="minimumSize">
                <size>
                 <width>200</width>
@@ -489,7 +489,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
-               <widget class="QLabel" name="labelHours">
+               <widget class="QLabel" name="labelCountdownHours">
                 <property name="minimumSize">
                  <size>
                   <width>70</width>
@@ -516,7 +516,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBoxHours">
+               <widget class="QSpinBox" name="spinBoxCountdownHours">
                 <property name="font">
                  <font>
                   <pointsize>11</pointsize>
@@ -538,7 +538,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_2">
               <item>
-               <widget class="QLabel" name="labelMinutes">
+               <widget class="QLabel" name="labelCountdownMinutes">
                 <property name="minimumSize">
                  <size>
                   <width>70</width>
@@ -562,7 +562,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBoxMinutes">
+               <widget class="QSpinBox" name="spinBoxCountdownMinutes">
                 <property name="font">
                  <font>
                   <pointsize>11</pointsize>
@@ -584,7 +584,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout">
               <item>
-               <widget class="QLabel" name="labelSeconds">
+               <widget class="QLabel" name="labelCountdownSeconds">
                 <property name="minimumSize">
                  <size>
                   <width>70</width>
@@ -611,7 +611,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBoxSeconds">
+               <widget class="QSpinBox" name="spinBoxCountdownSeconds">
                 <property name="font">
                  <font>
                   <pointsize>11</pointsize>
@@ -680,7 +680,7 @@
           <item row="1" column="0">
            <layout class="QGridLayout" name="gridLayout_4">
             <item row="0" column="0">
-             <widget class="QRadioButton" name="radioButtonLoadRAMUsed">
+             <widget class="QRadioButton" name="radioButtonSystemLoadRAMUsed">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -714,7 +714,7 @@
              </spacer>
             </item>
             <item row="0" column="2">
-             <widget class="QLabel" name="labelRAMUsed">
+             <widget class="QLabel" name="labelSystemLoadRAMUsed">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -732,7 +732,7 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QRadioButton" name="radioButtonCPUFrequency">
+             <widget class="QRadioButton" name="radioButtonSystemLoadCPUFrequency">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -763,7 +763,7 @@
              </spacer>
             </item>
             <item row="1" column="2">
-             <widget class="QLabel" name="labelCPUFrequency">
+             <widget class="QLabel" name="labelSystemLoadCPUFrequency">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -781,7 +781,7 @@
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QRadioButton" name="radioButtonLoadCPU">
+             <widget class="QRadioButton" name="radioButtonSystemLoadCPU">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -812,7 +812,7 @@
              </spacer>
             </item>
             <item row="2" column="2">
-             <widget class="QLabel" name="labelCPULoad">
+             <widget class="QLabel" name="labelSystemLoadCPULoad">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -830,7 +830,7 @@
              </widget>
             </item>
             <item row="3" column="0">
-             <widget class="QRadioButton" name="radioButtonCPUTemp">
+             <widget class="QRadioButton" name="radioButtonSystemLoadCPUTemp">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -861,7 +861,7 @@
              </spacer>
             </item>
             <item row="3" column="2">
-             <widget class="QLabel" name="labelCPUTemp">
+             <widget class="QLabel" name="labelSystemLoadCPUTemp">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -1525,7 +1525,7 @@
                  <locale language="English" country="UnitedStates"/>
                 </property>
                 <property name="text">
-                 <string>Power is</string>
+                 <string>Po&amp;wer is</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
@@ -1837,7 +1837,7 @@
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QSpinBox" name="spinBoxBatteryRemainingTime">
+             <widget class="QSpinBox" name="spinBoxPowerPercent">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -1867,7 +1867,7 @@
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QTimeEdit" name="timeEdit">
+             <widget class="QTimeEdit" name="timeEditPower">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -2179,7 +2179,7 @@
   <buttongroup name="buttonGroupPowerMain"/>
   <buttongroup name="buttonGroupActions"/>
   <buttongroup name="buttonGroupSystemLoad"/>
-  <buttongroup name="buttonGroupNetwork"/>
   <buttongroup name="buttonGroupPowerSnd"/>
+  <buttongroup name="buttonGroupNetwork"/>
  </buttongroups>
 </ui>
