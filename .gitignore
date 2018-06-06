@@ -42,3 +42,5 @@ ENV/
 env.bak/
 venv.bak/7
 
+/ui/pycket.ui.OLD2
+/ui/pycket.ui.old
