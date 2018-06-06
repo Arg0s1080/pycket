@@ -20,3 +20,9 @@ class Condition(Enum):
     Network = 3
     Power = 4
     Drives = 5
+
+
+class State(Enum):
+    Stopped = 0
+    Activated = 1
+    Paused = 2
