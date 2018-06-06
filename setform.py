@@ -36,6 +36,7 @@ class SetForm(QtWidgets.QMainWindow):
         self.delay = 0
         self.action = Action.Shutdown
         self.condition = Condition.AtTime
+        self.state = State.Stopped
         self.cpu_load1 = None
         self.cpu_load2 = None
         self.alarm_count_sl = None
@@ -55,7 +56,6 @@ class SetForm(QtWidgets.QMainWindow):
 
         # Section: Events
         self.ui.pushButtonStart.clicked.connect(self.pushbutton_start_clicked)
-        self.ui.pushButtonPause.clicked.connect(self.pushbutton_pause_clicked)
         self.ui.pushButtonCancel.clicked.connect(self.pushbutton_cancel_clicked)
         self.ui.dateTimeEditAtTime.dateTimeChanged.connect(self.datetime_edit_at_time_changed)
         self.ui.spinBoxCountdownHours.valueChanged.connect(self.spinbox_cd_hours_value_changed)
