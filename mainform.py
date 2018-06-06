@@ -1,6 +1,8 @@
 from setform import *
 from actions import execute
 from statux.net import *
+from datetime import timedelta
+
 
 class MainForm(SetForm):
     def closeEvent(self, a0: QtGui.QCloseEvent):
@@ -21,11 +23,12 @@ class MainForm(SetForm):
 
     def pushbutton_start_clicked(self):
         print(self.condition)
+        self.state = State.Activated
         if self.condition == Condition.AtTime:
             import datetime
-            self.delay = self.ui.dateTimeEdit.dateTime().toTime_t() - QDateTime.currentDateTime().toTime_t()
+            self.delay = self.ui.dateTimeEditAtTime.dateTime().toTime_t() - QDateTime.currentDateTime().toTime_t()
             print("Debug AtTime:", self.delay)
-            if datetime.datetime.now() >= self.ui.dateTimeEdit.dateTime():
+            if datetime.datetime.now() >= self.ui.dateTimeEditAtTime.dateTime():
                 print("Log: error, date after now")
                 self.msg_dlg("Pycket cannot start", "Date before now", icon=QMessageBox.Warning)
                 return
@@ -45,15 +48,11 @@ class MainForm(SetForm):
             self.count_bytes = self.get_net_value()
             self.timer_net.start(1000)
 
+        self.set_controls()
         print("start clicked")
 
-
     def pushbutton_cancel_clicked(self):
-        self.ui.lcdNumber.display("")
-        print(self.ui.lcdNumber.value())
-
-    def pushbutton_pause_clicked(self):
-        print(self.config.get("AtTime", "date_time"))
+        self.ui.labelData.setText("88 days, 87:88:06")
 
     def timer_temp_tick(self):
         print("Debug", "delay", self.delay)
@@ -64,6 +63,7 @@ class MainForm(SetForm):
 
         self.delay -= 1
         self.ui.progressBar.setValue(self.ui.progressBar.maximum() - self.delay)
+        self.ui.labelData.setText(str(timedelta(seconds=self.delay)))
         print("Debug. Delay:", self.delay)
 
     def set_temp1(self, on):
@@ -145,6 +145,11 @@ class MainForm(SetForm):
                                  self.ui.comboBoxNetworkUnit.currentText())[
                                  self.ui.comboBoxNetworkFinished.currentIndex()]
 
+    def set_controls(self):
+        if self.state == State.Activated:
+            pass
+        elif self.state == State.Stopped:
+            pass
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
