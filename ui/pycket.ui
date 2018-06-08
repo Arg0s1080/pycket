@@ -34,7 +34,7 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>139</width>
+              <width>160</width>
               <height>240</height>
              </size>
             </property>
@@ -229,7 +229,7 @@
            <widget class="QFrame" name="frame">
             <property name="minimumSize">
              <size>
-              <width>139</width>
+              <width>160</width>
               <height>75</height>
              </size>
             </property>
@@ -240,7 +240,8 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 0, 0);</string>
+             <string notr="true">background-color: rgb(170, 0, 0);
+background-color: rgb(0, 85, 0);</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::Panel</enum>
@@ -253,7 +254,7 @@
               <rect>
                <x>3</x>
                <y>10</y>
-               <width>131</width>
+               <width>151</width>
                <height>20</height>
               </rect>
              </property>
@@ -276,15 +277,15 @@
               <rect>
                <x>3</x>
                <y>40</y>
-               <width>131</width>
+               <width>156</width>
                <height>20</height>
               </rect>
              </property>
              <property name="font">
               <font>
-               <pointsize>11</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
+               <pointsize>10</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
               </font>
              </property>
              <property name="text">
@@ -324,7 +325,7 @@
              <enum>QTabWidget::Rounded</enum>
             </property>
             <property name="currentIndex">
-             <number>4</number>
+             <number>2</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideNone</enum>
@@ -912,7 +913,7 @@
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>RAM Load is</string>
+                   <string>RAM Used</string>
                   </property>
                  </widget>
                 </item>
@@ -1059,6 +1060,18 @@
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLabel" name="labelSystemLoadIs">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>is</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -2242,8 +2255,8 @@
  <buttongroups>
   <buttongroup name="buttonGroupNetwork"/>
   <buttongroup name="buttonGroupPowerMain"/>
-  <buttongroup name="buttonGroupPowerSnd"/>
   <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupActions"/>
+  <buttongroup name="buttonGroupPowerSnd"/>
  </buttongroups>
 </ui>
