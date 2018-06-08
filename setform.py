@@ -30,7 +30,7 @@ class SetForm(QtWidgets.QMainWindow):
         # Section: Widgets parameters
         # self.ui.dateTimeEdit.setDateTime(QDateTime.currentDateTime().addSecs(10))  # TODO Change addSecs
         self.ui.tabWidget.setCurrentIndex(0)
-        self.ui.comboBoxNetworkInterface.addItems(get_interfaces())
+        self.ui.comboBoxNetworkInterface.addItems(sorted(get_interfaces()))
 
         # Section: Variables
         self.delay = 0
@@ -39,9 +39,11 @@ class SetForm(QtWidgets.QMainWindow):
         self.state = State.Stopped
         self.cpu_load1 = None
         self.cpu_load2 = None
-        self.alarm_count_sl = None
-        self.alarm_count_net = None
+        self.alarm_count_sl = None   # to use only one alarm
+        self.alarm_count_net = None  # to use only one alarm
+        self.alarm_count_pow = None  # to use only one alarm
         self.count_bytes = None
+        self.unit_panel = None
 
         # Section: Declarations
         self.timer_mon = QTimer()   # SysLoad TabWidget monitoring
@@ -325,7 +327,7 @@ class SetForm(QtWidgets.QMainWindow):
             index = 3
             title = get_title(self.ui.radioButtonSystemLoadCPUTemp)
         self.ui.labelSystemLoadUnitSymbol.setText("%" if not index == 3 else "°C")
-        self.ui.labelSystemLoadTitle.setText("%s is" % title)
+        self.ui.labelSystemLoadTitle.setText(title)
         self.config.set("SystemLoad", "group_index", str(index))
 
     def spinbox_cd_hours_value_changed(self):
@@ -427,6 +429,35 @@ class SetForm(QtWidgets.QMainWindow):
 
         return msg.exec()
 
+    def set_controls(self):
+        if self.state == State.Activated:
+            self.ui.frame.setStyleSheet("background-color: rgb(0, 85, 0);")
+            self.ui.labelState.setText("Activated")
+            self.ui.tabWidget.setEnabled(False)
+            self.ui.groupBoxActions.setEnabled(False)
+            self.ui.pushButtonStart.setEnabled(False)
+            self.ui.pushButtonCancel.setEnabled(True)
+        elif self.state == State.Stopped:
+            self.ui.frame.setStyleSheet("background-color: rgb(170, 0, 0);")
+            self.ui.labelData.setText("")
+            self.ui.labelState.setText("Stopped")
+            self.ui.tabWidget.setEnabled(True)
+            self.ui.groupBoxActions.setEnabled(True)
+            self.ui.pushButtonStart.setEnabled(True)
+            self.ui.pushButtonCancel.setEnabled(False)
+
+        self.ui.labelState.setText(self.state.name)
+
+    def set_progressbar(self, value: int, maximum: int):
+        self.ui.progressBar.setMaximum(maximum)
+        self.ui.progressBar.setValue(value)
+
+    def set_timer(self, on, timer: QTimer):
+        if on:
+            timer.start(1000)
+        else:
+            timer.stop()
+        self.ui.progressBar.setValue(0)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
