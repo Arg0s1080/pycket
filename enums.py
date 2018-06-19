@@ -19,7 +19,7 @@ class Condition(Enum):
     SystemLoad = 2
     Network = 3
     Power = 4
-    Drives = 5
+    Partitions = 5
 
 
 class State(Enum):
