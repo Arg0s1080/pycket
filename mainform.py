@@ -54,6 +54,9 @@ class MainForm(SetForm):
         elif self.condition == Condition.Power:
             self.alarm_count_pow = 0
             self.set_timer(1, self.timer_pow)
+        elif self.condition == Condition.Partitions:
+            self.alarm_count_ptt = 0
+            self.set_timer(1, self.timer_ptt)
 
         self.set_controls()
         print("start clicked")
@@ -95,7 +98,7 @@ class MainForm(SetForm):
         elif self.ui.radioButtonSystemLoadCPU.isChecked():
             value = self.cpu_load2.next_value()
         elif self.ui.radioButtonSystemLoadCPUTemp.isChecked():
-            value = temp.x86_pkg("celsius")
+            value = temp.cpu("celsius")
             unit = "°C"
         index = self.ui.comboBoxSystemLoad.currentIndex()
         spin_value = self.ui.spinBoxSystemLoadUnit.value()
@@ -164,6 +167,31 @@ class MainForm(SetForm):
                     execute(self.action)
             else:
                 self.alarm_count_pow = 0
+        else:  # Remaining time
+            index = self.ui.comboBoxPowerMoreLess.currentIndex()
+            if self.ui.radioButtonPowerBatteryTime.isChecked():
+                value = remaining_time()
+                # DEBUG:
+                print("VALUE", value)
+                value_data = remaining_time(True)
+                time_ = self.ui.timeEditPower.time()
+                spin_value = time_.hour() * 3600 + time_.minute() * 60
+                title = "Remaining Time"
+                unit = ""
+            else:
+                value = capacity()
+                value_data = value
+                spin_value = self.ui.spinBoxPowerPercent.value()
+                title = "Capacity"
+                unit = "%"
+            self.ui.labelData.setText("%s: %s%s" % (title, value_data, unit))
+            if (index == 0 and value < spin_value) or (index == 1 and value > spin_value):
+                self.pushbutton_cancel_clicked()
+                execute(self.action)
+
+    def timer_ptt_tick(self):
+        if self.ui.radioButtonPttSpace.isChecked():
+            pass
 
 
 
