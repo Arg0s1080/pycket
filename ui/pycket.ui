@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>578</width>
+    <width>657</width>
     <height>424</height>
    </rect>
   </property>
@@ -304,6 +304,48 @@ background-color: rgb(0, 85, 0);</string>
           <property name="sizeConstraint">
            <enum>QLayout::SetMaximumSize</enum>
           </property>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="pushButtonStart">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="locale">
+             <locale language="English" country="UnitedStates"/>
+            </property>
+            <property name="text">
+             <string>Start</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="pushButtonCancel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="locale">
+             <locale language="English" country="UnitedStates"/>
+            </property>
+            <property name="text">
+             <string>Cancel</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0" colspan="2">
            <widget class="QTabWidget" name="tabWidget">
             <property name="minimumSize">
@@ -325,7 +367,7 @@ background-color: rgb(0, 85, 0);</string>
              <enum>QTabWidget::Rounded</enum>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>5</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideNone</enum>
@@ -1904,161 +1946,180 @@ background-color: rgb(0, 85, 0);</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tabDrives">
+            <widget class="QWidget" name="tab">
              <attribute name="title">
-              <string>Drives</string>
+              <string>Partition</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_7">
+             <layout class="QGridLayout" name="gridLayout_16">
               <item row="0" column="0">
-               <spacer name="horizontalSpacer_10">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>243</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="1" column="0">
-               <spacer name="verticalSpacer_19">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>15</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="2" column="0" colspan="2">
-               <layout class="QHBoxLayout" name="horizontalLayout_14">
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
-                 <widget class="QLabel" name="labelDrivesWhenDisk">
+                 <widget class="QLabel" name="labelPttWithThePartition">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
                    </font>
                   </property>
                   <property name="text">
-                   <string>When disk:</string>
+                   <string>With the  partition:</string>
+                  </property>
+                  <property name="textFormat">
+                   <enum>Qt::AutoText</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBoxDrives"/>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_21">
+                 <spacer name="horizontalSpacer_25">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>118</width>
                     <height>20</height>
                    </size>
                   </property>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="labelDrivesIs">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
+                 <widget class="QComboBox" name="comboBoxPttPartitions">
+                  <property name="editable">
+                   <bool>true</bool>
                   </property>
-                  <property name="text">
-                   <string>is</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_22">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="comboBoxDrivesUnMounted">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>mounted</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>unmounted</string>
-                   </property>
-                  </item>
                  </widget>
                 </item>
                </layout>
               </item>
-              <item row="3" column="0">
-               <spacer name="verticalSpacer_20">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+              <item row="1" column="0">
+               <layout class="QGridLayout" name="gridLayout_15">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetMaximumSize</enum>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>18</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="4" column="0" colspan="2">
-               <layout class="QHBoxLayout" name="horizontalLayout_13">
-                <item>
-                 <widget class="QCheckBox" name="checkBoxDrivesIfSizeIs">
+                <item row="0" column="1">
+                 <widget class="QLabel" name="labelPttIfIts">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
                    </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>If it's size is</string>
+                   <string>If it's</string>
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QComboBox" name="comboBoxDrivesBiggerSmaller">
+                <item row="1" column="4">
+                 <widget class="QComboBox" name="comboBoxPttSpaceUnit">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
                    </font>
                   </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
                   <item>
                    <property name="text">
-                    <string>smaller than</string>
+                    <string>KiB</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>bigger than</string>
+                    <string>MiB</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>GiB</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>TiB</string>
                    </property>
                   </item>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QSpinBox" name="spinBoxDrivesBytes">
+                <item row="2" column="1" colspan="4">
+                 <widget class="QComboBox" name="comboBoxPttIOPS">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>read speed rate</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>write speed rate</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="2" column="5" colspan="3">
+                 <widget class="QComboBox" name="comboBoxPttIOPSLessMore">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>is less than</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>is more than</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="3" column="3" colspan="2">
+                 <widget class="QComboBox" name="comboBoxPttIOPSUnit">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>bytes/sec</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>KiB/sec</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>MiB/sec</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>GiB/sec</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="3" column="1" colspan="2">
+                 <widget class="QSpinBox" name="spinBoxPttIOPS">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
@@ -2067,93 +2128,166 @@ background-color: rgb(0, 85, 0);</string>
                   <property name="maximum">
                    <number>999</number>
                   </property>
+                  <property name="value">
+                   <number>999</number>
+                  </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QComboBox" name="comboBoxDrivesBytes">
+                <item row="3" column="7">
+                 <widget class="QLabel" name="labelPttMinutes">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="text">
+                   <string>min.</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2" colspan="3">
+                 <widget class="QComboBox" name="comboBoxPttSpace">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
                   <item>
                    <property name="text">
-                    <string>MB</string>
+                    <string>used space</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>GB</string>
+                    <string>total size</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>TB</string>
+                    <string>free space</string>
                    </property>
                   </item>
+                 </widget>
+                </item>
+                <item row="3" column="6">
+                 <widget class="QSpinBox" name="spinBoxPttMinutes">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="maximum">
+                   <number>300</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QRadioButton" name="radioButtonPttIOPS">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
+                  <attribute name="buttonGroup">
+                   <string notr="true">buttonGroupPartitions</string>
+                  </attribute>
+                 </widget>
+                </item>
+                <item row="3" column="5">
+                 <widget class="QCheckBox" name="checkBoxPttFor">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="text">
+                   <string>for</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="5" colspan="3">
+                 <widget class="QComboBox" name="comboBoxPttSpaceLessMore">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>is more than</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>is less than</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="1" column="2" colspan="2">
+                 <widget class="QSpinBox" name="spinBoxPttSpace">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="maximum">
+                   <number>300</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QRadioButton" name="radioButtonPttSpace">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                  <attribute name="buttonGroup">
+                   <string notr="true">buttonGroupPartitions</string>
+                  </attribute>
                  </widget>
                 </item>
                </layout>
               </item>
-              <item row="5" column="0">
-               <spacer name="verticalSpacer_21">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>15</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="1">
-               <widget class="QPushButton" name="pushButtonDetectDrives">
-                <property name="text">
-                 <string>Detect Drives</string>
-                </property>
-               </widget>
-              </item>
              </layout>
             </widget>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QPushButton" name="pushButtonStart">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>11</pointsize>
-             </font>
-            </property>
-            <property name="locale">
-             <locale language="English" country="UnitedStates"/>
-            </property>
-            <property name="text">
-             <string>Start</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="pushButtonCancel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>11</pointsize>
-             </font>
-            </property>
-            <property name="locale">
-             <locale language="English" country="UnitedStates"/>
-            </property>
-            <property name="text">
-             <string>Cancel</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -2188,7 +2322,7 @@ background-color: rgb(0, 85, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>578</width>
+     <width>657</width>
      <height>30</height>
     </rect>
    </property>
@@ -2253,10 +2387,11 @@ background-color: rgb(0, 85, 0);</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroupNetwork"/>
   <buttongroup name="buttonGroupPowerMain"/>
   <buttongroup name="buttonGroupSystemLoad"/>
-  <buttongroup name="buttonGroupActions"/>
+  <buttongroup name="buttonGroupNetwork"/>
   <buttongroup name="buttonGroupPowerSnd"/>
+  <buttongroup name="buttonGroupActions"/>
+  <buttongroup name="buttonGroupPartitions"/>
  </buttongroups>
 </ui>
