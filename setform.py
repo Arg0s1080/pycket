@@ -42,6 +42,7 @@ class SetForm(QtWidgets.QMainWindow):
         self.alarm_count_sl = None   # to use only one alarm
         self.alarm_count_net = None  # to use only one alarm
         self.alarm_count_pow = None  # to use only one alarm
+        self.alarm_count_ptt = None  # to use only one alarm
         self.count_bytes = None
         self.unit_panel = None
 
@@ -51,6 +52,7 @@ class SetForm(QtWidgets.QMainWindow):
         self.timer_sl = QTimer()    # System Load
         self.timer_net = QTimer()   # Network
         self.timer_pow = QTimer()   # Power
+        self.timer_ptt = QTimer()   # Partitions
 
         self.config = ConfigParser()
         self.set_config()
@@ -89,11 +91,25 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.spinBoxPowerPercent.valueChanged.connect(self.spin_pow_percent_value_changed) #
         self.ui.checkBoxPowerFor.stateChanged.connect(self.check_pow_for_state_changed) #
         self.ui.timeEditPower.timeChanged.connect(self.time_edit_pow_time_changed) #
+        self.ui.buttonGroupPartitions.buttonClicked.connect(self.button_group_ptt_clicked)
+        self.ui.comboBoxPttPartitions.currentIndexChanged.connect(self.combo_ptt_partitions_index_changed)
+        self.ui.comboBoxPttSpace.currentIndexChanged.connect(self.combo_ptt_space_index_changed)
+        self.ui.comboBoxPttSpaceLessMore.currentIndexChanged.connect(self.combo_ptt_spc_less_more_index_changed)
+        self.ui.comboBoxPttSpaceUnit.currentIndexChanged.connect(self.combo_ptt_spc_unit_index_changed)
+        self.ui.comboBoxPttIOPS.currentIndexChanged.connect(self.combo_ptt_iops_index_changed)
+        self.ui.comboBoxPttIOPSLessMore.currentIndexChanged.connect(self.combo_ptt_iops_less_more_index_changed)
+        self.ui.comboBoxPttIOPSUnit.currentIndexChanged.connect(self.combo_ptt_iops_unit_index_changed)
+        self.ui.spinBoxPttSpace.valueChanged.connect(self.spin_ptt_space_value_changed)
+        self.ui.spinBoxPttIOPS.valueChanged.connect(self.spin_ptt_iops_value_changed)
+        self.ui.spinBoxPttMinutes.valueChanged.connect(self.spin_ptt_minutes_value_changed)
+        self.ui.checkBoxPttFor.stateChanged.connect(self.check_ptt_for_state_changed)
+
         self.timer_temp.timeout.connect(self.timer_temp_tick)
         self.timer_mon.timeout.connect(self.timer_mon_tick)
         self.timer_sl.timeout.connect(self.timer_sl_tick)
         self.timer_net.timeout.connect(self.timer_net_tick)
         self.timer_pow.timeout.connect(self.timer_pow_tick)
+        self.timer_ptt.timeout.connect(self.timer_ptt_tick)
 
 
     # TEST
@@ -136,10 +152,10 @@ class SetForm(QtWidgets.QMainWindow):
                 self.ui.tabWidget.setCurrentIndex(3)
             elif self.condition == Condition.Power:
                 self.ui.tabWidget.setCurrentIndex(4)
-            elif self.condition == Condition.Drives:
+            elif self.condition == Condition.Partitions:
                 self.ui.tabWidget.setCurrentIndex(5)
 
-            # Section: SystemLoad
+            # Section: AtTime
             d = QDateTime.fromString(self.config.get("AtTime", "date_time"), "yyyy/MM/dd hh:mm:ss")
             self.ui.dateTimeEditAtTime.setDateTime(d)
 
@@ -195,6 +211,18 @@ class SetForm(QtWidgets.QMainWindow):
             self.ui.spinBoxPowerPercent.setValue(self.config.getint("Power", "spin_percent"))
             self.ui.checkBoxPowerFor.setChecked(self.config.getboolean("Power", "check_for"))
             self.ui.timeEditPower.setDateTime(QDateTime.fromString(self.config.get("Power", "time_edit"), "h:mm"))
+
+            # Section Partitions
+            if self.config.getboolean("Partitions", "group_index"):
+                self.ui.radioButtonPttIOPS.setChecked(True)
+            else:
+                self.ui.radioButtonPttSpace.setChecked(True)
+            # TODO: comboPartitions
+            self.ui.comboBoxPttSpace.setCurrentIndex(self.config.getint("Partitions", "combo_space"))
+            self.ui.comboBoxPttSpaceLessMore.setCurrentIndex(self.config.getboolean("Partitions", "combo_spc_less_more"))
+            self.ui.comboBoxPttSpaceUnit.setCurrentIndex(self.config.getint("Partitions", "combo_spc_unit"))
+            self.ui.comboBoxPttIOPS.setCurrentIndex(self.config.getboolean("Partitions", "combo_iops"))
+            # YOU ARE HERE!!!!!!!!!
         else:
             folder = config_file.replace("config.cfg", "")
             if not exists(folder):
@@ -237,6 +265,19 @@ class SetForm(QtWidgets.QMainWindow):
             self.config.set("Power", "spin_percent", "0")
             self.config.set("Power", "check_for", "False")
             self.config.set("Power", "time_edit", "0:00")
+            self.config.add_section("Partitions")
+            self.config.set("Partitions", "group_index", "False")
+            self.config.set("Partitions", "combo_partitions", "0")
+            self.config.set("Partitions", "combo_space", "0")
+            self.config.set("Partitions", "combo_spc_less_more", "False")
+            self.config.set("Partitions", "combo_spc_unit", "0")
+            self.config.set("Partitions", "combo_iops", "False")
+            self.config.set("Partitions", "combo_iops_less_more", "False")
+            self.config.set("Partitions", "combo_iops_unit", "0")
+            self.config.set("Partitions", "spin_space_unit", "0")
+            self.config.set("Partitions", "spin_iops_unit", "0")
+            self.config.set("Partitions", "spin_minutes", "0")
+            self.config.set("Partitions", "check_for", "False")
 
 
     def set_sys_load(self):
@@ -247,7 +288,7 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.labelSystemLoadRAMUsed.setText("%.2f %%" % ram.used_percent())
         self.ui.labelSystemLoadCPUFrequency.setText("%.2f %%" % cpu.frequency_percent(False))
         self.ui.labelSystemLoadCPULoad.setText("%.2f %%" % self.cpu_load1.next_value())
-        self.ui.labelSystemLoadCPUTemp.setText("%.2f °C" % temp.x86_pkg("celsius"))
+        self.ui.labelSystemLoadCPUTemp.setText("%.2f °C" % temp.cpu("celsius"))
         # self.ui.labelCPUTemp.setText("%.2f °C" % temp.x86_pkg(scale="celsius"))
 
     def closeEvent(self, a0: QtGui.QCloseEvent):
@@ -301,7 +342,7 @@ class SetForm(QtWidgets.QMainWindow):
         elif self.ui.tabWidget.currentIndex() == 4:
             self.condition = Condition.Power
         elif self.ui.tabWidget.currentIndex() == 5:
-            self.condition = Condition.Drives
+            self.condition = Condition.Partitions
         else:
             # TODO CHANGE
             print("ERROR")
@@ -410,6 +451,43 @@ class SetForm(QtWidgets.QMainWindow):
 
     def time_edit_pow_time_changed(self):
         self.config.set("Power", "time_edit", self.ui.timeEditPower.time().toString("h:mm"))
+
+    def button_group_ptt_clicked(self):
+        self.config.set("Partitions", "group_index", "True" if self.ui.radioButtonPttIOPS.isChecked() else "False")
+
+    def combo_ptt_partitions_index_changed(self):
+        self.config.set("Partitions", "combo_partitions", str(self.ui.comboBoxPttSpace.currentIndex()))
+
+    def combo_ptt_space_index_changed(self):
+        self.config.set("Partitions", "combo_space", str(self.ui.comboBoxPttSpace.currentIndex()))
+
+    def combo_ptt_spc_less_more_index_changed(self):
+        self.config.set("Partitions", "combo_spc_less_more", str(bool(self.ui.comboBoxPttSpaceLessMore.currentIndex())))
+
+    def combo_ptt_spc_unit_index_changed(self):
+        self.config.set("Partitions", "combo_spc_unit", str(self.ui.comboBoxPttSpaceUnit.currentIndex()))
+
+    def combo_ptt_iops_index_changed(self):
+        self.config.set("Partitions", "combo_iops", str(bool(self.ui.comboBoxPttIOPS.currentIndex())))
+
+    def combo_ptt_iops_less_more_index_changed(self):
+        self.config.set("Partitions", "combo_iops_less_more", str(bool(self.ui.comboBoxPttIOPSLessMore.currentIndex())))
+
+    def combo_ptt_iops_unit_index_changed(self):
+        self.config.set("Partitions", "combo_iops_unit", str(self.ui.comboBoxPttIOPSUnit.currentIndex()))
+
+    def spin_ptt_space_value_changed(self):
+        self.config.set("Partitions", "spin_space_unit", str(self.ui.spinBoxPttSpace.value()))
+
+    def spin_ptt_iops_value_changed(self):
+        self.config.set("Partitions", "spin_iops_unit", str(self.ui.spinBoxPttIOPS.value()))
+
+    def spin_ptt_minutes_value_changed(self):
+        self.config.set("Partitions", "spin_minutes", str(self.ui.spinBoxPttMinutes.value()))
+
+    def check_ptt_for_state_changed(self):
+        self.config.set("Partitions", "check_for", str(self.ui.checkBoxPttFor.isChecked()))
+
 
     # </editor-fold>
 
