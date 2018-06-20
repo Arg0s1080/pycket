@@ -1961,7 +1961,7 @@ background-color: rgb(0, 85, 0);</string>
                    </font>
                   </property>
                   <property name="text">
-                   <string>With the  partition:</string>
+                   <string>With the mounted partition:</string>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::AutoText</enum>
@@ -2160,12 +2160,12 @@ background-color: rgb(0, 85, 0);</string>
                   </property>
                   <item>
                    <property name="text">
-                    <string>used space</string>
+                    <string>total size</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>total size</string>
+                    <string>used space</string>
                    </property>
                   </item>
                   <item>
@@ -2238,12 +2238,12 @@ background-color: rgb(0, 85, 0);</string>
                   </property>
                   <item>
                    <property name="text">
-                    <string>is more than</string>
+                    <string>is less than</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>is less than</string>
+                    <string>is more than</string>
                    </property>
                   </item>
                  </widget>
@@ -2387,11 +2387,11 @@ background-color: rgb(0, 85, 0);</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroupPowerMain"/>
-  <buttongroup name="buttonGroupSystemLoad"/>
-  <buttongroup name="buttonGroupNetwork"/>
   <buttongroup name="buttonGroupPowerSnd"/>
   <buttongroup name="buttonGroupActions"/>
+  <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupPartitions"/>
+  <buttongroup name="buttonGroupNetwork"/>
+  <buttongroup name="buttonGroupPowerMain"/>
  </buttongroups>
 </ui>
