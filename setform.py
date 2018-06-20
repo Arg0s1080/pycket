@@ -15,6 +15,7 @@ from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import QDateTime, QTimer
 from enums import *
 from statux.net import get_interfaces
+from statux.disks import mounted_partitions
 
 
 config_file = join(getcwd(), "config.cfg")
@@ -31,6 +32,7 @@ class SetForm(QtWidgets.QMainWindow):
         # self.ui.dateTimeEdit.setDateTime(QDateTime.currentDateTime().addSecs(10))  # TODO Change addSecs
         self.ui.tabWidget.setCurrentIndex(0)
         self.ui.comboBoxNetworkInterface.addItems(sorted(get_interfaces()))
+        self.ui.comboBoxPttPartitions.addItems(list(mounted_partitions()))
 
         # Section: Variables
         self.delay = 0
@@ -92,7 +94,8 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.checkBoxPowerFor.stateChanged.connect(self.check_pow_for_state_changed) #
         self.ui.timeEditPower.timeChanged.connect(self.time_edit_pow_time_changed) #
         self.ui.buttonGroupPartitions.buttonClicked.connect(self.button_group_ptt_clicked)
-        self.ui.comboBoxPttPartitions.currentIndexChanged.connect(self.combo_ptt_partitions_index_changed)
+        self.ui.comboBoxPttPartitions.focusOutEvent = self.combo_ptt_partitions_focus_out
+        #self.ui.comboBoxPttPartitions.currentIndexChanged.connect(self.combo_ptt_partitions_index_changed)
         self.ui.comboBoxPttSpace.currentIndexChanged.connect(self.combo_ptt_space_index_changed)
         self.ui.comboBoxPttSpaceLessMore.currentIndexChanged.connect(self.combo_ptt_spc_less_more_index_changed)
         self.ui.comboBoxPttSpaceUnit.currentIndexChanged.connect(self.combo_ptt_spc_unit_index_changed)
@@ -113,7 +116,7 @@ class SetForm(QtWidgets.QMainWindow):
 
 
     # TEST
-    def test_event(self):
+    def test_event(self, event):
         print("TEST EVENT")
 
     def set_config(self):
@@ -217,12 +220,18 @@ class SetForm(QtWidgets.QMainWindow):
                 self.ui.radioButtonPttIOPS.setChecked(True)
             else:
                 self.ui.radioButtonPttSpace.setChecked(True)
-            # TODO: comboPartitions
+            self.ui.comboBoxPttPartitions.setCurrentText(self.config.get("Partitions", "combo_partitions"))
             self.ui.comboBoxPttSpace.setCurrentIndex(self.config.getint("Partitions", "combo_space"))
             self.ui.comboBoxPttSpaceLessMore.setCurrentIndex(self.config.getboolean("Partitions", "combo_spc_less_more"))
             self.ui.comboBoxPttSpaceUnit.setCurrentIndex(self.config.getint("Partitions", "combo_spc_unit"))
             self.ui.comboBoxPttIOPS.setCurrentIndex(self.config.getboolean("Partitions", "combo_iops"))
-            # YOU ARE HERE!!!!!!!!!
+            self.ui.comboBoxPttIOPSLessMore.setCurrentIndex(self.config.getboolean("Partitions", "combo_iops_less_more"))
+            self.ui.comboBoxPttIOPSUnit.setCurrentIndex(self.config.getint("Partitions", "combo_iops_unit"))
+            self.ui.spinBoxPttSpace.setValue(self.config.getint("Partitions", "spin_space_unit"))
+            self.ui.spinBoxPttIOPS.setValue(self.config.getint("Partitions", "spin_iops_unit"))
+            self.ui.spinBoxPttMinutes.setValue(self.config.getint("Partitions", "spin_minutes"))
+            self.ui.checkBoxPttFor.setChecked(self.config.getboolean("Partitions", "check_for"))
+
         else:
             folder = config_file.replace("config.cfg", "")
             if not exists(folder):
@@ -267,7 +276,7 @@ class SetForm(QtWidgets.QMainWindow):
             self.config.set("Power", "time_edit", "0:00")
             self.config.add_section("Partitions")
             self.config.set("Partitions", "group_index", "False")
-            self.config.set("Partitions", "combo_partitions", "0")
+            self.config.set("Partitions", "combo_partitions", list(mounted_partitions().keys())[0])
             self.config.set("Partitions", "combo_space", "0")
             self.config.set("Partitions", "combo_spc_less_more", "False")
             self.config.set("Partitions", "combo_spc_unit", "0")
@@ -455,11 +464,17 @@ class SetForm(QtWidgets.QMainWindow):
     def button_group_ptt_clicked(self):
         self.config.set("Partitions", "group_index", "True" if self.ui.radioButtonPttIOPS.isChecked() else "False")
 
-    def combo_ptt_partitions_index_changed(self):
-        self.config.set("Partitions", "combo_partitions", str(self.ui.comboBoxPttSpace.currentIndex()))
+    def combo_ptt_partitions_focus_out(self, event):
+        ptt = self.ui.comboBoxPttPartitions.currentText()
+        mounted = mounted_partitions().keys()
+        if ptt not in mounted:
+            if self.msg_dlg("%s is not mounted yet" % ptt, "Do you want continue?", QMessageBox.Yes | QMessageBox.No,
+                         details="Current mounted partitions:\n%s" % "\n".join(mounted)) == QMessageBox.No:
+                self.ui.comboBoxPttPartitions.setCurrentText(list(mounted)[0])
+        self.config.set("Partitions", "combo_partitions", self.ui.comboBoxPttPartitions.currentText())
 
     def combo_ptt_space_index_changed(self):
-        self.config.set("Partitions", "combo_space", str(self.ui.comboBoxPttSpace.currentIndex()))
+        self.config.set("Partitions", "combo_space", self.ui.comboBoxPttSpace.currentText())
 
     def combo_ptt_spc_less_more_index_changed(self):
         self.config.set("Partitions", "combo_spc_less_more", str(bool(self.ui.comboBoxPttSpaceLessMore.currentIndex())))

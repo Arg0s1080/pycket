@@ -2,6 +2,7 @@ from setform import *
 from actions import execute
 from statux.net import *
 from statux.battery import *
+from statux.disks import *
 from datetime import timedelta
 
 
@@ -191,8 +192,20 @@ class MainForm(SetForm):
 
     def timer_ptt_tick(self):
         if self.ui.radioButtonPttSpace.isChecked():
-            pass
-
+            index = self.ui.comboBoxPttSpaceLessMore.currentIndex()
+            spin_value = self.ui.spinBoxPttSpace.value()
+            index_size = self.ui.comboBoxPttSpace.currentIndex()
+            ptt = self.ui.comboBoxPttPartitions.currentText()
+            scale = self.ui.comboBoxPttSpaceUnit.currentText()
+            if index_size == 0:
+                value = total_size(ptt, scale)
+            elif index_size == 1:
+                value = used_space(ptt, scale)
+            else:
+                value = free_space(ptt, scale)
+            if (value <= spin_value and index == 0) or (value >= spin_value and index == 1):
+                self.pushbutton_cancel_clicked()
+                execute(self.action)
 
 
     def get_net_value(self):
