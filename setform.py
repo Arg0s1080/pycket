@@ -297,7 +297,7 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.labelSystemLoadRAMUsed.setText("%.2f %%" % ram.used_percent())
         self.ui.labelSystemLoadCPUFrequency.setText("%.2f %%" % cpu.frequency_percent(False))
         self.ui.labelSystemLoadCPULoad.setText("%.2f %%" % self.cpu_load1.next_value())
-        self.ui.labelSystemLoadCPUTemp.setText("%.2f °C" % temp.cpu("celsius"))
+        self.ui.labelSystemLoadCPUTemp.setText("%.2f °C" % temp.max_val("celsius"))
         # self.ui.labelCPUTemp.setText("%.2f °C" % temp.x86_pkg(scale="celsius"))
 
     def closeEvent(self, a0: QtGui.QCloseEvent):
