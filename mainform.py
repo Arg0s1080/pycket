@@ -75,6 +75,9 @@ class MainForm(SetForm):
         elif self.condition == Condition.Power:
             self.set_timer(0, self.timer_pow)
             self.alarm_count_pow = 0
+        elif self.condition == Condition.Partitions:
+            self.set_timer(0, self.timer_ptt)
+            self.alarm_count_ptt = 0
         self.state = State.Stopped
         self.set_controls()
 
@@ -99,7 +102,7 @@ class MainForm(SetForm):
         elif self.ui.radioButtonSystemLoadCPU.isChecked():
             value = self.cpu_load2.next_value()
         elif self.ui.radioButtonSystemLoadCPUTemp.isChecked():
-            value = temp.cpu("celsius")
+            value = temp.max_val("celsius")
             unit = "°C"
         index = self.ui.comboBoxSystemLoad.currentIndex()
         spin_value = self.ui.spinBoxSystemLoadUnit.value()
@@ -191,11 +194,11 @@ class MainForm(SetForm):
                 execute(self.action)
 
     def timer_ptt_tick(self):
+        ptt = self.ui.comboBoxPttPartitions.currentText()
         if self.ui.radioButtonPttSpace.isChecked():
             index = self.ui.comboBoxPttSpaceLessMore.currentIndex()
             spin_value = self.ui.spinBoxPttSpace.value()
             index_size = self.ui.comboBoxPttSpace.currentIndex()
-            ptt = self.ui.comboBoxPttPartitions.currentText()
             scale = self.ui.comboBoxPttSpaceUnit.currentText()
             if index_size == 0:
                 value = total_size(ptt, scale)
@@ -203,10 +206,29 @@ class MainForm(SetForm):
                 value = used_space(ptt, scale)
             else:
                 value = free_space(ptt, scale)
-            if (value <= spin_value and index == 0) or (value >= spin_value and index == 1):
+            if (value < spin_value and index == 0) or (value > spin_value and index == 1):
                 self.pushbutton_cancel_clicked()
                 execute(self.action)
-
+        else:  # IOPS
+            index = self.ui.comboBoxPttIOPSLessMore.currentIndex()
+            spin_value = self.ui.spinBoxPttIOPS.value()
+            scale = self.ui.comboBoxPttIOPSUnit.currentText().split("/")[0]
+            value = bytes_read_write(ptt, scale=scale)[index]
+            self.ui.labelData.setText("%s: %s %s/sec" % (ptt, value, scale))
+            # DEBUG:
+            print(value, scale)
+            if (value < spin_value and index == 0) or (value > spin_value and index == 1):
+                if self.ui.checkBoxPttFor.isChecked():
+                    self.alarm_count_ptt += 1
+                    self.set_progressbar(self.alarm_count_ptt, self.ui.spinBoxPttMinutes.value())  # TODO: Multiply by 60
+                    if self.alarm_count_ptt >= self.ui.spinBoxPttMinutes.value():  # TODO * 60
+                        self.pushbutton_cancel_clicked()
+                        execute(self.action)
+                else:
+                    self.pushbutton_cancel_clicked()
+                    execute(self.action)
+            else:
+                self.alarm_count_ptt = 0
 
     def get_net_value(self):
         if self.ui.radioButtonNetworkUploadDownloadSpeed.isChecked():
