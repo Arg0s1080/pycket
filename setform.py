@@ -39,22 +39,29 @@ class SetForm(QtWidgets.QMainWindow):
         self.action = Action.Shutdown
         self.condition = Condition.AtTime
         self.state = State.Stopped
+        self.delay = None
+        self.value = None
+        self.scale = None
+        self.index = None
+        self.net_interface = None
+        self.partition = None
+        self.index_radio = None
+        self.index_radio2 = None
+        self.index_combo = None
+        self.title = None
+        self.minutes = None
+        self.spin_value = None
+        self.check_for = None
         self.cpu_load1 = None
         self.cpu_load2 = None
-        self.alarm_count_sl = None   # to use only one alarm
-        self.alarm_count_net = None  # to use only one alarm
-        self.alarm_count_pow = None  # to use only one alarm
+        self.alarm_count = None   # to use only one alarm
         self.alarm_count_ptt = None  # to use only one alarm
         self.count_bytes = None
         self.unit_panel = None
 
         # Section: Declarations
         self.timer_mon = QTimer()   # SysLoad TabWidget monitoring
-        self.timer_temp = QTimer()  # Countdown and AtTime
-        self.timer_sl = QTimer()    # System Load
-        self.timer_net = QTimer()   # Network
-        self.timer_pow = QTimer()   # Power
-        self.timer_ptt = QTimer()   # Partitions
+        self.timer = QTimer()       # ALL
 
         self.config = ConfigParser()
         self.set_config()
@@ -107,13 +114,8 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.spinBoxPttMinutes.valueChanged.connect(self.spin_ptt_minutes_value_changed)
         self.ui.checkBoxPttFor.stateChanged.connect(self.check_ptt_for_state_changed)
 
-        self.timer_temp.timeout.connect(self.timer_temp_tick)
         self.timer_mon.timeout.connect(self.timer_mon_tick)
-        self.timer_sl.timeout.connect(self.timer_sl_tick)
-        self.timer_net.timeout.connect(self.timer_net_tick)
-        self.timer_pow.timeout.connect(self.timer_pow_tick)
-        self.timer_ptt.timeout.connect(self.timer_ptt_tick)
-
+        self.timer.timeout.connect(self.timer_tick)
 
     # TEST
     def test_event(self, event):
@@ -308,7 +310,7 @@ class SetForm(QtWidgets.QMainWindow):
         except Exception as ex:
             err = ""
             for arg in sys.exc_info():
-                err += "! " + str(arg) + "\n"
+                err += "! %s\n" % str(arg)
             self.msg_dlg("An unexpected error occurred:", ex.args[1], QMessageBox.Ok,
                          QMessageBox.Warning, err)
 
@@ -408,6 +410,7 @@ class SetForm(QtWidgets.QMainWindow):
 
     def combo_net_interface_index_changed(self):
         self.config.set("Network", "combo_interface", str(self.ui.comboBoxNetworkInterface.currentIndex()))
+        self.net_interface = self.ui.comboBoxNetworkInterface.currentText()
 
     def combo_net_speed_index_changed(self):
         self.config.set("Network", "combo_speed", str(bool(self.ui.comboBoxNetworkSpeed.currentIndex())))
@@ -465,16 +468,12 @@ class SetForm(QtWidgets.QMainWindow):
         self.config.set("Partitions", "group_index", "True" if self.ui.radioButtonPttIOPS.isChecked() else "False")
 
     def combo_ptt_partitions_focus_out(self, event):
-        ptt = self.ui.comboBoxPttPartitions.currentText()
-        mounted = mounted_partitions().keys()
-        if ptt not in mounted:
-            if self.msg_dlg("%s is not mounted yet" % ptt, "Do you want continue?", QMessageBox.Yes | QMessageBox.No,
-                         details="Current mounted partitions:\n%s" % "\n".join(mounted)) == QMessageBox.No:
-                self.ui.comboBoxPttPartitions.setCurrentText(list(mounted)[0])
+        if self.check_ptt() == QMessageBox.No:
+                self.ui.comboBoxPttPartitions.setCurrentText(list(mounted_partitions().keys())[0])
         self.config.set("Partitions", "combo_partitions", self.ui.comboBoxPttPartitions.currentText())
 
     def combo_ptt_space_index_changed(self):
-        self.config.set("Partitions", "combo_space", self.ui.comboBoxPttSpace.currentText())
+        self.config.set("Partitions", "combo_space", str(self.ui.comboBoxPttSpace.currentIndex()))
 
     def combo_ptt_spc_less_more_index_changed(self):
         self.config.set("Partitions", "combo_spc_less_more", str(bool(self.ui.comboBoxPttSpaceLessMore.currentIndex())))
@@ -551,6 +550,14 @@ class SetForm(QtWidgets.QMainWindow):
         else:
             timer.stop()
         self.ui.progressBar.setValue(0)
+
+    def check_ptt(self):
+        ptt = self.ui.comboBoxPttPartitions.currentText()
+        mounted = mounted_partitions().keys()
+        if ptt not in mounted:
+            return self.msg_dlg("%s is not mounted yet" % ptt, "Do you want continue?", QMessageBox.Yes |
+                                QMessageBox.No, details="Current mounted partitions:\n%s" % "\n".join(mounted))
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
