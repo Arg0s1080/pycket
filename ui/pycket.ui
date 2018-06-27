@@ -2160,7 +2160,7 @@ background-color: rgb(0, 85, 0);</string>
                   </property>
                   <item>
                    <property name="text">
-                    <string>total size</string>
+                    <string>free space</string>
                    </property>
                   </item>
                   <item>
@@ -2170,7 +2170,7 @@ background-color: rgb(0, 85, 0);</string>
                   </item>
                   <item>
                    <property name="text">
-                    <string>free space</string>
+                    <string>total size</string>
                    </property>
                   </item>
                  </widget>
@@ -2387,11 +2387,11 @@ background-color: rgb(0, 85, 0);</string>
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="buttonGroupPartitions"/>
   <buttongroup name="buttonGroupPowerSnd"/>
   <buttongroup name="buttonGroupActions"/>
-  <buttongroup name="buttonGroupSystemLoad"/>
-  <buttongroup name="buttonGroupPartitions"/>
   <buttongroup name="buttonGroupNetwork"/>
+  <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupPowerMain"/>
  </buttongroups>
 </ui>
