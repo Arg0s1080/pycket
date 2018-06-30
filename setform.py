@@ -52,8 +52,8 @@ class SetForm(QtWidgets.QMainWindow):
         self.minutes = None
         self.spin_value = None
         self.check_for = None
-        self.cpu_load1 = None
-        self.cpu_load2 = None
+        self.cpu_mon = None
+        self.cpu_load = None
         self.alarm_count = None   # to use only one alarm
         self.alarm_count_ptt = None  # to use only one alarm
         self.count_bytes = None
@@ -71,6 +71,9 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.pushButtonStart.clicked.connect(self.pushbutton_start_clicked)
         self.ui.pushButtonCancel.clicked.connect(self.pushbutton_cancel_clicked)
         self.ui.dateTimeEditAtTime.dateTimeChanged.connect(self.datetime_edit_at_time_changed)
+        self.ui.pushButtonAtTimeNow.clicked.connect(self.pushbutton_at_time_now_clicked)
+        self.ui.pushButtonAtTimePlus1H.clicked.connect(self.pushbutton_at_time_plus_1h)
+        self.ui.pushButtonAtTimeMinus1H.clicked.connect(self.pushbutton_at_time_minus_1h)
         self.ui.spinBoxCountdownHours.valueChanged.connect(self.spinbox_cd_hours_value_changed)
         self.ui.spinBoxCountdownMinutes.valueChanged.connect(self.spinbox_cd_minutes_value_changed)
         self.ui.spinBoxCountdownSeconds.valueChanged.connect(self.spinbox_cd_seconds_value_changed)
@@ -290,15 +293,14 @@ class SetForm(QtWidgets.QMainWindow):
             self.config.set("Partitions", "spin_minutes", "0")
             self.config.set("Partitions", "check_for", "False")
 
-
     def set_sys_load(self):
         self.timer_mon.start(1000)
-        self.cpu_load1 = cpu.Load()
+        self.cpu_mon = cpu.Load()
 
     def timer_mon_tick(self):
         self.ui.labelSystemLoadRAMUsed.setText("%.2f %%" % ram.used_percent())
         self.ui.labelSystemLoadCPUFrequency.setText("%.2f %%" % cpu.frequency_percent(False))
-        self.ui.labelSystemLoadCPULoad.setText("%.2f %%" % self.cpu_load1.next_value())
+        self.ui.labelSystemLoadCPULoad.setText("%.2f %%" % self.cpu_mon.next_value())
         self.ui.labelSystemLoadCPUTemp.setText("%.2f °C" % temp.max_val("celsius"))
         # self.ui.labelCPUTemp.setText("%.2f °C" % temp.x86_pkg(scale="celsius"))
 
@@ -501,6 +503,8 @@ class SetForm(QtWidgets.QMainWindow):
 
     def check_ptt_for_state_changed(self):
         self.config.set("Partitions", "check_for", str(self.ui.checkBoxPttFor.isChecked()))
+
+
 
 
     # </editor-fold>

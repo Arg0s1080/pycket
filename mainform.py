@@ -39,11 +39,11 @@ class MainForm(SetForm):
             self.delay = ((self.ui.spinBoxCountdownHours.value() * 3600) +
                           (self.ui.spinBoxCountdownMinutes.value() * 60) +
                           self.ui.spinBoxCountdownSeconds.value())
-            self.ui.progressBar.setMaximum(self.delay)  # TODO: necessary?
+            self.ui.progressBar.setMaximum(self.delay)
             # Debug
             print("Debug Countdown:", self.delay)
         elif self.condition == Condition.SystemLoad: ###########################################
-            self.cpu_load2 = cpu.Load()
+            self.cpu_load = cpu.Load()
             self.alarm_count = 0
             self.title = self.ui.labelSystemLoadTitle.text()
             self.index = self.ui.comboBoxSystemLoad.currentIndex()
@@ -133,7 +133,7 @@ class MainForm(SetForm):
             elif self.ui.radioButtonSystemLoadCPUFrequency.isChecked():
                 self.value = cpu.frequency_percent(False)
             elif self.ui.radioButtonSystemLoadCPU.isChecked():
-                self.value = self.cpu_load2.next_value()
+                self.value = self.cpu_load.next_value()
             else:  # Temp
                 self.value = temp.max_val("celsius")
                 self.scale = "°C"
@@ -293,6 +293,17 @@ class MainForm(SetForm):
         if execute_:
             execute(self.action)
 
+    def set_time_edit(self, dt: QDateTime, secs: int):
+        self.ui.dateTimeEditAtTime.setDateTime(dt.addSecs(secs))
+
+    def pushbutton_at_time_now_clicked(self):
+        self.set_time_edit(QDateTime.currentDateTime(), 60)
+
+    def pushbutton_at_time_plus_1h(self):
+        self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), 3600)
+
+    def pushbutton_at_time_minus_1h(self):
+        self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), -3600)
 
 
 if __name__ == '__main__':
