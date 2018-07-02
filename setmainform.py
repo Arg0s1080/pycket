@@ -13,18 +13,22 @@ from configparser import ConfigParser
 from ui.main_window import *
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import QDateTime, QTimer
+from configform import ConfigForm
 from enums import *
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
+from statux.system import session_id
 
 
 config_file = join(getcwd(), "config.cfg")
 
 
-class SetForm(QtWidgets.QMainWindow):
+class SetMainForm(QtWidgets.QMainWindow):
     # <editor-fold desc=" Init and close "
     def __init__(self):
-        QtWidgets.QWidget.__init__(self, None)
+        #QtWidgets.QWidget.__init__(self, None)
+        super().__init__()
+
         self.ui = Ui_SetForm()
         self.ui.setupUi(self)
 
@@ -65,6 +69,7 @@ class SetForm(QtWidgets.QMainWindow):
 
         self.config = ConfigParser()
         self.set_config()
+        self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, False)
         self.set_sys_load()
 
         # Section: Events
@@ -116,17 +121,25 @@ class SetForm(QtWidgets.QMainWindow):
         self.ui.spinBoxPttIOPS.valueChanged.connect(self.spin_ptt_iops_value_changed)
         self.ui.spinBoxPttMinutes.valueChanged.connect(self.spin_ptt_minutes_value_changed)
         self.ui.checkBoxPttFor.stateChanged.connect(self.check_ptt_for_state_changed)
-
+        self.ui.actionSettings.triggered.connect(self.action_settings_triggered)
         self.timer_mon.timeout.connect(self.timer_mon_tick)
         self.timer.timeout.connect(self.timer_tick)
+
+        self.settings = ConfigForm()
+
 
     # TEST
     def test_event(self, event):
         print("TEST EVENT")
+        print(type(QtCore.Qt.WindowStaysOnTopHint))
+        application.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
 
     def set_config(self):
         if exists(config_file):
             self.config.read(config_file)
+
+            # Section: General
+            self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, self.config.getboolean("General", "on_top"))
 
             # Section: Main
             self.action = Action[self.config.get("Main", "actions")]
@@ -242,6 +255,8 @@ class SetForm(QtWidgets.QMainWindow):
             if not exists(folder):
                 makedirs(folder)
 
+            self.config.add_section("General")
+            self.config.set("General", "on_top", "False")
             self.config.add_section("Main")
             self.config.set("Main", "actions", "Shutdown")
             self.config.set("Main", "conditions", "AtTime")
@@ -292,6 +307,14 @@ class SetForm(QtWidgets.QMainWindow):
             self.config.set("Partitions", "spin_iops_unit", "0")
             self.config.set("Partitions", "spin_minutes", "0")
             self.config.set("Partitions", "check_for", "False")
+            self.config.add_section("Commands")
+            self.config.set("Commands", "shutdown", "systemctl poweroff")
+            self.config.set("Commands", "reboot", "systemctl reboot")
+            self.config.set("Commands", "close_session", "%s%d" % ("loginctl terminate-session", session_id()))
+            self.config.set("Commands", "lockscreen", "%s%d" % ("loginctl lock-session", session_id()))
+            self.config.set("Commands", "suspend", "systemctl suspend")
+            self.config.set("Commands", "hibernate", "systemctl hibernate")
+            self.config.set("Commands", "execute", "")
 
     def set_sys_load(self):
         self.timer_mon.start(1000)
@@ -505,8 +528,6 @@ class SetForm(QtWidgets.QMainWindow):
         self.config.set("Partitions", "check_for", str(self.ui.checkBoxPttFor.isChecked()))
 
 
-
-
     # </editor-fold>
 
     @staticmethod
@@ -565,6 +586,7 @@ class SetForm(QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    application = SetForm()
+    application = SetMainForm()
     application.show()
+
     sys.exit(app.exec_())
