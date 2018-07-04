@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SetForm</class>
- <widget class="QMainWindow" name="SetForm">
+ <class>SetMainForm</class>
+ <widget class="QMainWindow" name="SetMainForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SetForm</string>
+   <string>Pycket</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -116,7 +116,7 @@
                 <locale language="English" country="UnitedStates"/>
                </property>
                <property name="text">
-                <string>&amp;Shutdown</string>
+                <string>S&amp;hutdown</string>
                </property>
                <property name="checked">
                 <bool>true</bool>
@@ -367,7 +367,7 @@ background-color: rgb(0, 85, 0);</string>
              <enum>QTabWidget::Rounded</enum>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideNone</enum>
@@ -913,7 +913,7 @@ background-color: rgb(0, 85, 0);</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>CPU Temp (&amp;ºC)</string>
+                   <string>CPU Temp (degrees)</string>
                   </property>
                   <attribute name="buttonGroup">
                    <string notr="true">buttonGroupSystemLoad</string>
@@ -2373,15 +2373,15 @@ background-color: rgb(0, 85, 0);</string>
     <addaction name="actionExecute"/>
     <addaction name="actionSendMail"/>
    </widget>
-   <widget class="QMenu" name="menuHelp">
+   <widget class="QMenu" name="menuSee">
     <property name="title">
-     <string>&amp;Help</string>
+     <string>&amp;See</string>
     </property>
-    <addaction name="actionAbout"/>
+    <addaction name="actionAlways_on_top"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuConfig"/>
-   <addaction name="menuHelp"/>
+   <addaction name="menuSee"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionClose">
@@ -2401,7 +2401,7 @@ background-color: rgb(0, 85, 0);</string>
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>&amp;About</string>
+    <string>Style</string>
    </property>
   </action>
   <action name="actionExecute">
@@ -2414,15 +2414,84 @@ background-color: rgb(0, 85, 0);</string>
     <string>Send &amp;Mail</string>
    </property>
   </action>
+  <action name="actionAlways_on_top">
+   <property name="text">
+    <string>&amp;Always on top</string>
+   </property>
+  </action>
  </widget>
+ <tabstops>
+  <tabstop>pushButtonStart</tabstop>
+  <tabstop>pushButtonCancel</tabstop>
+  <tabstop>radioButtonShutdown</tabstop>
+  <tabstop>radioButtonReboot</tabstop>
+  <tabstop>radioButtonCloseSesion</tabstop>
+  <tabstop>radioButtonLock</tabstop>
+  <tabstop>radioButtonSuspend</tabstop>
+  <tabstop>radioButtonHibernate</tabstop>
+  <tabstop>radioButtonNotify</tabstop>
+  <tabstop>radioButtonExecute</tabstop>
+  <tabstop>radioButtonSendMail</tabstop>
+  <tabstop>pushButtonAtTimePlus1H</tabstop>
+  <tabstop>pushButtonAtTimeNow</tabstop>
+  <tabstop>spinBoxCountdownHours</tabstop>
+  <tabstop>spinBoxCountdownMinutes</tabstop>
+  <tabstop>spinBoxCountdownSeconds</tabstop>
+  <tabstop>radioButtonSystemLoadRAMUsed</tabstop>
+  <tabstop>radioButtonSystemLoadCPUFrequency</tabstop>
+  <tabstop>radioButtonSystemLoadCPU</tabstop>
+  <tabstop>radioButtonSystemLoadCPUTemp</tabstop>
+  <tabstop>comboBoxSystemLoad</tabstop>
+  <tabstop>spinBoxSystemLoadUnit</tabstop>
+  <tabstop>checkBoxSystemLoadFor</tabstop>
+  <tabstop>spinBoxSystemLoadMinutes</tabstop>
+  <tabstop>comboBoxNetworkInterface</tabstop>
+  <tabstop>radioButtonNetworkUploadDownloadSpeed</tabstop>
+  <tabstop>radioButtonNetworkIsUpDownloading</tabstop>
+  <tabstop>comboBoxNetworkSpeed</tabstop>
+  <tabstop>comboBoxNetworkFinished</tabstop>
+  <tabstop>comboBoxNetworkMoreLess</tabstop>
+  <tabstop>spinBoxNetworkUnitSpeed</tabstop>
+  <tabstop>comboBoxNetworkUnitSpeed</tabstop>
+  <tabstop>checkBoxNetworkFor</tabstop>
+  <tabstop>spinBoxNetworkMinutes</tabstop>
+  <tabstop>spinBoxNetworkUnit</tabstop>
+  <tabstop>comboBoxNetworkUnit</tabstop>
+  <tabstop>radioButtonPowerIs</tabstop>
+  <tabstop>radioButtonPowerTheBatteryHas</tabstop>
+  <tabstop>comboBoxPowerACDC</tabstop>
+  <tabstop>checkBoxPowerFor</tabstop>
+  <tabstop>spinBoxPowerMinutes</tabstop>
+  <tabstop>comboBoxPowerMoreLess</tabstop>
+  <tabstop>radioButtonPowerBatteryTime</tabstop>
+  <tabstop>radioButtonPowerBatteryPercent</tabstop>
+  <tabstop>timeEditPower</tabstop>
+  <tabstop>spinBoxPowerPercent</tabstop>
+  <tabstop>comboBoxPttPartitions</tabstop>
+  <tabstop>radioButtonPttSpace</tabstop>
+  <tabstop>radioButtonPttIOPS</tabstop>
+  <tabstop>comboBoxPttSpace</tabstop>
+  <tabstop>comboBoxPttSpaceLessMore</tabstop>
+  <tabstop>spinBoxPttSpace</tabstop>
+  <tabstop>comboBoxPttSpaceUnit</tabstop>
+  <tabstop>comboBoxPttIOPS</tabstop>
+  <tabstop>comboBoxPttIOPSLessMore</tabstop>
+  <tabstop>spinBoxPttIOPS</tabstop>
+  <tabstop>comboBoxPttIOPSUnit</tabstop>
+  <tabstop>checkBoxPttFor</tabstop>
+  <tabstop>spinBoxPttMinutes</tabstop>
+  <tabstop>pushButtonAtTimeMinus1H</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>dateTimeEditAtTime</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroupPowerSnd"/>
-  <buttongroup name="buttonGroupPowerMain"/>
-  <buttongroup name="buttonGroupPartitions"/>
   <buttongroup name="buttonGroupSystemLoad"/>
-  <buttongroup name="buttonGroupNetwork"/>
+  <buttongroup name="buttonGroupPowerMain"/>
   <buttongroup name="buttonGroupActions"/>
+  <buttongroup name="buttonGroupPartitions"/>
+  <buttongroup name="buttonGroupNetwork"/>
+  <buttongroup name="buttonGroupPowerSnd"/>
  </buttongroups>
 </ui>

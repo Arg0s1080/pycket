@@ -1,4 +1,4 @@
-from setform import *
+from setmainform import *
 from actions import execute
 from statux.net import *
 from statux.battery import *
@@ -6,8 +6,10 @@ from statux.disks import *
 from datetime import timedelta
 
 
-class MainForm(SetForm):
+class MainForm(SetMainForm):
     def closeEvent(self, a0: QtGui.QCloseEvent):
+        # TODO Delete
+        print("Beeeeeeppp")
         try:
             with open(config_file, "w") as file:
                 self.config.write(file)
@@ -115,6 +117,11 @@ class MainForm(SetForm):
         print("start clicked")
 
     def pushbutton_cancel_clicked(self):
+        from PyQt5.QtWidgets import QStyleFactory
+
+        print(QStyleFactory.keys())  # Listar estilos disponibles
+        app.setStyle("Windows")
+        input("??")
         self.set_finish(False)
 
     def timer_tick(self):
@@ -129,16 +136,16 @@ class MainForm(SetForm):
         elif self.condition == Condition.SystemLoad:  #########################################################
             self.scale = "%"
             if self.ui.radioButtonSystemLoadRAMUsed.isChecked():
-                self.value = ram.used_percent()
+                value = ram.used_percent()
             elif self.ui.radioButtonSystemLoadCPUFrequency.isChecked():
-                self.value = cpu.frequency_percent(False)
+                value = cpu.frequency_percent(False)
             elif self.ui.radioButtonSystemLoadCPU.isChecked():
-                self.value = self.cpu_load.next_value()
+                value = self.cpu_load.next_value()
             else:  # Temp
-                self.value = temp.max_val("celsius")
-                self.scale = "°C"
-            self.ui.labelData.setText("%s %.2f %s" % (self.title, self.value, self.scale))
-            if (self.index == 0 and self.value < self.spin_value) or (self.index == 1 and self.value > self.spin_value):
+                value = temp.max_val(self.temp_scale)
+                self.scale = self.temp_symbol
+            self.ui.labelData.setText("%s %.2f %s" % (self.title, value, self.scale))
+            if (self.index == 0 and value < self.spin_value) or (self.index == 1 and value > self.spin_value):
                 if self.check_for:
                     self.alarm_count += 1
                     self.set_progressbar(self.alarm_count, self.minutes)  # TODO: * 60
@@ -150,11 +157,11 @@ class MainForm(SetForm):
                 self.alarm_count = 0
                 self.set_progressbar(0, 1)
         elif self.condition == Condition.Network: ############################################################
-            self.value = self.get_net_value() if not self.index_radio else self.get_net_value() - self.count_bytes
-            self.ui.labelData.setText("%s: %s %s" % (self.title, self.value, self.scale))
+            value = self.get_net_value() if not self.index_radio else self.get_net_value() - self.count_bytes
+            self.ui.labelData.setText("%s: %s %s" % (self.title, value, self.scale))
             if self.index_radio == 0:  # Network speed
-                if ((self.index == 0 and self.value < self.spin_value)
-                        or (self.index == 1 and self.value > self.spin_value)):
+                if ((self.index == 0 and value < self.spin_value)
+                        or (self.index == 1 and value > self.spin_value)):
                     if self.ui.checkBoxNetworkFor.isChecked():
                         self.alarm_count += 1
                         self.set_progressbar(self.alarm_count, self.minutes)  # TODO * 60
@@ -166,7 +173,7 @@ class MainForm(SetForm):
                     self.alarm_count = 0  # set 0
                     self.set_progressbar(0, 1)
             else:  # is finished download/upload
-                if self.value >= self.spin_value:
+                if value >= self.spin_value:
                     self.set_finish(True)
         elif self.condition == Condition.Power:  #################################################################
             if self.index_radio == 0:
@@ -274,7 +281,7 @@ class MainForm(SetForm):
         self.set_timer(0, self.timer)
         self.delay = None
         self.scale = None
-        self.value = None
+        # self.value = None  # set in timer
         self.index = None
         # self.net_interface = None  # set in event
         self.index_radio = None
@@ -300,11 +307,15 @@ class MainForm(SetForm):
         self.set_time_edit(QDateTime.currentDateTime(), 60)
 
     def pushbutton_at_time_plus_1h(self):
+        self.config.read(config_file)
         self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), 3600)
 
     def pushbutton_at_time_minus_1h(self):
         self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), -3600)
 
+    def action_settings_triggered(self):
+        if self.settings.exec_() == 0:
+            self.config.read(config_file)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
