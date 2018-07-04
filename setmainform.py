@@ -11,7 +11,7 @@ from os import makedirs, getcwd
 from os.path import join, exists
 from configparser import ConfigParser
 from ui.main_window import *
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QStyleFactory
 from PyQt5.QtCore import QDateTime, QTimer
 from configform import ConfigForm
 from enums import *
@@ -29,7 +29,7 @@ class SetMainForm(QtWidgets.QMainWindow):
         #QtWidgets.QWidget.__init__(self, None)
         super().__init__()
 
-        self.ui = Ui_SetForm()
+        self.ui = Ui_SetMainForm()
         self.ui.setupUi(self)
 
         # Section: Widgets parameters
@@ -62,6 +62,8 @@ class SetMainForm(QtWidgets.QMainWindow):
         self.alarm_count_ptt = None  # to use only one alarm
         self.count_bytes = None
         self.unit_panel = None
+        self.temp_scale = None
+        self.temp_symbol = None
 
         # Section: Declarations
         self.timer_mon = QTimer()   # SysLoad TabWidget monitoring
@@ -139,7 +141,13 @@ class SetMainForm(QtWidgets.QMainWindow):
             self.config.read(config_file)
 
             # Section: General
-            self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, self.config.getboolean("General", "on_top"))
+            # self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, self.config.getboolean("General", "on_top"))
+            self.setStyle(QtWidgets.QApplication.setStyle(self.config.get("General", "qstyle")))
+            self.ui.dateTimeEditAtTime.setDisplayFormat(self.config.get("General", "date_time_format"))
+            scale = self.config.get("General", "temp_scale")
+            self.temp_scale = scale.lower()
+            self.temp_symbol = "%s%s" % (u"\u00B0", scale[0])
+            self.ui.progressBar.setTextVisible(self.config.getboolean("General", "progressbar_text"))
 
             # Section: Main
             self.action = Action[self.config.get("Main", "actions")]
@@ -217,6 +225,7 @@ class SetMainForm(QtWidgets.QMainWindow):
             self.ui.spinBoxNetworkMinutes.setValue(self.config.getint("Network", "spin_minutes"))
             self.ui.spinBoxNetworkUnit.setValue(self.config.getint("Network", "spin_unit"))
 
+
             # Section Power
             if self.config.getboolean("Power", "group_index_1"):
                 self.ui.radioButtonPowerTheBatteryHas.setChecked(True)
@@ -250,13 +259,17 @@ class SetMainForm(QtWidgets.QMainWindow):
             self.ui.spinBoxPttMinutes.setValue(self.config.getint("Partitions", "spin_minutes"))
             self.ui.checkBoxPttFor.setChecked(self.config.getboolean("Partitions", "check_for"))
 
+
         else:
             folder = config_file.replace("config.cfg", "")
             if not exists(folder):
                 makedirs(folder)
 
             self.config.add_section("General")
-            self.config.set("General", "on_top", "False")
+            self.config.set("General", "qstyle", QStyleFactory.keys()[0])
+            self.config.set("General", "temp_scale", "Celsius")
+            self.config.set("General", "date_time_format", "dd/MM/yyyy - HH:mm:ss")
+            self.config.set("General", "progressbar_text", "False")
             self.config.add_section("Main")
             self.config.set("Main", "actions", "Shutdown")
             self.config.set("Main", "conditions", "AtTime")
@@ -310,11 +323,14 @@ class SetMainForm(QtWidgets.QMainWindow):
             self.config.add_section("Commands")
             self.config.set("Commands", "shutdown", "systemctl poweroff")
             self.config.set("Commands", "reboot", "systemctl reboot")
-            self.config.set("Commands", "close_session", "%s%d" % ("loginctl terminate-session", session_id()))
-            self.config.set("Commands", "lockscreen", "%s%d" % ("loginctl lock-session", session_id()))
+            self.config.set("Commands", "close_session", "%s %d" % ("loginctl terminate-session", session_id()))
+            self.config.set("Commands", "lock_screen", "%s %d" % ("loginctl lock-session", session_id()))
             self.config.set("Commands", "suspend", "systemctl suspend")
             self.config.set("Commands", "hibernate", "systemctl hibernate")
             self.config.set("Commands", "execute", "")
+
+            with open(config_file, "w") as file:
+                self.config.write(file)
 
     def set_sys_load(self):
         self.timer_mon.start(1000)
@@ -324,11 +340,13 @@ class SetMainForm(QtWidgets.QMainWindow):
         self.ui.labelSystemLoadRAMUsed.setText("%.2f %%" % ram.used_percent())
         self.ui.labelSystemLoadCPUFrequency.setText("%.2f %%" % cpu.frequency_percent(False))
         self.ui.labelSystemLoadCPULoad.setText("%.2f %%" % self.cpu_mon.next_value())
-        self.ui.labelSystemLoadCPUTemp.setText("%.2f °C" % temp.max_val("celsius"))
+        self.ui.labelSystemLoadCPUTemp.setText("%.2f %s" % (temp.max_val(self.temp_scale), self.temp_symbol))
         # self.ui.labelCPUTemp.setText("%.2f °C" % temp.x86_pkg(scale="celsius"))
 
     def closeEvent(self, a0: QtGui.QCloseEvent):
         try:
+            # TODO DELETE:
+            print("BeeeEEP")
             with open(config_file, "w") as file:
                 self.config.write(file)
 
@@ -403,7 +421,8 @@ class SetMainForm(QtWidgets.QMainWindow):
         else:
             index = 3
             title = get_title(self.ui.radioButtonSystemLoadCPUTemp)
-        self.ui.labelSystemLoadUnitSymbol.setText("%" if not index == 3 else "°C")
+        self.set_spin_sl_unit()
+        self.ui.labelSystemLoadUnitSymbol.setText("%" if not index == 3 else self.temp_symbol)
         self.ui.labelSystemLoadTitle.setText(title)
         self.config.set("SystemLoad", "group_index", str(index))
 
@@ -582,6 +601,27 @@ class SetMainForm(QtWidgets.QMainWindow):
         if ptt not in mounted:
             return self.msg_dlg("%s is not mounted yet" % ptt, "Do you want continue?", QMessageBox.Yes |
                                 QMessageBox.No, details="Current mounted partitions:\n%s" % "\n".join(mounted))
+
+    def set_spin_sl_unit(self):
+        if self.ui.radioButtonSystemLoadCPUTemp.isChecked():
+            self.ui.labelSystemLoadUnitSymbol.setText(self.temp_symbol)
+            if self.temp_scale == "celsius":
+                maximum = 100
+                minimum = 0
+            elif self.temp_scale == "fahrenheit":
+                maximum = 212
+                minimum = 32
+            elif self.temp_scale == "kelvin":
+                maximum = 374
+                minimum = 273
+            else:  # rankine
+                maximum = 672
+                minimum = 491
+        else:
+            maximum = 100
+            minimum = 0
+        self.ui.spinBoxSystemLoadUnit.setMaximum(maximum)
+        self.ui.spinBoxSystemLoadUnit.setMinimum(minimum)
 
 
 if __name__ == "__main__":
