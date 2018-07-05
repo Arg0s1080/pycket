@@ -317,6 +317,7 @@ class MainForm(SetMainForm):
         if self.settings.exec_() == 0:
             self.config.read(config_file)
 
+
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     application = MainForm()
