@@ -15,13 +15,14 @@ class Encrypt(Enum):
 
 
 class SendMail:
-    def __init__(self, smpt_server: str, port: int, from_: str, password: str, to: str, subject="", body="",
-                 attachment=None, encrypt=Encrypt.STARTTSL):
+    def __init__(self, smpt_server: str, port: int, from_address: str, password: str, to: str,
+                 from_alias="", subject="", body="", attachment=None, encrypt=Encrypt.STARTTSL):
         self.smpt_server = smpt_server
         self.port = port
-        self.from_ = from_
+        self.from_ = from_address
         self.password = password
         self.to = to
+        self.from_alias = from_alias
         self.subject = subject
         self.body = body
         self.attachment = attachment
@@ -29,10 +30,10 @@ class SendMail:
 
     def send(self):
         msg = MIMEMultipart()
-        msg['From'] = self.from_
-        msg['To'] = self.to
-        msg['Subject'] = self.subject
-        msg.attach(MIMEText(self.body, 'plain'))
+        msg["From"] = self.from_alias
+        msg["To"] = self.to
+        msg["Subject"] = self.subject
+        msg.attach(MIMEText(self.body, "plain"))
 
         if self.attachment is not None:
             if isfile(self.attachment):
@@ -61,14 +62,13 @@ class SendMail:
         server.sendmail(self.from_, self.to, mail)
         server.quit()
 
-"""
+
 mail_ = SendMail(smpt_server="smtp.gmail.com", port=587,
-                 from_="ivan.rincon76@gmail.com",
-                 password="", # GMAIL App password
-                 to="ivan.rincon76@gmail.com",
-                 subject="ésto éŝ ötrà pruebä ññ",
+                 from_address="ivan.rincon76@gmail.com",
+                 password="",  # GMAIL App password
+                 to="ivan.rincon@ymail.com",
+                 subject="prueba a yahoo 2",
                  body="únó dòŝ trêŝ",
                  attachment="/home/ivan/Escritorio/tabla.ods",
                  encrypt=Encrypt.STARTTSL)
 mail_.send()
-"""
