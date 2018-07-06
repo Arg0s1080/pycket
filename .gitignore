@@ -1,16 +1,27 @@
+# Hidden folders
 .idea/
+/.directory
+
+# Personal notes and test files
 Notes
-config.cfg
 /test.py
 /test1.py
 /test2.py
 /test3.py
-ui/compile_ui.py
-ui/pycket.ui.old
-/.directory
+
+# Config files
+config.cfg
+mail.cfg
+
+# Symbolic links to other projects
 /statux/
 ProgramatorCS/
 
+# PyQt ui's backups & compilation scripts
+ui/compile_ui.py
+/ui/*.ui.old*
+
+# Cache & others
 __pycache__/
 *$py.class
 
@@ -42,5 +53,3 @@ ENV/
 env.bak/
 venv.bak/7
 
-/ui/pycket.ui.OLD2
-/ui/*.ui.old

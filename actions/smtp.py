@@ -65,7 +65,7 @@ class SendMail:
 
 mail_ = SendMail(smpt_server="smtp.gmail.com", port=587,
                  from_address="ivan.rincon76@gmail.com",
-                 password="",  # GMAIL App password
+                 password="ofocabanisphhbbx",  # GMAIL App password
                  to="ivan.rincon@ymail.com",
                  subject="prueba a yahoo 2",
                  body="únó dòŝ trêŝ",
