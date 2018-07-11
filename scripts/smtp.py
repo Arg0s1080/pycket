@@ -72,3 +72,7 @@ mail_ = SendMail(smpt_server="smtp.gmail.com", port=587,
                  attachment="/home/ivan/Escritorio/tabla.ods",
                  encrypt=Encrypt.STARTTSL)
 mail_.send()
+
+# TSL 587
+# SSL 465
+# ANY 25
