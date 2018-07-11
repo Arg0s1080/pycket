@@ -1,7 +1,7 @@
 from ui.mail_window import *
 from PyQt5.QtWidgets import QDialog
 from configparser import ConfigParser
-from os.path import join, exists
+from os.path import join, exists, dirname
 from os import getcwd, makedirs
 import sys
 
@@ -15,6 +15,19 @@ class MailForm(QDialog):
         self.ui.setupUi(self)
         self.config = ConfigParser()
         self.set_config()
+        self.ui.lineEditFrom.textChanged.connect(self.line_edit_from_text_changed)
+        self.ui.lineEditAlias.textChanged.connect(self.line_edit_alias_text_changed)
+        self.ui.lineEditServer.textChanged.connect(self.line_edit_server_text_changed)
+        self.ui.lineEditPassword.textChanged.connect(self.line_edit_password_text_changed)
+        self.ui.lineEditTo.textChanged.connect(self.line_edit_to_text_changed)
+        self.ui.lineEditSubject.textChanged.connect(self.line_edit_subject_text_changed)
+        self.ui.plainTextEditBody.textChanged.connect(self.plain_text_edit_body_text_changed)
+        self.ui.comboBoxEncrypt.currentIndexChanged.connect(self.combobox_encrypt_current_index_changed)
+        self.ui.spinBoxPort.valueChanged.connect(self.spinbox_port_value_changed)
+        self.ui.pushButtonAttach.clicked.connect(self.pushbutton_attach_clicked)
+        self.ui.pushButtonClose.clicked.connect(self.pushbutton_close_clicked)
+        self.ui.pushButtonOk.clicked.connect(self.pushbutton_ok_clicked)
+        self.ui.pushButtonTest.clicked.connect(self.pushbutton_test_clicked)
 
     def set_config(self):
         if exists(config_file):
@@ -29,7 +42,7 @@ class MailForm(QDialog):
             self.ui.lineEditSubject.setText(self.config.get("Encrypted", "subject"))
             self.ui.plainTextEditBody.setPlainText(self.config.get("Encrypted", "body"))
         else:
-            folder = config_file.split("/")[-1]
+            folder = dirname(config_file)
             if not exists(folder):
                 makedirs(folder)
             self.config.add_section("General")
@@ -45,8 +58,72 @@ class MailForm(QDialog):
             self.config.set("Encrypted", "body", "")
             self.config.set("Encrypted", "attachment", "")
 
+            with open(config_file, "w") as file:
+                self.config.write(file)
 
+    def closeEvent(self, a0: QtGui.QCloseEvent):
+        try:
+            with open(config_file, "w") as file:
+                self.config.write(file)
 
+        except Exception as ex:
+            err = ""
+            for arg in sys.exc_info():
+                err += "! %s\n" % str(arg)
+            #self.msg_dlg("An unexpected error occurred:", ex.args[1], QMessageBox.Ok,
+            #             QMessageBox.Warning, err)
+            print(err)
+
+        finally:
+            application.close()
+            print("Goodbye!")
+
+    def line_edit_from_text_changed(self):
+        self.config.set("Encrypted", "from", self.ui.lineEditFrom.text())
+
+    def line_edit_alias_text_changed(self, event):
+        self.config.set("Encrypted", "alias", self.ui.lineEditAlias.text())
+
+    def line_edit_server_text_changed(self, event):
+        self.config.set("General", "server", self.ui.lineEditServer.text())
+
+    def line_edit_password_text_changed(self, event):
+        self.config.set("Encrypted", "password", self.ui.lineEditPassword.text())
+
+    def line_edit_to_text_changed(self, event):
+        self.config.set("Encrypted", "to", self.ui.lineEditTo.text())
+
+    def line_edit_subject_text_changed(self, event):
+        self.config.set("Encrypted", "subject", self.ui.lineEditSubject.text())
+
+    def plain_text_edit_body_text_changed(self, event):
+        self.config.set("Encrypted", "body", self.ui.plainTextEditBody.toPlainText())
+
+    def combobox_encrypt_current_index_changed(self, event):
+        encrypt = self.ui.comboBoxEncrypt.currentText()
+        if encrypt == "TSL":
+            port = 587
+        elif encrypt == "SSL":
+            port = 465
+        else:
+            port = 25
+        self.ui.spinBoxPort.setValue(port)
+        self.config.set("General", "encryption", self.ui.comboBoxEncrypt.currentText())
+
+    def spinbox_port_value_changed(self):
+        self.config.set("General", "port", str(self.ui.spinBoxPort.value()))
+
+    def pushbutton_attach_clicked(self):
+        pass
+
+    def pushbutton_close_clicked(self):
+        pass
+
+    def pushbutton_ok_clicked(self):
+        pass
+
+    def pushbutton_test_clicked(self):
+        pass
 
 
 
