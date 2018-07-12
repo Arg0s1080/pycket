@@ -10,6 +10,7 @@ import sys
 
 config_file = join(getcwd(), "mail.cfg")
 
+
 class MailForm(QDialog):
     def __init__(self):
         super().__init__()
@@ -46,7 +47,8 @@ class MailForm(QDialog):
             if pw is not None:
                 self.aes = AESManaged(pw)
                 self.config.read(config_file)
-                if self.aes.decrypt(self.config.get("Encrypted", "control")) == self.control:
+                control = self.aes.decrypt(self.config.get("Encrypted", "control"))
+                if control == self.control and control != -1:
                     self.ui.lineEditFrom.setText(self.aes.decrypt(self.config.get("Encrypted", "from")))
                     self.ui.lineEditAlias.setText(self.aes.decrypt(self.config.get("Encrypted", "alias")))
                     self.ui.lineEditServer.setText(self.config.get("General", "server"))
@@ -60,31 +62,40 @@ class MailForm(QDialog):
                     self.count -= 1
                     self.msg_dlg("Password incorrect", "Attempts: %d" % self.count)
                     self.set_config()
+            else:
+                exit(0)
 
         else:
             folder = dirname(config_file)
             if not exists(folder):
                 makedirs(folder)
-            pw = self.pw_dlg("Enter a new password")
-            self.aes = AESManaged(pw)
-            self.config.add_section("General")
-            self.config.set("General", "server", "smtp.gmail.com")
-            self.config.set("General", "encryption", "TSL")
-            self.config.set("General", "port", "587")
-            self.config.add_section("Encrypted")
-            empty = self.aes.encrypt("")
-            self.config.set("Encrypted", "control", self.aes.encrypt(self.control))
-            self.config.set("Encrypted", "from", empty)
-            self.config.set("Encrypted", "alias", empty)
-            self.config.set("Encrypted", "password", empty)
-            self.config.set("Encrypted", "to", empty)
-            self.config.set("Encrypted", "subject", empty)
-            self.config.set("Encrypted", "body", empty)
-            self.config.set("Encrypted", "attachment", empty)
+            pw = self.pw_dlg("Enter a new password:\n\nThis password will not be stored.\n"
+                             "If this is lost or forgotten, the data can not be recovered")
+            if pw is not None:
+                if pw == self.pw_dlg("Type the password again"):
+                    self.aes = AESManaged(pw)
+                    self.config.add_section("General")
+                    self.config.set("General", "server", "smtp.gmail.com")
+                    self.config.set("General", "encryption", "TSL")
+                    self.config.set("General", "port", "587")
+                    self.config.add_section("Encrypted")
+                    empty = self.aes.encrypt("")
+                    self.config.set("Encrypted", "control", self.aes.encrypt(self.control))
+                    self.config.set("Encrypted", "from", empty)
+                    self.config.set("Encrypted", "alias", empty)
+                    self.config.set("Encrypted", "password", empty)
+                    self.config.set("Encrypted", "to", empty)
+                    self.config.set("Encrypted", "subject", empty)
+                    self.config.set("Encrypted", "body", empty)
+                    self.config.set("Encrypted", "attachment", empty)
 
-            with open(config_file, "w") as file:
-                self.config.write(file)
-
+                    with open(config_file, "w") as file:
+                        self.config.write(file)
+                else:
+                    self.msg_dlg("Both string do not match", icon=QMessageBox.Warning)
+                    self.set_config()
+            else:
+                exit(0)
     def closeEvent(self, a0: QtGui.QCloseEvent):
         try:
             with open(config_file, "w") as file:
