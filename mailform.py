@@ -1,7 +1,8 @@
 from ui.mail_window import *
-from PyQt5.QtWidgets import QDialog, QInputDialog, QMessageBox, QLineEdit
+from PyQt5.QtWidgets import QDialog, QInputDialog, QMessageBox, QLineEdit, QFileDialog
+from PyQt5.QtCore import QStringListModel
 from configparser import ConfigParser
-from os.path import join, exists, dirname
+from os.path import join, exists, dirname, expanduser
 from os import getcwd, makedirs, remove
 from scripts.aes import AESManaged, sha3_256
 from math import pi, e
@@ -18,7 +19,8 @@ class MailForm(QDialog):
         self.ui.setupUi(self)
         self.config = ConfigParser()
         self.control = "%.15f%s%.14f%s" % (pi, "ck", e, "t")
-        self.count = 3
+        self.attempts = 3
+        self.cancel = None
         self.aes = None
         self.set_config()
         self.ui.lineEditFrom.textChanged.connect(self.line_edit_from_text_changed)
@@ -31,13 +33,15 @@ class MailForm(QDialog):
         self.ui.comboBoxEncrypt.currentIndexChanged.connect(self.combobox_encrypt_current_index_changed)
         self.ui.spinBoxPort.valueChanged.connect(self.spinbox_port_value_changed)
         self.ui.pushButtonAttach.clicked.connect(self.pushbutton_attach_clicked)
-        self.ui.pushButtonClose.clicked.connect(self.pushbutton_close_clicked)
+        self.ui.pushButtonCancel.clicked.connect(self.pushbutton_cancel_clicked)
         self.ui.pushButtonOk.clicked.connect(self.pushbutton_ok_clicked)
         self.ui.pushButtonTest.clicked.connect(self.pushbutton_test_clicked)
 
+        print(self.geometry())
+
     def set_config(self):
         if exists(config_file):
-            if self.count < 1:
+            if self.attempts < 1:
                 remove(config_file)
                 msg = "Bad Password"
                 self.msg_dlg(msg, "The data has been deleted", icon=QMessageBox.Critical,
@@ -49,6 +53,11 @@ class MailForm(QDialog):
                 self.config.read(config_file)
                 control = self.aes.decrypt(self.config.get("Encrypted", "control"))
                 if control == self.control and control != -1:
+                    x = self.config.getint("Geometry", "x")
+                    y = self.config.getint("Geometry", "y")
+                    width = self.config.getint("Geometry", "width")
+                    height = self.config.getint("Geometry", "height")
+                    self.setGeometry(x, y, width, height)
                     self.ui.lineEditFrom.setText(self.aes.decrypt(self.config.get("Encrypted", "from")))
                     self.ui.lineEditAlias.setText(self.aes.decrypt(self.config.get("Encrypted", "alias")))
                     self.ui.lineEditServer.setText(self.config.get("General", "server"))
@@ -58,9 +67,10 @@ class MailForm(QDialog):
                     self.ui.lineEditTo.setText(self.aes.decrypt(self.config.get("Encrypted", "to")))
                     self.ui.lineEditSubject.setText(self.aes.decrypt(self.config.get("Encrypted", "subject")))
                     self.ui.plainTextEditBody.setPlainText(self.aes.decrypt(self.config.get("Encrypted", "body")))
+
                 else:
-                    self.count -= 1
-                    self.msg_dlg("Password incorrect", "Attempts: %d" % self.count)
+                    self.attempts -= 1
+                    self.msg_dlg("Password incorrect", "Attempts: %d" % self.attempts)
                     self.set_config()
             else:
                 exit(0)
@@ -74,6 +84,11 @@ class MailForm(QDialog):
             if pw is not None:
                 if pw == self.pw_dlg("Type the password again"):
                     self.aes = AESManaged(pw)
+                    self.config.add_section("Geometry")
+                    self.config.set("Geometry", "x", "0")
+                    self.config.set("Geometry", "y", "0")
+                    self.config.set("Geometry", "width", "769")
+                    self.config.set("Geometry", "height", "514")
                     self.config.add_section("General")
                     self.config.set("General", "server", "smtp.gmail.com")
                     self.config.set("General", "encryption", "TSL")
@@ -96,20 +111,18 @@ class MailForm(QDialog):
                     self.set_config()
             else:
                 exit(0)
+
     def closeEvent(self, a0: QtGui.QCloseEvent):
-        try:
+        geometry = self.geometry()
+        self.config.set("Geometry", "x", str(geometry.x()))
+        self.config.set("Geometry", "y", str(geometry.y()))
+        self.config.set("Geometry", "width", str(geometry.width()))
+        self.config.set("Geometry", "height", str(geometry.height()))
+        if not self.cancel:
             with open(config_file, "w") as file:
                 self.config.write(file)
-        except Exception as ex:
-            err = ""
-            for arg in sys.exc_info():
-                err += "! %s\n" % str(arg)
-            #self.msg_dlg("An unexpected error occurred:", ex.args[1], QMessageBox.Ok,
-            #             QMessageBox.Warning, err)
-            print(err)
-        finally:
-            application.close()
-            print("Goodbye!")
+        application.close()
+        print("Goodbye!")
 
     def line_edit_from_text_changed(self):
         self.config.set("Encrypted", "from", self.aes.encrypt(self.ui.lineEditFrom.text()))
@@ -147,21 +160,28 @@ class MailForm(QDialog):
         self.config.set("General", "port", str(self.ui.spinBoxPort.value()))
 
     def pushbutton_attach_clicked(self):
-        self.getPassword()
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        attachment = self.aes.decrypt(self.config.get("Encrypted", "attachment"))
+        directory = dirname(attachment) or expanduser("~")
+        filename, _ = QFileDialog.getOpenFileName(self, "Select a file", directory, "All Files (*)", options=options)
+        if filename:
+            self.config.set("Encrypted", "attachment", self.aes.encrypt(filename))
 
-    def pushbutton_close_clicked(self):
-        pass
+    def pushbutton_cancel_clicked(self):
+        self.cancel = True
+        application.close()
 
-    def pushbutton_ok_clicked(self):
-        pass
+    @staticmethod
+    def pushbutton_ok_clicked():
+        application.close()
 
     def pushbutton_test_clicked(self):
-        pass
-
-    def password_dialog(self):
-        text, ok = QInputDialog.getText(self, "Attention", "Password?", QLineEdit.Password)
-        if ok and text:
-            print("password=%s" % text)
+        print(self.geometry())
+        print(self.geometry().x())
+        print(self.geometry().y())
+        print(self.geometry().width())
+        print(self.geometry().center())
 
     @staticmethod
     def pw_dlg(msg):
