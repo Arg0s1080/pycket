@@ -1,6 +1,6 @@
-from ui.mail_window import *
-from PyQt5.QtWidgets import QDialog, QInputDialog, QMessageBox, QLineEdit, QFileDialog
-from PyQt5.QtCore import QStringListModel
+from ui.mail_window import Ui_MailDialog
+from PyQt5.QtWidgets import QApplication, QDialog, QInputDialog, QMessageBox, QLineEdit, QFileDialog
+from PyQt5.QtGui import QCloseEvent
 from configparser import ConfigParser
 from os.path import join, exists, dirname, expanduser
 from os import getcwd, makedirs, remove
@@ -112,7 +112,7 @@ class MailForm(QDialog):
             else:
                 exit(0)
 
-    def closeEvent(self, a0: QtGui.QCloseEvent):
+    def closeEvent(self, a0: QCloseEvent):
         geometry = self.geometry()
         self.config.set("Geometry", "x", str(geometry.x()))
         self.config.set("Geometry", "y", str(geometry.y()))
@@ -207,7 +207,7 @@ class MailForm(QDialog):
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     application = MailForm()
     application.show()
 
