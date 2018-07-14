@@ -15,10 +15,10 @@ class Encrypt(Enum):
     SSL = 2
 
 
-class SendMail:
-    def __init__(self, smpt_server: str, port: int, from_address: str, password: str, to: str, from_alias="",
+class SMPTMail:
+    def __init__(self, server: str, port: int, from_address: str, password: str, to: str, from_alias="",
                  subject="", body="", attachment=None, encrypt=Encrypt.TSL, debug_level=False):
-        self.smpt_server = smpt_server
+        self.server = server
         self.port = port
         self.from_ = from_address
         self.password = password
@@ -49,10 +49,10 @@ class SendMail:
                 raise FileNotFoundError("The attachment doesn't exist or is not a valid file", self.attachment)
 
         if self.encrypt == Encrypt.SSL:
-            server = smtplib.SMTP_SSL(self.smpt_server, self.port)
+            server = smtplib.SMTP_SSL(self.server, self.port)
             server.ehlo()
         else:
-            server = smtplib.SMTP(self.smpt_server, self.port)
+            server = smtplib.SMTP(self.server, self.port)
             if self.encrypt == Encrypt.TSL:
                 server.ehlo()
                 server.starttls()
@@ -71,8 +71,8 @@ class SendMail:
         else:
             raise ValueError("Bad email address syntax", address)
 
-
-mail_ = SendMail(smpt_server="smtp.gmail.com", port=587,
+"""
+mail_ = SMPTMail(smpt_server="smtp.gmail.com", port=587,
                  from_address="ivan.rincon76@gmail.com",
                  password="",  # GMAIL App password
                  to="xxxxxivan.rincon@ymxxxxxxail.com",
@@ -82,7 +82,7 @@ mail_ = SendMail(smpt_server="smtp.gmail.com", port=587,
                  encrypt=Encrypt.TSL,
                  debug_level=True)
 mail_.send()
-
+"""
 # TSL 587
 # SSL 465
 # ANY 25
