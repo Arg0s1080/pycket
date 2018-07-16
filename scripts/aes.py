@@ -27,3 +27,15 @@ class AESManaged:
             # Debug
             print("UnicodeDecodeError from decrypt")
             return -1
+
+
+class BadPasswordError(ValueError):
+    # TODO: Move class to other file.
+    def __init__(self, msg="", cause=""):
+        self.cause = cause
+        self.msg = msg or "Bad password"
+        self.args = (self.msg, self.cause)
+        super(BadPasswordError, self).__init__(self.msg, self.cause)
+
+    def __str__(self):
+        return str(self.args)
