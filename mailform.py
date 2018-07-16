@@ -4,8 +4,8 @@ from PyQt5.QtGui import QCloseEvent
 from configparser import ConfigParser
 from os.path import join, exists, dirname, expanduser
 from os import getcwd, makedirs, remove
-from scripts.aes import AESManaged, sha3_256
-from math import pi, e
+from scripts.aes import AESManaged, BadPasswordError, sha3_256
+from sendmail import SendMail, CONTROL
 import sys
 
 
@@ -18,7 +18,6 @@ class MailForm(QDialog):
         self.ui = Ui_MailDialog()
         self.ui.setupUi(self)
         self.config = ConfigParser()
-        self.control = "%.15f%s%.14f%s" % (pi, "ck", e, "t")
         self.attempts = 3
         self.cancel = None
         self.aes = None
@@ -51,8 +50,8 @@ class MailForm(QDialog):
             if pw is not None:
                 self.aes = AESManaged(pw)
                 self.config.read(config_file)
-                control = self.aes.decrypt(self.config.get("Encrypted", "control"))
-                if control == self.control and control != -1:
+                cntrl = self.aes.decrypt(self.config.get("Encrypted", "control"))
+                if cntrl == CONTROL and cntrl != -1:
                     x = self.config.getint("Geometry", "x")
                     y = self.config.getint("Geometry", "y")
                     width = self.config.getint("Geometry", "width")
@@ -177,11 +176,21 @@ class MailForm(QDialog):
         application.close()
 
     def pushbutton_test_clicked(self):
-        print(self.geometry())
-        print(self.geometry().x())
-        print(self.geometry().y())
-        print(self.geometry().width())
-        print(self.geometry().center())
+        pw = self.pw_dlg("Enter the password:")
+        ok = True
+        if pw is not None:
+            try:
+                mail = SendMail(pw, config_file)
+                mail.send()
+            except BadPasswordError as ex:
+                ok = False
+                self.msg_dlg(ex.msg, "Aborted operation", icon=QMessageBox.Critical)
+            except Exception as ex:
+                ok = False
+                self.msg_dlg(ex.args[0])
+            finally:
+                if ok:
+                    self.msg_dlg("Operation performed", "Please, check your mailbox")
 
     @staticmethod
     def pw_dlg(msg):
@@ -212,4 +221,3 @@ if __name__ == "__main__":
     application.show()
 
     sys.exit(app.exec_())
-
