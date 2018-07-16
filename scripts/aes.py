@@ -9,8 +9,9 @@ class AESManaged:
         self.key = sha3_256(key.encode()).digest()
 
     def encrypt(self, msg: str) -> str:
-        pad = lambda s: s + (AES.block_size - len(s) % AES.block_size) * chr(AES.block_size - len(s) % AES.block_size)
-        msg = pad(msg)
+        pad = lambda s: s + ((AES.block_size - len(s) % AES.block_size) *
+                             chr(AES.block_size - len(s) % AES.block_size)).encode()
+        msg = pad(msg.encode())
         iv = Random.new().read(16)
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
         return b64encode(iv + cipher.encrypt(msg)).decode()
@@ -21,7 +22,8 @@ class AESManaged:
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
         unpad = lambda s: s[:-ord(s[len(s) - 1:])]
         try:
-            return unpad(cipher.decrypt(encrypted_msg[AES.block_size:])).decode("utf8")
+            return unpad(cipher.decrypt(encrypted_msg[AES.block_size:])).decode()
         except UnicodeDecodeError:
+            # Debug
+            print("UnicodeDecodeError from decrypt")
             return -1
-
