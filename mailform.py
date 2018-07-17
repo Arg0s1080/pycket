@@ -8,8 +8,8 @@ from scripts.aes import AESManaged, BadPasswordError, sha3_256
 from sendmail import SendMail, CONTROL
 import sys
 
-
-config_file = join(getcwd(), "mail.cfg")
+# TODO: Delete
+from provisional import MAIL_CFG
 
 
 class MailForm(QDialog):
@@ -39,9 +39,9 @@ class MailForm(QDialog):
         print(self.geometry())
 
     def set_config(self):
-        if exists(config_file):
+        if exists(MAIL_CFG):
             if self.attempts < 1:
-                remove(config_file)
+                remove(MAIL_CFG)
                 msg = "Bad Password"
                 self.msg_dlg(msg, "The data has been deleted", icon=QMessageBox.Critical,
                              details="The maximum number of attempts has been exceeded")
@@ -49,7 +49,7 @@ class MailForm(QDialog):
             pw = self.pw_dlg("Enter the password")
             if pw is not None:
                 self.aes = AESManaged(pw)
-                self.config.read(config_file)
+                self.config.read(MAIL_CFG)
                 cntrl = self.aes.decrypt(self.config.get("Encrypted", "control"))
                 if cntrl == CONTROL and cntrl != -1:
                     x = self.config.getint("Geometry", "x")
@@ -75,7 +75,7 @@ class MailForm(QDialog):
                 exit(0)
 
         else:
-            folder = dirname(config_file)
+            folder = dirname(MAIL_CFG)
             if not exists(folder):
                 makedirs(folder)
             pw = self.pw_dlg("Enter a new password:\n\nThis password will not be stored.\n"
@@ -103,7 +103,7 @@ class MailForm(QDialog):
                     self.config.set("Encrypted", "body", empty)
                     self.config.set("Encrypted", "attachment", empty)
 
-                    with open(config_file, "w") as file:
+                    with open(MAIL_CFG, "w") as file:
                         self.config.write(file)
                 else:
                     self.msg_dlg("Both string do not match", icon=QMessageBox.Warning)
@@ -118,7 +118,7 @@ class MailForm(QDialog):
         self.config.set("Geometry", "width", str(geometry.width()))
         self.config.set("Geometry", "height", str(geometry.height()))
         if not self.cancel:
-            with open(config_file, "w") as file:
+            with open(MAIL_CFG, "w") as file:
                 self.config.write(file)
         application.close()
         print("Goodbye!")
@@ -180,7 +180,7 @@ class MailForm(QDialog):
         ok = True
         if pw is not None:
             try:
-                mail = SendMail(pw, config_file)
+                mail = SendMail(pw, MAIL_CFG)
                 mail.send()
             except BadPasswordError as ex:
                 ok = False
