@@ -8,6 +8,8 @@ Notes
 /test1.py
 /test2.py
 /test3.py
+/provisional.py
+
 
 # Config files
 config.cfg
@@ -52,4 +54,3 @@ venv/
 ENV/
 env.bak/
 venv.bak/7
-
