@@ -8,12 +8,10 @@ from datetime import timedelta
 
 class MainForm(SetMainForm):
     def closeEvent(self, a0: QtGui.QCloseEvent):
-        # TODO Delete
-        print("Beeeeeeppp")
+        self.save_geometry()
         try:
             with open(config_file, "w") as file:
                 self.config.write(file)
-
         except Exception as ex:
             err = ""
             for arg in sys.exc_info():

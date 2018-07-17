@@ -129,7 +129,6 @@ class SetMainForm(QtWidgets.QMainWindow):
 
         self.settings = ConfigForm()
 
-
     # TEST
     def test_event(self, event):
         print("TEST EVENT")
@@ -139,6 +138,13 @@ class SetMainForm(QtWidgets.QMainWindow):
     def set_config(self):
         if exists(config_file):
             self.config.read(config_file)
+
+            # Section: Geometry
+            x = self.config.getint("Geometry", "x")
+            y = self.config.getint("Geometry", "y")
+            width = self.config.getint("Geometry", "width")
+            height = self.config.getint("Geometry", "height")
+            self.setGeometry(x, y, width, height)
 
             # Section: General
             # self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, self.config.getboolean("General", "on_top"))
@@ -264,7 +270,11 @@ class SetMainForm(QtWidgets.QMainWindow):
             folder = config_file.replace("config.cfg", "")
             if not exists(folder):
                 makedirs(folder)
-
+            self.config.add_section("Geometry")
+            self.config.set("Geometry", "x", "0")
+            self.config.set("Geometry", "y", "0")
+            self.config.set("Geometry", "width", "657")
+            self.config.set("Geometry", "height", "424")
             self.config.add_section("General")
             self.config.set("General", "qstyle", QStyleFactory.keys()[0])
             self.config.set("General", "temp_scale", "Celsius")
@@ -332,6 +342,13 @@ class SetMainForm(QtWidgets.QMainWindow):
             with open(config_file, "w") as file:
                 self.config.write(file)
 
+    def save_geometry(self):
+        geometry = self.geometry()
+        self.config.set("Geometry", "x", str(geometry.x()))
+        self.config.set("Geometry", "y", str(geometry.y()))
+        self.config.set("Geometry", "width", str(geometry.width()))
+        self.config.set("Geometry", "height", str(geometry.height()))
+
     def set_sys_load(self):
         self.timer_mon.start(1000)
         self.cpu_mon = cpu.Load()
@@ -343,23 +360,6 @@ class SetMainForm(QtWidgets.QMainWindow):
         self.ui.labelSystemLoadCPUTemp.setText("%.2f %s" % (temp.max_val(self.temp_scale), self.temp_symbol))
         # self.ui.labelCPUTemp.setText("%.2f °C" % temp.x86_pkg(scale="celsius"))
 
-    def closeEvent(self, a0: QtGui.QCloseEvent):
-        try:
-            # TODO DELETE:
-            print("BeeeEEP")
-            with open(config_file, "w") as file:
-                self.config.write(file)
-
-        except Exception as ex:
-            err = ""
-            for arg in sys.exc_info():
-                err += "! %s\n" % str(arg)
-            self.msg_dlg("An unexpected error occurred:", ex.args[1], QMessageBox.Ok,
-                         QMessageBox.Warning, err)
-
-        finally:
-            application.close()
-            print("Goodbye!")
     # </editor-fold>
 
     # <editor-fold desc= " Controls "
