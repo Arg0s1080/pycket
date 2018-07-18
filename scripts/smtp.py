@@ -71,12 +71,15 @@ class SMPTMail:
         else:
             raise ValueError("Bad email address syntax", address)
 
+
 """
-mail_ = SMPTMail(smpt_server="smtp.gmail.com", port=587,
+# TODO: Delete
+from provisional import GMAIL_APP_PW
+mail_ = SMPTMail(server="smtp.gmail.com", port=587,
                  from_address="ivan.rincon76@gmail.com",
-                 password="",  # GMAIL App password
-                 to="xxxxxivan.rincon@ymxxxxxxail.com",
-                 subject="prueba a yahoo 2",
+                 password=GMAIL_APP_PW,  # GMAIL App password
+                 to="ivan.rincon@ymail.com",
+                 subject="Mensaje de prueba III a a yahoo 2",
                  body="únó dòŝ trêŝ",
                  attachment="/home/ivan/Escritorio/tabla.ods",
                  encrypt=Encrypt.TSL,

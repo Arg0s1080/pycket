@@ -1,11 +1,13 @@
 from configparser import ConfigParser
 from scripts.aes import AESManaged, BadPasswordError
 from scripts.smtp import SMPTMail, Encrypt
-from os.path import join
-from os import getcwd
 from math import pi, e
+# from os.path import join  # Unused
+# from os import getcwd     # Unused
 
-config_file = join(getcwd(), "mail.cfg")
+# TODO: Delete
+from provisional import MAIL_CFG
+
 CONTROL = "%.15f%s%.14f%s" % (pi, "ck", e, "t")
 
 
