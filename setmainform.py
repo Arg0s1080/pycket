@@ -28,7 +28,7 @@ class SetMainForm(QtWidgets.QMainWindow):
     def __init__(self):
         #QtWidgets.QWidget.__init__(self, None)
         super().__init__()
-
+        self.set_translation()
         self.ui = Ui_SetMainForm()
         self.ui.setupUi(self)
 
@@ -134,6 +134,17 @@ class SetMainForm(QtWidgets.QMainWindow):
         print("TEST EVENT")
         print(type(QtCore.Qt.WindowStaysOnTopHint))
         application.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
+
+    @staticmethod
+    def set_translation():
+        translator = QtCore.QTranslator()
+        locale = QtCore.QLocale.system().name()
+        path = join(getcwd(), "translate")
+        loc_file = join(path, "main_%s.qm" % locale)
+        if not exists(loc_file):
+            loc_file = join(path, "main_%s.qm" % locale[:2])
+        translator.load(loc_file)
+        app.installTranslator(translator)
 
     def set_config(self):
         if exists(config_file):

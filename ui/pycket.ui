@@ -288,8 +288,11 @@ background-color: rgb(0, 85, 0);</string>
                <bold>false</bold>
               </font>
              </property>
+             <property name="locale">
+              <locale language="English" country="UnitedStates"/>
+             </property>
              <property name="text">
-              <string>-</string>
+              <string notr="true">-</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -367,7 +370,7 @@ background-color: rgb(0, 85, 0);</string>
              <enum>QTabWidget::Rounded</enum>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>1</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideNone</enum>
@@ -797,7 +800,7 @@ background-color: rgb(0, 85, 0);</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>00.00 %</string>
+                   <string notr="true">00.00 %</string>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::AutoText</enum>
@@ -846,7 +849,7 @@ background-color: rgb(0, 85, 0);</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>00.00 %</string>
+                   <string notr="true">00.00 %</string>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::AutoText</enum>
@@ -895,7 +898,7 @@ background-color: rgb(0, 85, 0);</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>00.00 %</string>
+                   <string notr="true">00.00 %</string>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::AutoText</enum>
@@ -944,7 +947,7 @@ background-color: rgb(0, 85, 0);</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>00.00 ºC</string>
+                   <string notr="true">00.00 ºC</string>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::AutoText</enum>
@@ -1221,6 +1224,9 @@ background-color: rgb(0, 85, 0);</string>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
                   </property>
+                  <property name="currentText">
+                   <string notr="true"/>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -1359,24 +1365,27 @@ background-color: rgb(0, 85, 0);</string>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
                   </property>
+                  <property name="currentText">
+                   <string notr="true">b/s</string>
+                  </property>
                   <item>
                    <property name="text">
-                    <string>b/s</string>
+                    <string notr="true">b/s</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>KiB/s</string>
+                    <string notr="true">KiB/s</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>MiB/s</string>
+                    <string notr="true">MiB/s</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>GiB/s</string>
+                    <string notr="true">GiB/s</string>
                    </property>
                   </item>
                  </widget>
@@ -1543,19 +1552,22 @@ background-color: rgb(0, 85, 0);</string>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
                   </property>
+                  <property name="currentText">
+                   <string notr="true">KiB</string>
+                  </property>
                   <item>
                    <property name="text">
-                    <string>KiB</string>
+                    <string notr="true">KiB</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>MiB</string>
+                    <string notr="true">MiB</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>GiB</string>
+                    <string notr="true">GiB</string>
                    </property>
                   </item>
                  </widget>
@@ -1947,7 +1959,7 @@ background-color: rgb(0, 85, 0);</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>% </string>
+                   <string notr="true">% </string>
                   </property>
                  </widget>
                 </item>
@@ -2017,6 +2029,9 @@ background-color: rgb(0, 85, 0);</string>
                   <property name="editable">
                    <bool>true</bool>
                   </property>
+                  <property name="currentText">
+                   <string notr="true"/>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -2050,6 +2065,9 @@ background-color: rgb(0, 85, 0);</string>
                   </property>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="currentText">
+                   <string notr="true">KiB</string>
                   </property>
                   <item>
                    <property name="text">
@@ -2127,24 +2145,27 @@ background-color: rgb(0, 85, 0);</string>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
                   </property>
+                  <property name="currentText">
+                   <string notr="true">bytes/sec</string>
+                  </property>
                   <item>
                    <property name="text">
-                    <string>bytes/sec</string>
+                    <string notr="true">bytes/sec</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>KiB/sec</string>
+                    <string notr="true">KiB/sec</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>MiB/sec</string>
+                    <string notr="true">MiB/sec</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>GiB/sec</string>
+                    <string notr="true">GiB/sec</string>
                    </property>
                   </item>
                  </widget>
@@ -2487,11 +2508,11 @@ background-color: rgb(0, 85, 0);</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupPowerMain"/>
-  <buttongroup name="buttonGroupActions"/>
-  <buttongroup name="buttonGroupPartitions"/>
-  <buttongroup name="buttonGroupNetwork"/>
   <buttongroup name="buttonGroupPowerSnd"/>
+  <buttongroup name="buttonGroupPartitions"/>
+  <buttongroup name="buttonGroupSystemLoad"/>
+  <buttongroup name="buttonGroupActions"/>
+  <buttongroup name="buttonGroupNetwork"/>
  </buttongroups>
 </ui>
