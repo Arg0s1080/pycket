@@ -370,7 +370,7 @@ background-color: rgb(0, 85, 0);</string>
              <enum>QTabWidget::Rounded</enum>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>3</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideNone</enum>
@@ -2508,11 +2508,11 @@ background-color: rgb(0, 85, 0);</string>
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="buttonGroupPartitions"/>
+  <buttongroup name="buttonGroupNetwork"/>
+  <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupPowerMain"/>
   <buttongroup name="buttonGroupPowerSnd"/>
-  <buttongroup name="buttonGroupPartitions"/>
-  <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupActions"/>
-  <buttongroup name="buttonGroupNetwork"/>
  </buttongroups>
 </ui>
