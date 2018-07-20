@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>657</width>
+    <width>652</width>
     <height>424</height>
    </rect>
   </property>
@@ -370,7 +370,7 @@ background-color: rgb(0, 85, 0);</string>
              <enum>QTabWidget::Rounded</enum>
             </property>
             <property name="currentIndex">
-             <number>3</number>
+             <number>5</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideNone</enum>
@@ -438,10 +438,10 @@ background-color: rgb(0, 85, 0);</string>
                    </date>
                   </property>
                   <property name="currentSection">
-                   <enum>QDateTimeEdit::DaySection</enum>
+                   <enum>QDateTimeEdit::MonthSection</enum>
                   </property>
                   <property name="displayFormat">
-                   <string>dd/MM/yyyy - HH:mm:ss</string>
+                   <string>MM/dd/yyyy - HH:mm:ss</string>
                   </property>
                   <property name="calendarPopup">
                    <bool>true</bool>
@@ -486,14 +486,14 @@ background-color: rgb(0, 85, 0);</string>
                   <item>
                    <widget class="QPushButton" name="pushButtonAtTimeMinus1H">
                     <property name="text">
-                     <string>- 1 H</string>
+                     <string extracomment="- 1 Hour">- 1 H</string>
                     </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QPushButton" name="pushButtonAtTimePlus1H">
                     <property name="text">
-                     <string>+ 1 H</string>
+                     <string extracomment="+ 1 Hour">+ 1 H</string>
                     </property>
                    </widget>
                   </item>
@@ -1102,7 +1102,7 @@ background-color: rgb(0, 85, 0);</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>min.</string>
+                   <string extracomment="minutes">min.</string>
                   </property>
                  </widget>
                 </item>
@@ -1457,7 +1457,7 @@ background-color: rgb(0, 85, 0);</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>min.</string>
+                   <string extracomment="minutes">min.</string>
                   </property>
                  </widget>
                 </item>
@@ -1791,6 +1791,9 @@ background-color: rgb(0, 85, 0);</string>
                     <property name="locale">
                      <locale language="English" country="UnitedStates"/>
                     </property>
+                    <property name="currentText">
+                     <string extracomment="context: The battery has LESS than">less</string>
+                    </property>
                     <item>
                      <property name="text">
                       <string>less</string>
@@ -1798,7 +1801,7 @@ background-color: rgb(0, 85, 0);</string>
                     </item>
                     <item>
                      <property name="text">
-                      <string>more</string>
+                      <string extracomment="context: The battery has MORE than">more</string>
                      </property>
                     </item>
                    </widget>
@@ -1814,7 +1817,7 @@ background-color: rgb(0, 85, 0);</string>
                      <locale language="English" country="UnitedStates"/>
                     </property>
                     <property name="text">
-                     <string>than</string>
+                     <string extracomment="context: The battery has less|more THAN">than</string>
                     </property>
                    </widget>
                   </item>
@@ -1993,8 +1996,44 @@ background-color: rgb(0, 85, 0);</string>
              <attribute name="title">
               <string>Partition</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_16">
-              <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="1" column="0">
+               <widget class="QRadioButton" name="radioButtonPttSpace">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">buttonGroupPartitions</string>
+                </attribute>
+               </widget>
+              </item>
+              <item row="4" column="5">
+               <widget class="QCheckBox" name="checkBoxPttFor">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="text">
+                 <string>for</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="8">
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
                  <widget class="QLabel" name="labelPttWithThePartition">
@@ -2036,307 +2075,279 @@ background-color: rgb(0, 85, 0);</string>
                 </item>
                </layout>
               </item>
-              <item row="1" column="0">
-               <layout class="QGridLayout" name="gridLayout_15">
-                <property name="sizeConstraint">
-                 <enum>QLayout::SetMaximumSize</enum>
+              <item row="3" column="1">
+               <widget class="QLabel" name="labelPttIfIts_2">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
                 </property>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="labelPttIfIts">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>If it's</string>
-                  </property>
-                 </widget>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="text">
+                 <string>If it's</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="6">
+               <widget class="QSpinBox" name="spinBoxPttMinutes">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="maximum">
+                 <number>300</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="7">
+               <widget class="QLabel" name="labelPttMinutes">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="text">
+                 <string>min.</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1" colspan="2">
+               <widget class="QSpinBox" name="spinBoxPttIOPS">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+                <property name="value">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="4">
+               <widget class="QComboBox" name="comboBoxPttSpaceUnit">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="currentText">
+                 <string notr="true">KiB</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string notr="true">KiB</string>
+                 </property>
                 </item>
-                <item row="1" column="4">
-                 <widget class="QComboBox" name="comboBoxPttSpaceUnit">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="currentText">
-                   <string notr="true">KiB</string>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>KiB</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>MiB</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>GiB</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>TiB</string>
-                   </property>
-                  </item>
-                 </widget>
+                <item>
+                 <property name="text">
+                  <string notr="true">MiB</string>
+                 </property>
                 </item>
-                <item row="2" column="1" colspan="4">
-                 <widget class="QComboBox" name="comboBoxPttIOPS">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>read speed rate</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>write speed rate</string>
-                   </property>
-                  </item>
-                 </widget>
+                <item>
+                 <property name="text">
+                  <string notr="true">GiB</string>
+                 </property>
                 </item>
-                <item row="2" column="5" colspan="3">
-                 <widget class="QComboBox" name="comboBoxPttIOPSLessMore">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>is less than</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>is more than</string>
-                   </property>
-                  </item>
-                 </widget>
+                <item>
+                 <property name="text">
+                  <string notr="true">TiB</string>
+                 </property>
                 </item>
-                <item row="3" column="3" colspan="2">
-                 <widget class="QComboBox" name="comboBoxPttIOPSUnit">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="currentText">
-                   <string notr="true">bytes/sec</string>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string notr="true">bytes/sec</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string notr="true">KiB/sec</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string notr="true">MiB/sec</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string notr="true">GiB/sec</string>
-                   </property>
-                  </item>
-                 </widget>
+               </widget>
+              </item>
+              <item row="3" column="5" colspan="2">
+               <widget class="QComboBox" name="comboBoxPttIOPSLessMore">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>is less than</string>
+                 </property>
                 </item>
-                <item row="3" column="1" colspan="2">
-                 <widget class="QSpinBox" name="spinBoxPttIOPS">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="maximum">
-                   <number>999</number>
-                  </property>
-                  <property name="value">
-                   <number>999</number>
-                  </property>
-                 </widget>
+                <item>
+                 <property name="text">
+                  <string>is more than</string>
+                 </property>
                 </item>
-                <item row="3" column="7">
-                 <widget class="QLabel" name="labelPttMinutes">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>min.</string>
-                  </property>
-                 </widget>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QRadioButton" name="radioButtonPttIOPS">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">buttonGroupPartitions</string>
+                </attribute>
+               </widget>
+              </item>
+              <item row="4" column="3" colspan="2">
+               <widget class="QComboBox" name="comboBoxPttIOPSUnit">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="currentText">
+                 <string notr="true">bytes/sec</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string notr="true">bytes/sec</string>
+                 </property>
                 </item>
-                <item row="0" column="2" colspan="3">
-                 <widget class="QComboBox" name="comboBoxPttSpace">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>free space</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>used space</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>total size</string>
-                   </property>
-                  </item>
-                 </widget>
+                <item>
+                 <property name="text">
+                  <string notr="true">KiB/sec</string>
+                 </property>
                 </item>
-                <item row="3" column="6">
-                 <widget class="QSpinBox" name="spinBoxPttMinutes">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="maximum">
-                   <number>300</number>
-                  </property>
-                 </widget>
+                <item>
+                 <property name="text">
+                  <string notr="true">MiB/sec</string>
+                 </property>
                 </item>
-                <item row="2" column="0">
-                 <widget class="QRadioButton" name="radioButtonPttIOPS">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="checked">
-                   <bool>false</bool>
-                  </property>
-                  <attribute name="buttonGroup">
-                   <string notr="true">buttonGroupPartitions</string>
-                  </attribute>
-                 </widget>
+                <item>
+                 <property name="text">
+                  <string notr="true">GiB/sec</string>
+                 </property>
                 </item>
-                <item row="3" column="5">
-                 <widget class="QCheckBox" name="checkBoxPttFor">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>for</string>
-                  </property>
-                 </widget>
+               </widget>
+              </item>
+              <item row="3" column="2" colspan="3">
+               <widget class="QComboBox" name="comboBoxPttIOPS">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>read speed rate</string>
+                 </property>
                 </item>
-                <item row="0" column="5" colspan="3">
-                 <widget class="QComboBox" name="comboBoxPttSpaceLessMore">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>is less than</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>is more than</string>
-                   </property>
-                  </item>
-                 </widget>
+                <item>
+                 <property name="text">
+                  <string>write speed rate</string>
+                 </property>
                 </item>
-                <item row="1" column="2" colspan="2">
-                 <widget class="QSpinBox" name="spinBoxPttSpace">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="maximum">
-                   <number>300</number>
-                  </property>
-                 </widget>
+               </widget>
+              </item>
+              <item row="2" column="2" colspan="2">
+               <widget class="QSpinBox" name="spinBoxPttSpace">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="maximum">
+                 <number>300</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="5" colspan="2">
+               <widget class="QComboBox" name="comboBoxPttSpaceLessMore">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>is less than</string>
+                 </property>
                 </item>
-                <item row="0" column="0">
-                 <widget class="QRadioButton" name="radioButtonPttSpace">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                  <attribute name="buttonGroup">
-                   <string notr="true">buttonGroupPartitions</string>
-                  </attribute>
-                 </widget>
+                <item>
+                 <property name="text">
+                  <string>is more than</string>
+                 </property>
                 </item>
-               </layout>
+               </widget>
+              </item>
+              <item row="1" column="2" colspan="3">
+               <widget class="QComboBox" name="comboBoxPttSpace">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>free space</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>used space</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>total size</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="labelPttIfIts">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="text">
+                 <string>If it's</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -2374,7 +2385,7 @@ background-color: rgb(0, 85, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>657</width>
+     <width>652</width>
      <height>30</height>
     </rect>
    </property>
@@ -2508,11 +2519,11 @@ background-color: rgb(0, 85, 0);</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroupPartitions"/>
   <buttongroup name="buttonGroupNetwork"/>
-  <buttongroup name="buttonGroupSystemLoad"/>
-  <buttongroup name="buttonGroupPowerMain"/>
   <buttongroup name="buttonGroupPowerSnd"/>
+  <buttongroup name="buttonGroupSystemLoad"/>
+  <buttongroup name="buttonGroupPartitions"/>
   <buttongroup name="buttonGroupActions"/>
+  <buttongroup name="buttonGroupPowerMain"/>
  </buttongroups>
 </ui>
