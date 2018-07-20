@@ -19,8 +19,8 @@ mail.cfg
 /statux/
 ProgramatorCS/
 
-# PyQt ui's backups & support scripts
-ui/compile_ui.py
+# PyQt ui's backups #& support scripts
+#ui/compile_ui.py
 /ui/*.ui.old*
 # /translate/translate.py
 
