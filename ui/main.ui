@@ -2519,11 +2519,11 @@ background-color: rgb(0, 85, 0);</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroupNetwork"/>
-  <buttongroup name="buttonGroupPowerSnd"/>
+  <buttongroup name="buttonGroupActions"/>
   <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupPartitions"/>
-  <buttongroup name="buttonGroupActions"/>
+  <buttongroup name="buttonGroupNetwork"/>
+  <buttongroup name="buttonGroupPowerSnd"/>
   <buttongroup name="buttonGroupPowerMain"/>
  </buttongroups>
 </ui>

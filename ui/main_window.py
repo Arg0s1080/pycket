@@ -1027,7 +1027,7 @@ class Ui_SetMainForm(object):
         self.menubar.addAction(self.menuSee.menuAction())
 
         self.retranslateUi(SetMainForm)
-        self.tabWidget.setCurrentIndex(4)
+        self.tabWidget.setCurrentIndex(5)
         QtCore.QMetaObject.connectSlotsByName(SetMainForm)
         SetMainForm.setTabOrder(self.pushButtonStart, self.pushButtonCancel)
         SetMainForm.setTabOrder(self.pushButtonCancel, self.radioButtonShutdown)
@@ -1145,6 +1145,7 @@ class Ui_SetMainForm(object):
         self.checkBoxPowerFor.setText(_translate("SetMainForm", "for"))
         self.labelPowerMinutes1.setText(_translate("SetMainForm", "min."))
         self.radioButtonPowerTheBatteryHas.setText(_translate("SetMainForm", "The &battery has"))
+        self.comboBoxPowerMoreLess.setCurrentText(_translate("SetMainForm", "less"))
         self.comboBoxPowerMoreLess.setItemText(0, _translate("SetMainForm", "less"))
         self.comboBoxPowerMoreLess.setItemText(1, _translate("SetMainForm", "more"))
         self.labelPowerThan.setText(_translate("SetMainForm", "than"))
