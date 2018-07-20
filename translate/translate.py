@@ -49,5 +49,5 @@ class Translate:
 
 tr = Translate()
 
-tr.pylupdate()
-#tr.lrelease()
+#tr.pylupdate()
+tr.lrelease()
