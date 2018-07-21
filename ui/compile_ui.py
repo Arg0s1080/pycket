@@ -11,21 +11,18 @@ class CompileUI:
         self.ui_file = ui_file
         self.ui_output = output
 
+    @staticmethod
+    def filename(file_path):
+        return file_path.split("/")[-1]
+
     def backup(self, file):
         if path.exists(self.ui_file):
             copyfile(self.ui_file, file)
-            print("- Make %s backup" % self.ui_file.split("/")[-1])
+            print("- Make %s backup" % self.filename(self.ui_file))
 
     def execute(self):
-        arg_ui = list()
-        arg_ui.insert(0, "pyuic5")
-        arg_ui.insert(1, self.ui_file)
-        arg_ui.append("-o")
-        arg_ui.append(self.ui_output)
-
-        process = run(arg_ui, stdout=PIPE)
-        print("- Compile %s" % self.ui_file.split("/")[-1])
-        return process
+        process = run(["pyuic5", self.ui_file, "-o", self.ui_output], stdout=PIPE)
+        print("- Compile %s" % self.filename(self.ui_file))
 
     def header_lines(self):
         with open(self.ui_output, "r") as f:
@@ -39,18 +36,18 @@ class CompileUI:
                         pass
                         line = "# (ɔ) Iván Rincón 2018\n"
                     file.write(line)
-                print("- Modify %s header lines" % self.ui_output.split("/")[-1])
+                print("- Modify %s header lines" % self.filename(self.ui_output))
 
 
-bak = lambda x: x + ".old"
+bak = lambda x: "%s.old" % x
 out = lambda x: x.replace(".ui", "_window.py")
 join = lambda x: path.join(getcwd(), x)
 
-ops = [(file, out(file), bak(file)) for file in listdir(getcwd()) if file.endswith("ui")]
+sets = [(file, out(file), bak(file)) for file in listdir(getcwd()) if file.endswith("ui")]
 
-for item in ops:
-    item = list(map(join, item))
-    compile_ui = CompileUI(item[0], item[1])
-    compile_ui.backup(item[2])
+for item in sets:
+    ui, output, backup = map(join, item)
+    compile_ui = CompileUI(ui, output)
+    compile_ui.backup(backup)
     compile_ui.execute()
     compile_ui.header_lines()
