@@ -4,16 +4,12 @@
 
 # Personal notes and test files
 Notes
-/test.py
-/test1.py
-/test2.py
-/test3.py
+/test*.py
 /provisional.py
 
 
 # Config files
-config.cfg
-mail.cfg
+*.cfg
 
 # Symbolic links to other projects
 /statux/
