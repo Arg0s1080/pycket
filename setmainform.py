@@ -18,7 +18,7 @@ from enums import *
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
 from statux.system import session_id
-
+from geometry import set_geometry, make_geometry
 
 config_file = join(getcwd(), "config.cfg")
 
@@ -139,11 +139,7 @@ class SetMainForm(QtWidgets.QMainWindow):
             self.config.read(config_file)
 
             # Section: Geometry
-            x = self.config.getint("Geometry", "x")
-            y = self.config.getint("Geometry", "y")
-            width = self.config.getint("Geometry", "width")
-            height = self.config.getint("Geometry", "height")
-            self.setGeometry(x, y, width, height)
+            set_geometry(self.config, self.setGeometry)
 
             # Section: General
             # self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, self.config.getboolean("General", "on_top"))
@@ -269,11 +265,7 @@ class SetMainForm(QtWidgets.QMainWindow):
             folder = config_file.replace("config.cfg", "")
             if not exists(folder):
                 makedirs(folder)
-            self.config.add_section("Geometry")
-            self.config.set("Geometry", "x", "0")
-            self.config.set("Geometry", "y", "0")
-            self.config.set("Geometry", "width", "657")
-            self.config.set("Geometry", "height", "424")
+            make_geometry(self.config, 657, 424)
             self.config.add_section("General")
             self.config.set("General", "qstyle", QStyleFactory.keys()[0])
             self.config.set("General", "temp_scale", "Celsius")
@@ -340,13 +332,6 @@ class SetMainForm(QtWidgets.QMainWindow):
 
             with open(config_file, "w") as file:
                 self.config.write(file)
-
-    def save_geometry(self):
-        geometry = self.geometry()
-        self.config.set("Geometry", "x", str(geometry.x()))
-        self.config.set("Geometry", "y", str(geometry.y()))
-        self.config.set("Geometry", "width", str(geometry.width()))
-        self.config.set("Geometry", "height", str(geometry.height()))
 
     def set_sys_load(self):
         self.timer_mon.start(1000)

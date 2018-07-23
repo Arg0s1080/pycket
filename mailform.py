@@ -6,7 +6,8 @@ from os.path import join, exists, dirname, expanduser
 from os import getcwd, makedirs, remove
 from scripts.aes import AESManaged, BadPasswordError, sha3_256
 from sendmail import SendMail, CONTROL
-import sys
+from sys import argv, exit
+from geometry import save_geometry, set_geometry, make_geometry
 
 # TODO: Delete
 from provisional import MAIL_CFG
@@ -18,6 +19,7 @@ class MailForm(QDialog):
         self.ui = Ui_MailDialog()
         self.ui.setupUi(self)
         self.config = ConfigParser()
+        self.control = CONTROL
         self.attempts = 3
         self.cancel = None
         self.aes = None
@@ -36,7 +38,6 @@ class MailForm(QDialog):
         self.ui.pushButtonOk.clicked.connect(self.pushbutton_ok_clicked)
         self.ui.pushButtonTest.clicked.connect(self.pushbutton_test_clicked)
 
-        print(self.geometry())
 
     def set_config(self):
         if exists(MAIL_CFG):
@@ -52,11 +53,7 @@ class MailForm(QDialog):
                 self.config.read(MAIL_CFG)
                 cntrl = self.aes.decrypt(self.config.get("Encrypted", "control"))
                 if cntrl == CONTROL and cntrl != -1:
-                    x = self.config.getint("Geometry", "x")
-                    y = self.config.getint("Geometry", "y")
-                    width = self.config.getint("Geometry", "width")
-                    height = self.config.getint("Geometry", "height")
-                    self.setGeometry(x, y, width, height)
+                    set_geometry(self.config, self.setGeometry)
                     self.ui.lineEditFrom.setText(self.aes.decrypt(self.config.get("Encrypted", "from")))
                     self.ui.lineEditAlias.setText(self.aes.decrypt(self.config.get("Encrypted", "alias")))
                     self.ui.lineEditServer.setText(self.config.get("General", "server"))
@@ -83,11 +80,7 @@ class MailForm(QDialog):
             if pw is not None:
                 if pw == self.pw_dlg("Type the password again"):
                     self.aes = AESManaged(pw)
-                    self.config.add_section("Geometry")
-                    self.config.set("Geometry", "x", "0")
-                    self.config.set("Geometry", "y", "0")
-                    self.config.set("Geometry", "width", "769")
-                    self.config.set("Geometry", "height", "514")
+                    make_geometry(self.config, 769, 514)
                     self.config.add_section("General")
                     self.config.set("General", "server", "smtp.gmail.com")
                     self.config.set("General", "encryption", "TSL")
@@ -112,11 +105,8 @@ class MailForm(QDialog):
                 exit(0)
 
     def closeEvent(self, a0: QCloseEvent):
-        geometry = self.geometry()
-        self.config.set("Geometry", "x", str(geometry.x()))
-        self.config.set("Geometry", "y", str(geometry.y()))
-        self.config.set("Geometry", "width", str(geometry.width()))
-        self.config.set("Geometry", "height", str(geometry.height()))
+        save_geometry(self.config, self.geometry())
+
         if not self.cancel:
             with open(MAIL_CFG, "w") as file:
                 self.config.write(file)
@@ -216,8 +206,8 @@ class MailForm(QDialog):
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    app = QApplication(argv)
     application = MailForm()
     application.show()
 
-    sys.exit(app.exec_())
+    exit(app.exec_())

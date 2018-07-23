@@ -4,11 +4,12 @@ from statux.net import *
 from statux.battery import *
 from statux.disks import *
 from datetime import timedelta
+from geometry import save_geometry
 
 
 class MainForm(SetMainForm):
     def closeEvent(self, a0: QtGui.QCloseEvent):
-        self.save_geometry()
+        save_geometry(self.config, self.geometry())
         try:
             with open(config_file, "w") as file:
                 self.config.write(file)
