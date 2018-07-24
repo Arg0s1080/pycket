@@ -4,7 +4,7 @@ from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtCore import QTimer
 from configparser import ConfigParser
 from os.path import join, exists, dirname, expanduser
-from os import getcwd, makedirs, remove
+from os import getcwd, makedirs, remove, listdir
 from sys import argv, exit
 from common import *
 
@@ -17,9 +17,9 @@ class NotifySettingsForm(QDialog):
         super().__init__()
         self.ui = Ui_NotifySettingsDialog()
         self.ui.setupUi(self)
+        self.set_combo_sound()
         self.config = ConfigParser()
         self.set_config()
-        self.timer = QTimer()
         self.ui.checkBoxAlwaysOnTop.stateChanged.connect(self.checkbox_always_on_top_state_changed)
         self.ui.checkBoxCloseAuto.stateChanged.connect(self.checkbox_close_auto_state_changed)
         self.ui.spinBoxSecondsClose.valueChanged.connect(self.spinbox_seconds_value_changed)
@@ -28,12 +28,10 @@ class NotifySettingsForm(QDialog):
         self.ui.comboBoxSounds.currentTextChanged.connect(self.combobox_sounds_text_changed)
         self.ui.checkBoxInLoop.stateChanged.connect(self.checkbox_in_loop_state_changed)
         self.ui.doubleSpinBoxOpacity.valueChanged.connect(self.double_spinbox_opacity_value_changed)
-
         self.ui.fontComboBoxHeader.currentTextChanged.connect(self.font_combobox_header_text_changed)
         self.ui.spinBoxSizeFontHeader.valueChanged.connect(self.spinbox_font_size_header_value_changed)
         self.ui.checkBoxBoldHeader.stateChanged.connect(self.checkbox_bold_header_state_changed)
         self.ui.checkBoxItalicHeader.stateChanged.connect(self.checkbox_italic_header_state_changed)
-
         self.ui.lineEditHeader.textChanged.connect(self.line_edit_header_text_changed)
         self.ui.plainTextEditBody.textChanged.connect(self.plain_text_edit_body_text_changed)
         self.ui.fontComboBoxBody.currentTextChanged.connect(self.font_combobox_body_text_changed)
@@ -43,12 +41,30 @@ class NotifySettingsForm(QDialog):
         self.ui.pushButtonOk.clicked.connect(self.pushbutton_ok_clicked)
         self.ui.pushButtonCancel.clicked.connect(self.pushbutton_cancel_clicked)
         self.ui.pushButtonTest.clicked.connect(self.pushbutton_test_clicked)
-        self.timer.timeout.connect(self.timer_tick)
 
     def set_config(self):
         if exists(NOTIFY_CFG):
             self.config.read(NOTIFY_CFG)
             set_geometry(self.config, self.setGeometry)
+            self.ui.checkBoxAlwaysOnTop.setChecked(self.config.getboolean("General", "on_top"))
+            self.ui.checkBoxCloseAuto.setChecked(self.config.getboolean("General", "auto_close"))
+            self.ui.spinBoxSecondsClose.setValue(self.config.getint("General", "seconds"))
+            self.ui.checkBoxShowTime.setChecked(self.config.getboolean("General", "show_time"))
+            self.ui.lineEditHeader.setEnabled(not self.ui.checkBoxShowTime.isChecked())
+            self.ui.checkBoxPlaySound.setChecked(self.config.getboolean("General", "play_sound"))
+            self.ui.comboBoxSounds.setCurrentText(self.config.get("General", "sound"))
+            self.ui.checkBoxInLoop.setChecked(self.config.getboolean("General", "in_loop"))
+            self.ui.doubleSpinBoxOpacity.setValue(self.config.getfloat("General", "opacity"))
+            self.ui.fontComboBoxHeader.setCurrentText(self.config.get("Header", "font"))
+            self.ui.spinBoxSizeFontHeader.setValue(self.config.getint("Header", "size"))
+            self.ui.checkBoxBoldHeader.setChecked(self.config.getboolean("Header", "bold"))
+            self.ui.checkBoxItalicHeader.setChecked(self.config.getboolean("Header", "italic"))
+            self.ui.lineEditHeader.setText(self.config.get("Header", "txt"))
+            self.ui.fontComboBoxBody.setCurrentText(self.config.get("Body", "font"))
+            self.ui.spinBoxSizeFontBody.setValue(self.config.getint("Body", "size"))
+            self.ui.checkBoxBoldBody.setChecked(self.config.getboolean("Body", "bold"))
+            self.ui.checkBoxItalicBody.setChecked(self.config.getboolean("Body", "italic"))
+            self.ui.plainTextEditBody.setPlainText(self.config.get("Body", "txt"))
         else:
             folder = dirname(NOTIFY_CFG)
             if not exists(folder):
@@ -74,17 +90,24 @@ class NotifySettingsForm(QDialog):
             self.config.set("Body", "size", "14")
             self.config.set("Body", "bold", "False")
             self.config.set("Body", "italic", "False")
-            self.config.set("Body", "body", "ALARM")
+            self.config.set("Body", "txt", "ALARM")
 
             with open(NOTIFY_CFG, "w") as file:
                 self.config.write(file)
+
+    def set_combo_sound(self):
+        def rn(filename):
+            return filename.replace("-", " ")[:-4].title()
+        for file in listdir(join(getcwd(), "sounds")):
+            if file.endswith(".wav"):
+                self.ui.comboBoxSounds.addItem(rn(file))
 
     def closeEvent(self, a0: QCloseEvent):
         save_geometry(self.config, self.geometry())
         close_widget(self, self.config, NOTIFY_CFG)
 
     def checkbox_always_on_top_state_changed(self):
-        self.config.set("General", "on_top", "False")
+        self.config.set("General", "on_top", str(self.ui.checkBoxAlwaysOnTop.isChecked()))
 
     def checkbox_close_auto_state_changed(self):
         self.config.set("General", "auto_close", str(self.ui.checkBoxCloseAuto.isChecked()))
@@ -94,9 +117,10 @@ class NotifySettingsForm(QDialog):
 
     def checkbox_show_time_state_changed(self):
         self.config.set("General", "show_time", str(self.ui.checkBoxShowTime.isChecked()))
+        self.ui.lineEditHeader.setEnabled(not self.ui.checkBoxShowTime.isChecked())
 
     def checkbox_play_sound_state_changed(self):
-        self.config.save_geometry, set_geometry, make_geometryset("General", "play_sound", str(self.ui.checkBoxPlaySound.isChecked()))
+        self.config.set("General", "play_sound", str(self.ui.checkBoxPlaySound.isChecked()))
 
     def combobox_sounds_text_changed(self):
         self.config.set("General", "sound", self.ui.comboBoxSounds.currentText())
@@ -108,7 +132,7 @@ class NotifySettingsForm(QDialog):
         self.config.set("General", "opacity", str(self.ui.doubleSpinBoxOpacity.value()))
 
     def font_combobox_header_text_changed(self):
-        self.config.set("Header", "font", self.ui.fontComboBoxBody.currentText())
+        self.config.set("Header", "font", self.ui.fontComboBoxHeader.currentText())
 
     def spinbox_font_size_header_value_changed(self):
         self.config.set("Header", "size", str(self.ui.spinBoxSizeFontHeader.value()))
@@ -138,14 +162,13 @@ class NotifySettingsForm(QDialog):
         self.config.set("Body", "txt", self.ui.plainTextEditBody.toPlainText())
 
     def pushbutton_ok_clicked(self):
-        from common import msg_dlg
-        msg_dlg("Body", "info", QMessageBox.Ok | QMessageBox.No, QMessageBox.Warning, "details")
+        self.set_controls()
 
     def pushbutton_cancel_clicked(self):
         pass
 
     def pushbutton_test_clicked(self):
-        pass
+        self.set_combo_sound()
 
     def timer_tick(self):
         print("Beep")
