@@ -6,7 +6,7 @@ from configparser import ConfigParser
 from os.path import join, exists, dirname, expanduser
 from os import getcwd, makedirs, remove
 from sys import argv, exit
-from geometry import save_geometry, set_geometry, make_geometry
+from common import *
 
 # TODO: Delete:
 from provisional import NOTIFY_CFG
@@ -81,8 +81,7 @@ class NotifySettingsForm(QDialog):
 
     def closeEvent(self, a0: QCloseEvent):
         save_geometry(self.config, self.geometry())
-        with open(NOTIFY_CFG, "w") as file:
-            self.config.write(file)
+        close_widget(self, self.config, NOTIFY_CFG)
 
     def checkbox_always_on_top_state_changed(self):
         self.config.set("General", "on_top", "False")
@@ -97,7 +96,7 @@ class NotifySettingsForm(QDialog):
         self.config.set("General", "show_time", str(self.ui.checkBoxShowTime.isChecked()))
 
     def checkbox_play_sound_state_changed(self):
-        self.config.set("General", "play_sound", str(self.ui.checkBoxPlaySound.isChecked()))
+        self.config.save_geometry, set_geometry, make_geometryset("General", "play_sound", str(self.ui.checkBoxPlaySound.isChecked()))
 
     def combobox_sounds_text_changed(self):
         self.config.set("General", "sound", self.ui.comboBoxSounds.currentText())
@@ -139,7 +138,8 @@ class NotifySettingsForm(QDialog):
         self.config.set("Body", "txt", self.ui.plainTextEditBody.toPlainText())
 
     def pushbutton_ok_clicked(self):
-        pass
+        from common import msg_dlg
+        msg_dlg("Body", "info", QMessageBox.Ok | QMessageBox.No, QMessageBox.Warning, "details")
 
     def pushbutton_cancel_clicked(self):
         pass

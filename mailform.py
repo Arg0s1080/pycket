@@ -7,7 +7,7 @@ from os import getcwd, makedirs, remove
 from scripts.aes import AESManaged, BadPasswordError, sha3_256
 from sendmail import SendMail, CONTROL
 from sys import argv, exit
-from geometry import save_geometry, set_geometry, make_geometry
+from common import *
 
 # TODO: Delete
 from provisional import MAIL_CFG
@@ -38,13 +38,12 @@ class MailForm(QDialog):
         self.ui.pushButtonOk.clicked.connect(self.pushbutton_ok_clicked)
         self.ui.pushButtonTest.clicked.connect(self.pushbutton_test_clicked)
 
-
     def set_config(self):
         if exists(MAIL_CFG):
             if self.attempts < 1:
                 remove(MAIL_CFG)
                 msg = "Bad Password"
-                self.msg_dlg(msg, "The data has been deleted", icon=QMessageBox.Critical,
+                msg_dlg(msg, "The data has been deleted", icon=QMessageBox.Critical,
                              details="The maximum number of attempts has been exceeded")
                 exit(msg)
             pw = self.pw_dlg("Enter the password")
@@ -66,7 +65,7 @@ class MailForm(QDialog):
 
                 else:
                     self.attempts -= 1
-                    self.msg_dlg("Password incorrect", "Attempts: %d" % self.attempts)
+                    msg_dlg("Password incorrect", "Attempts: %d" % self.attempts)
                     self.set_config()
             else:
                 exit(0)
@@ -99,19 +98,14 @@ class MailForm(QDialog):
                     with open(MAIL_CFG, "w") as file:
                         self.config.write(file)
                 else:
-                    self.msg_dlg("Both string do not match", icon=QMessageBox.Warning)
+                    msg_dlg("Both string do not match", icon=QMessageBox.Warning)
                     self.set_config()
             else:
                 exit(0)
 
     def closeEvent(self, a0: QCloseEvent):
         save_geometry(self.config, self.geometry())
-
-        if not self.cancel:
-            with open(MAIL_CFG, "w") as file:
-                self.config.write(file)
-        application.close()
-        print("Goodbye!")
+        close_widget(self, self.config, MAIL_CFG, self.cancel)
 
     def line_edit_from_text_changed(self):
         self.config.set("Encrypted", "from", self.aes.encrypt(self.ui.lineEditFrom.text()))
@@ -149,6 +143,7 @@ class MailForm(QDialog):
         self.config.set("General", "port", str(self.ui.spinBoxPort.value()))
 
     def pushbutton_attach_clicked(self):
+        # TODO: to common
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         attachment = self.aes.decrypt(self.config.get("Encrypted", "attachment"))
@@ -174,13 +169,13 @@ class MailForm(QDialog):
                 mail.send()
             except BadPasswordError as ex:
                 ok = False
-                self.msg_dlg(ex.msg, "Aborted operation", icon=QMessageBox.Critical)
+                msg_dlg(ex.msg, "Aborted operation", icon=QMessageBox.Critical)
             except Exception as ex:
                 ok = False
-                self.msg_dlg(ex.args[0])
+                msg_dlg(ex.args[0])
             finally:
                 if ok:
-                    self.msg_dlg("Operation performed", "Please, check your mailbox")
+                    msg_dlg("Operation performed", "Please, check your mailbox")
 
     @staticmethod
     def pw_dlg(msg):
@@ -190,19 +185,6 @@ class MailForm(QDialog):
             return txt
         return
 
-    @staticmethod
-    def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information, details=""):
-        msg = QMessageBox()
-        msg.setIcon(icon)
-        msg.setText(body)
-        msg.setInformativeText(info)
-        msg.setWindowTitle("Pycket")
-        msg.setStandardButtons(buttons)
-
-        if details != "":
-            msg.setDetailedText(details)
-
-        return msg.exec()
 
 
 if __name__ == "__main__":

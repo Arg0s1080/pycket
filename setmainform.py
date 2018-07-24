@@ -18,9 +18,10 @@ from enums import *
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
 from statux.system import session_id
-from geometry import set_geometry, make_geometry
+from common import *
 
-config_file = join(getcwd(), "config.cfg")
+# TODO: Move
+from provisional import MAIN_CFG
 
 
 class SetMainForm(QtWidgets.QMainWindow):
@@ -135,8 +136,8 @@ class SetMainForm(QtWidgets.QMainWindow):
         application.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
 
     def set_config(self):
-        if exists(config_file):
-            self.config.read(config_file)
+        if exists(MAIN_CFG):
+            self.config.read(MAIN_CFG)
 
             # Section: Geometry
             set_geometry(self.config, self.setGeometry)
@@ -262,7 +263,7 @@ class SetMainForm(QtWidgets.QMainWindow):
 
 
         else:
-            folder = config_file.replace("config.cfg", "")
+            folder = MAIN_CFG.replace("config.cfg", "")
             if not exists(folder):
                 makedirs(folder)
             make_geometry(self.config, 657, 424)
@@ -330,7 +331,7 @@ class SetMainForm(QtWidgets.QMainWindow):
             self.config.set("Commands", "hibernate", "systemctl hibernate")
             self.config.set("Commands", "execute", "")
 
-            with open(config_file, "w") as file:
+            with open(MAIN_CFG, "w") as file:
                 self.config.write(file)
 
     def set_sys_load(self):
@@ -530,24 +531,7 @@ class SetMainForm(QtWidgets.QMainWindow):
     def check_ptt_for_state_changed(self):
         self.config.set("Partitions", "check_for", str(self.ui.checkBoxPttFor.isChecked()))
 
-
     # </editor-fold>
-
-    @staticmethod
-    def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information, details=""):
-
-        msg = QMessageBox()
-
-        msg.setIcon(icon)
-        msg.setText(body)
-        msg.setInformativeText(info)
-        msg.setWindowTitle("Pycket")
-        msg.setStandardButtons(buttons)
-
-        if details != "":
-            msg.setDetailedText(details)
-
-        return msg.exec()
 
     def set_controls(self):
         if self.state == State.Activated:
@@ -583,8 +567,9 @@ class SetMainForm(QtWidgets.QMainWindow):
         ptt = self.ui.comboBoxPttPartitions.currentText()
         mounted = mounted_partitions().keys()
         if ptt not in mounted:
-            return self.msg_dlg("%s is not mounted yet" % ptt, "Do you want continue?", QMessageBox.Yes |
-                                QMessageBox.No, details="Current mounted partitions:\n%s" % "\n".join(mounted))
+            return msg_dlg("%s is not mounted yet" % ptt, "Do you want continue?",
+                           QMessageBox.Yes | QMessageBox.No,
+                           details="Current mounted partitions:\n%s" % "\n".join(mounted))
 
     def set_spin_sl_unit(self):
         if self.ui.radioButtonSystemLoadCPUTemp.isChecked():

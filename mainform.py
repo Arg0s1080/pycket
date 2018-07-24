@@ -4,28 +4,14 @@ from statux.net import *
 from statux.battery import *
 from statux.disks import *
 from datetime import timedelta
-from geometry import save_geometry
 
 
 class MainForm(SetMainForm):
     def closeEvent(self, a0: QtGui.QCloseEvent):
         save_geometry(self.config, self.geometry())
-        try:
-            with open(config_file, "w") as file:
-                self.config.write(file)
-        except Exception as ex:
-            err = ""
-            for arg in sys.exc_info():
-                err += "! %s\n" % str(arg)
-            self.msg_dlg("An unexpected error occurred:", ex.args[1], QMessageBox.Ok,
-                         QMessageBox.Warning, err)
-
-        finally:
-            application.close()
-            print("Goodbye!")
+        close_widget(self, self.config, MAIN_CFG)
 
     def pushbutton_start_clicked(self):
-        print(self.condition)
         self.state = State.Activated
         if self.condition == Condition.AtTime: ###############################################
             import datetime
@@ -33,7 +19,7 @@ class MainForm(SetMainForm):
             print("Debug AtTime:", self.delay)
             if datetime.datetime.now() >= self.ui.dateTimeEditAtTime.dateTime():
                 print("Log: error, date after now")
-                self.msg_dlg("Pycket cannot start", "Date before now", icon=QMessageBox.Warning)
+                msg_dlg("Pycket cannot start", "Date before now", icon=QMessageBox.Warning)
                 return
             self.ui.progressBar.setMaximum(self.delay)
         elif self.condition == Condition.Countdown:  ###########################################
@@ -306,7 +292,7 @@ class MainForm(SetMainForm):
         self.set_time_edit(QDateTime.currentDateTime(), 60)
 
     def pushbutton_at_time_plus_1h(self):
-        self.config.read(config_file)
+        self.config.read(MAIN_CFG)
         self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), 3600)
 
     def pushbutton_at_time_minus_1h(self):
@@ -314,18 +300,8 @@ class MainForm(SetMainForm):
 
     def action_settings_triggered(self):
         if self.settings.exec_() == 0:
-            self.config.read(config_file)
+            self.config.read(MAIN_CFG)
 
-
-# TODO: Move
-def get_loc_file(context):
-    # Ex: if context == "main": loc_file = "./translate/main_es_ES.qm"
-    locale = QtCore.QLocale.system().name()
-    path = join(getcwd(), "translate")
-    loc_file = join(path, "%s_%s.qm" % (context, locale))
-    if not exists(loc_file):
-        loc_file = join(path, "%s_%s.qm" % (context, locale[:-3]))
-    return loc_file
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
