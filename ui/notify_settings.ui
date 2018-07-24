@@ -45,84 +45,6 @@
      </item>
     </layout>
    </item>
-   <item row="0" column="0">
-    <widget class="QGroupBox" name="groupBoxGeneral">
-     <property name="title">
-      <string>General</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="2" column="1">
-         <widget class="QSpinBox" name="spinBoxSecondsClose"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QCheckBox" name="checkBoxShowTime">
-          <property name="text">
-           <string>Show time</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="checkBoxAlwaysOnTop">
-          <property name="text">
-           <string>Always on top</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QCheckBox" name="checkBoxCloseAuto">
-          <property name="text">
-           <string>Close dialog automatically</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QLabel" name="labelSeconds">
-          <property name="text">
-           <string>seconds</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QCheckBox" name="checkBoxPlaySound">
-          <property name="text">
-           <string>Play sound</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QComboBox" name="comboBoxSounds"/>
-        </item>
-        <item row="4" column="2">
-         <widget class="QCheckBox" name="checkBoxInLoop">
-          <property name="text">
-           <string>in loop</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="labelOpacity">
-          <property name="text">
-           <string>Opacity</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBoxOpacity"/>
-        </item>
-        <item row="5" column="2">
-         <widget class="QLabel" name="labelPercent">
-          <property name="text">
-           <string>%</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="1" column="0">
     <widget class="QGroupBox" name="groupBoxText">
      <property name="title">
@@ -237,6 +159,103 @@
          <string>Body</string>
         </property>
        </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBoxGeneral">
+     <property name="title">
+      <string>General</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="2" column="2">
+         <widget class="QSpinBox" name="spinBoxSecondsClose"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QCheckBox" name="checkBoxShowTime">
+          <property name="text">
+           <string>Show time</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="checkBoxAlwaysOnTop">
+          <property name="text">
+           <string>Always on top</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="checkBoxCloseAuto">
+          <property name="text">
+           <string>Close dialog automatically</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QCheckBox" name="checkBoxPlaySound">
+          <property name="text">
+           <string>Play sound</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QComboBox" name="comboBoxSounds"/>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="labelOpacity">
+          <property name="text">
+           <string>Opacity</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxOpacity"/>
+        </item>
+        <item row="4" column="4">
+         <widget class="QCheckBox" name="checkBoxInLoop">
+          <property name="text">
+           <string>in loop</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="3">
+         <widget class="QPushButton" name="pushButtonPlaySound">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>35</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>▶</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="3">
+         <widget class="QLabel" name="labelPercent">
+          <property name="text">
+           <string>%</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QLabel" name="labelSeconds">
+          <property name="text">
+           <string>seconds</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
