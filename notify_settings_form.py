@@ -1,12 +1,10 @@
 from ui.notify_settings_window import Ui_NotifySettingsDialog
-from PyQt5.QtWidgets import QApplication, QDialog, QInputDialog, QMessageBox, QLineEdit, QFileDialog
+from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtGui import QCloseEvent
-from PyQt5.QtCore import QTimer
-from configparser import ConfigParser
-from os.path import join, exists, dirname, expanduser
-from os import getcwd, makedirs, remove, listdir
+from os.path import dirname
+from os import makedirs, listdir
 from sys import argv, exit
-from common import *
+from common.common import *
 
 # TODO: Delete:
 from provisional import NOTIFY_CFG
@@ -19,6 +17,7 @@ class NotifySettingsForm(QDialog):
         self.ui.setupUi(self)
         self.set_combo_sound()
         self.config = ConfigParser()
+        self.cancel = None
         self.set_config()
         self.ui.checkBoxAlwaysOnTop.stateChanged.connect(self.checkbox_always_on_top_state_changed)
         self.ui.checkBoxCloseAuto.stateChanged.connect(self.checkbox_close_auto_state_changed)
@@ -104,7 +103,7 @@ class NotifySettingsForm(QDialog):
 
     def closeEvent(self, a0: QCloseEvent):
         save_geometry(self.config, self.geometry())
-        close_widget(self, self.config, NOTIFY_CFG)
+        close_widget(self, self.config, NOTIFY_CFG, self.cancel)
 
     def checkbox_always_on_top_state_changed(self):
         self.config.set("General", "on_top", str(self.ui.checkBoxAlwaysOnTop.isChecked()))
@@ -165,14 +164,11 @@ class NotifySettingsForm(QDialog):
         self.set_controls()
 
     def pushbutton_cancel_clicked(self):
-        pass
+        self.cancel = True
+        application.close()
 
     def pushbutton_test_clicked(self):
         self.set_combo_sound()
-
-    def timer_tick(self):
-        print("Beep")
-        pass
 
 
 if __name__ == '__main__':

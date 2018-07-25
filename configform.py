@@ -1,9 +1,7 @@
 from ui.settings_window import *
 from PyQt5.QtWidgets import QStyleFactory
 from configparser import ConfigParser
-from os.path import join
-from os import getcwd
-from common import close_widget
+from common.common import close_widget
 import sys
 
 # TODO: Move

@@ -7,18 +7,16 @@ import statux.ram as ram
 import statux.cpu2 as cpu
 import statux.temp as temp
 
-from os import makedirs, getcwd
-from os.path import join, exists
-from configparser import ConfigParser
+from os import makedirs
 from ui.main_window import *
-from PyQt5.QtWidgets import QMessageBox, QStyleFactory
+from PyQt5.QtWidgets import QStyleFactory
 from PyQt5.QtCore import QDateTime, QTimer
 from configform import ConfigForm
 from enums import *
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
 from statux.system import session_id
-from common import *
+from common.common import *
 
 # TODO: Move
 from provisional import MAIN_CFG

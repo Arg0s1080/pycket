@@ -1,13 +1,13 @@
 from ui.mail_window import Ui_MailDialog
-from PyQt5.QtWidgets import QApplication, QDialog, QInputDialog, QMessageBox, QLineEdit, QFileDialog
+from PyQt5.QtWidgets import QApplication, QDialog, QInputDialog, QLineEdit, QFileDialog
 from PyQt5.QtGui import QCloseEvent
-from configparser import ConfigParser
-from os.path import join, exists, dirname, expanduser
-from os import getcwd, makedirs, remove
-from scripts.aes import AESManaged, BadPasswordError, sha3_256
+from os.path import dirname, expanduser
+from os import makedirs, remove
+from scripts.aes import AESManaged
 from sendmail import SendMail, CONTROL
 from sys import argv, exit
-from common import *
+from common.common import *
+from common.errors import BadPasswordError
 
 # TODO: Delete
 from provisional import MAIL_CFG

@@ -1,5 +1,7 @@
 from configparser import ConfigParser
-from scripts.aes import AESManaged, BadPasswordError
+from scripts.aes import AESManaged
+from common.errors import BadPasswordError
+from common.common import test_cfg
 from scripts.smtp import SMPTMail, Encrypt
 from math import pi, e
 # from os.path import join  # Unused
@@ -15,7 +17,7 @@ class SendMail:
     def __init__(self, password: str, mail_cfg: str):
         self.aes = AESManaged(password)
         self.config = ConfigParser()
-        self.config.read(mail_cfg)
+        self.config.read(test_cfg(mail_cfg))
         self._verify(password)
         self.server = self.config.get("General", "server")
         self.port = self.config.getint("General", "port")
@@ -36,3 +38,4 @@ class SendMail:
     def _verify(self, pw):
         if CONTROL != self.aes.decrypt(self.config.get("Encrypted", "control")):
             raise BadPasswordError(cause=pw)
+

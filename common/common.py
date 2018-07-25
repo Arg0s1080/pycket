@@ -1,9 +1,12 @@
 from configparser import ConfigParser
-from PyQt5.QtWidgets import QWidget, QDialog, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtCore import QLocale
 from sys import exc_info
 from os.path import join, exists
 from os import getcwd
+from subprocess import run, Popen, PIPE
+from common.errors import ConfigFileNotFoundError
+
 
 
 def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information, details=""):
@@ -24,7 +27,7 @@ def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information,
 def get_loc_file(context):
     # Ex: if context == "main": loc_file = "./translate/main_es_ES.qm"
     locale = QLocale.system().name()
-    path = join(getcwd(), "translate")
+    path = join(getcwd().replace("common", ""), "translate")
     loc_file = join(path, "%s_%s.qm" % (context, locale))
     if not exists(loc_file):
         loc_file = join(path, "%s_%s.qm" % (context, locale[:-3]))
@@ -67,3 +70,17 @@ def make_geometry(config: ConfigParser, width: int, height: int, x=0, y=0):
     config.set("Geometry", "y", str(y))
     config.set("Geometry", "width", str(width))
     config.set("Geometry", "height", str(height))
+
+
+def execute(*args, **kwargs):
+    return run(*args, **kwargs)
+
+
+def exe_async(*args, **kwargs):
+    return Popen(*args, **kwargs)
+
+
+def test_cfg(cfg_file):
+    if not exists(cfg_file):
+        raise ConfigFileNotFoundError(cfg_file)
+    return cfg_file
