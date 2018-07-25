@@ -8,11 +8,12 @@ import statux.cpu2 as cpu
 import statux.temp as temp
 
 from os import makedirs
+from os.path import dirname
 from ui.main_window import *
 from PyQt5.QtWidgets import QStyleFactory
 from PyQt5.QtCore import QDateTime, QTimer
-from configform import ConfigForm
-from enums import *
+from forms.configform import ConfigForm
+from common.enums import *
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
 from statux.system import session_id
@@ -60,8 +61,8 @@ class SetMainForm(QtWidgets.QMainWindow):
         self.alarm_count_ptt = None  # to use only one alarm
         self.count_bytes = None
         self.unit_panel = None
-        self.temp_scale = None
         self.temp_symbol = None
+        self.temp_scale = None
 
         # Section: Declarations
         self.timer_mon = QTimer()   # SysLoad TabWidget monitoring
@@ -259,9 +260,8 @@ class SetMainForm(QtWidgets.QMainWindow):
             self.ui.spinBoxPttMinutes.setValue(self.config.getint("Partitions", "spin_minutes"))
             self.ui.checkBoxPttFor.setChecked(self.config.getboolean("Partitions", "check_for"))
 
-
         else:
-            folder = MAIN_CFG.replace("config.cfg", "")
+            folder = dirname(MAIN_CFG)
             if not exists(folder):
                 makedirs(folder)
             make_geometry(self.config, 657, 424)
@@ -329,6 +329,8 @@ class SetMainForm(QtWidgets.QMainWindow):
             self.config.set("Commands", "hibernate", "systemctl hibernate")
             self.config.set("Commands", "execute", "")
 
+            self.temp_symbol = "°C"
+            self.temp_scale = "celsius"
             with open(MAIN_CFG, "w") as file:
                 self.config.write(file)
 

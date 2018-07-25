@@ -1,4 +1,4 @@
-from setmainform import *
+from forms.setmainform import *
 from actions import execute
 from statux.net import *
 from statux.battery import *

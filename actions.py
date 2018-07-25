@@ -1,4 +1,4 @@
-from enums import Action
+from common.enums import Action
 
 
 def execute(action: Action):

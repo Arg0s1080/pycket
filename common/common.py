@@ -2,8 +2,8 @@ from configparser import ConfigParser
 from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtCore import QLocale
 from sys import exc_info
-from os.path import join, exists
-from os import getcwd
+from os.path import join, exists, dirname
+from os import getcwd, makedirs
 from subprocess import run, Popen, PIPE
 from common.errors import ConfigFileNotFoundError
 
@@ -84,3 +84,8 @@ def test_cfg(cfg_file):
     if not exists(cfg_file):
         raise ConfigFileNotFoundError(cfg_file)
     return cfg_file
+
+def make_cfg_folder(cfg_file):
+    folder = dirname(cfg_file)
+    if not exists(folder):
+        makedirs(folder)
