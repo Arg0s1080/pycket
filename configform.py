@@ -3,9 +3,11 @@ from PyQt5.QtWidgets import QStyleFactory
 from configparser import ConfigParser
 from os.path import join
 from os import getcwd
+from common import close_widget
 import sys
 
-config_file = join(getcwd(), "config.cfg")
+# TODO: Move
+from provisional import MAIN_CFG
 
 
 class ConfigForm(QtWidgets.QDialog):
@@ -19,42 +21,27 @@ class ConfigForm(QtWidgets.QDialog):
         self.get_config()
         self.ui.pushButtonOk.clicked.connect(self.close)
         self.ui.pushButtonCancel.clicked.connect(self.canceled)
-        self.ui.lineEditShutdown.focusOutEvent = self.line_edit_shutdown_focus_out
-        self.ui.lineEditReboot.focusOutEvent = self.line_edit_reboot_focus_out
-        self.ui.lineEditCloseSession.focusOutEvent = self.line_edit_close_session_focus_out
-        self.ui.lineEditLockScreen.focusOutEvent = self.line_edit_lock_screen_focus_out
-        self.ui.lineEditSuspend.focusOutEvent = self.line_edit_suspend_focus_out
-        self.ui.lineEditHibernate.focusOutEvent = self.line_edit_hibernate_focus_out
-        self.ui.lineEditExecute.focusOutEvent = self.line_edit_execute_focus_out
+        self.ui.lineEditShutdown.textChanged.connect(self.line_edit_shutdown_text_changed)
+        self.ui.lineEditReboot.textChanged.connect(self.line_edit_reboot_text_changed)
+        self.ui.lineEditCloseSession.textChanged.connect(self.line_edit_close_session_text_changed)
+        self.ui.lineEditLockScreen.textChanged.connect(self.line_edit_lock_screen_text_changed)
+        self.ui.lineEditSuspend.textChanged.connect(self.line_edit_suspend_text_changed)
+        self.ui.lineEditHibernate.textChanged.connect(self.line_edit_hibernate_text_changed)
+        self.ui.lineEditExecute.textChanged.connect(self.line_edit_execute_text_changed)
         self.ui.comboBoxStyle.currentIndexChanged.connect(self.combo_style_current_index_changed)
-        self.ui.lineEditDateTimeEditFormat.focusOutEvent = self.line_edit_date_time_edit_format
+        self.ui.lineEditDateTimeEditFormat.textChanged.connect(self.line_edit_date_time_edit_format)
         self.ui.comboBoxTempScale.currentIndexChanged.connect(self.combo_temp_scale_current_index_changed)
         self.ui.checkBoxProgressbarText.stateChanged.connect(self.check_progressbar_text_state_changed)
 
-
-
     def closeEvent(self, a0: QtGui.QCloseEvent):
-        try:
-            if not self.cancel:
-                print("BEEEP")
-                with open(config_file, "w") as file:
-                    self.config.write(file)
-        except Exception:
-            for arg in sys.exc_info():
-                print("! %s" % arg)
-        finally:
-            self.close()
-            print("Close Config Form!")
+        close_widget(self, self.config, MAIN_CFG, self.cancel)
 
     def canceled(self):
         self.cancel = True
         self.close()
 
-    def test_event(self, event):
-        print("TEST EVENT")
-
     def get_config(self):
-        self.config.read(config_file)
+        self.config.read(MAIN_CFG)
         self.ui.lineEditShutdown.setText(self.config.get("Commands", "shutdown"))
         self.ui.lineEditReboot.setText(self.config.get("Commands", "reboot"))
         self.ui.lineEditCloseSession.setText(self.config.get("Commands", "close_session"))
@@ -67,25 +54,25 @@ class ConfigForm(QtWidgets.QDialog):
         self.ui.comboBoxTempScale.setCurrentText(self.config.get("General", "temp_scale"))
         self.ui.checkBoxProgressbarText.setChecked(self.config.getboolean("General", "progressbar_text"))
 
-    def line_edit_shutdown_focus_out(self, event):
+    def line_edit_shutdown_text_changed(self):
         self.config.set("Commands", "shutdown", self.ui.lineEditShutdown.text())
 
-    def line_edit_reboot_focus_out(self, event):
+    def line_edit_reboot_text_changed(self):
         self.config.set("Commands", "reboot", self.ui.lineEditReboot.text())
 
-    def line_edit_close_session_focus_out(self, event):
+    def line_edit_close_session_text_changed(self):
         self.config.set("Commands", "close_session", self.ui.lineEditCloseSession.text())
 
-    def line_edit_lock_screen_focus_out(self, event):
+    def line_edit_lock_screen_text_changed(self):
         self.config.set("Commands", "lock_screen", self.ui.lineEditLockScreen.text())
 
-    def line_edit_suspend_focus_out(self, event):
+    def line_edit_suspend_text_changed(self):
         self.config.set("Commands", "suspend", self.ui.lineEditSuspend.text())
 
-    def line_edit_hibernate_focus_out(self, event):
+    def line_edit_hibernate_text_changed(self):
         self.config.set("Commands", "hibernate", self.ui.lineEditHibernate.text())
 
-    def line_edit_execute_focus_out(self, event):
+    def line_edit_execute_text_changed(self):
         self.config.set("Commands", "execute", self.ui.lineEditExecute.text())
 
     def combo_style_current_index_changed(self):
@@ -94,7 +81,7 @@ class ConfigForm(QtWidgets.QDialog):
     def combo_temp_scale_current_index_changed(self):
         self.config.set("General", "temp_scale", self.ui.comboBoxTempScale.currentText())
 
-    def line_edit_date_time_edit_format(self, event):
+    def line_edit_date_time_edit_format(self):
         self.config.set("General", "date_time_format", self.ui.lineEditDateTimeEditFormat.text())
 
     def check_progressbar_text_state_changed(self):
