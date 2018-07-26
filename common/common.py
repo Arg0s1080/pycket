@@ -8,7 +8,6 @@ from subprocess import run, Popen, PIPE
 from common.errors import ConfigFileNotFoundError
 
 
-
 def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information, details=""):
     msg = QMessageBox()
 
@@ -37,8 +36,7 @@ def get_loc_file(context):
 def close_widget(widget: QWidget, config: ConfigParser, file_cfg: str, cancel=False):
     try:
         if not cancel:
-            with open(file_cfg, "w") as file:
-                config.write(file)
+            write_config(config, file_cfg)
     except Exception as ex:
         err = ""
         for arg in exc_info():
@@ -80,12 +78,18 @@ def exe_async(*args, **kwargs):
     return Popen(*args, **kwargs)
 
 
-def test_cfg(cfg_file):
+def test_cfg(cfg_file: str) -> str:
     if not exists(cfg_file):
         raise ConfigFileNotFoundError(cfg_file)
     return cfg_file
 
-def make_cfg_folder(cfg_file):
+
+def make_cfg_folder(cfg_file: str):
     folder = dirname(cfg_file)
     if not exists(folder):
         makedirs(folder)
+
+
+def write_config(config: ConfigParser, cfg_file: str):
+    with open(cfg_file, "w") as cfg_file:
+        config.write(cfg_file)
