@@ -2,6 +2,7 @@ from ui.notify_settings_window import Ui_NotifySettingsDialog
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtGui import QCloseEvent
 from os.path import dirname
+from forms.notify import NotifyForm
 from os import makedirs, listdir
 from sys import argv, exit
 from common.common import *
@@ -23,6 +24,7 @@ class NotifySettingsForm(QDialog):
         self.ui.checkBoxCloseAuto.stateChanged.connect(self.checkbox_close_auto_state_changed)
         self.ui.spinBoxSecondsClose.valueChanged.connect(self.spinbox_seconds_value_changed)
         self.ui.checkBoxShowTime.stateChanged.connect(self.checkbox_show_time_state_changed)
+        self.ui.lineEditTimeFormat.textChanged.connect(self.line_edit_time_format_text_changed)
         self.ui.checkBoxPlaySound.stateChanged.connect(self.checkbox_play_sound_state_changed)
         self.ui.comboBoxSounds.currentTextChanged.connect(self.combobox_sounds_text_changed)
         self.ui.checkBoxInLoop.stateChanged.connect(self.checkbox_in_loop_state_changed)
@@ -49,6 +51,7 @@ class NotifySettingsForm(QDialog):
             self.ui.checkBoxCloseAuto.setChecked(self.config.getboolean("General", "auto_close"))
             self.ui.spinBoxSecondsClose.setValue(self.config.getint("General", "seconds"))
             self.ui.checkBoxShowTime.setChecked(self.config.getboolean("General", "show_time"))
+            self.ui.lineEditTimeFormat.setText(self.config.get("General", "time_format"))
             self.ui.lineEditHeader.setEnabled(not self.ui.checkBoxShowTime.isChecked())
             self.ui.checkBoxPlaySound.setChecked(self.config.getboolean("General", "play_sound"))
             self.ui.comboBoxSounds.setCurrentText(self.config.get("General", "sound"))
@@ -65,19 +68,18 @@ class NotifySettingsForm(QDialog):
             self.ui.checkBoxItalicBody.setChecked(self.config.getboolean("Body", "italic"))
             self.ui.plainTextEditBody.setPlainText(self.config.get("Body", "txt"))
         else:
-            folder = dirname(NOTIFY_CFG)
-            if not exists(folder):
-                makedirs(folder)
+            make_cfg_folder(NOTIFY_CFG)
             make_geometry(self.config, 400, 600)
             self.config.add_section("General")
             self.config.set("General", "on_top", "False")
             self.config.set("General", "auto_close", "False")
             self.config.set("General", "seconds", "0")
             self.config.set("General", "show_time", "False")
+            self.config.set("General", "time_format", "hh:mm:ss")
             self.config.set("General", "play_sound", "False")
             self.config.set("General", "in_loop", "False")
             self.config.set("General", "sound", "?")  # TODO set a sound
-            self.config.set("General", "opacity", "0")
+            self.config.set("General", "opacity", "100.0")
             self.config.add_section("Header")
             self.config.set("Header", "font", "Noto Sans")
             self.config.set("Header", "size", "10")
@@ -91,13 +93,12 @@ class NotifySettingsForm(QDialog):
             self.config.set("Body", "italic", "False")
             self.config.set("Body", "txt", "ALARM")
 
-            with open(NOTIFY_CFG, "w") as file:
-                self.config.write(file)
+            write_config(self.config, NOTIFY_CFG)
 
     def set_combo_sound(self):
         def rn(filename):
             return filename.replace("-", " ")[:-4].title()
-        for file in listdir(join(getcwd(), "sounds")):
+        for file in listdir(join(getcwd().replace("forms", ""), "sounds")):
             if file.endswith(".wav"):
                 self.ui.comboBoxSounds.addItem(rn(file))
 
@@ -117,6 +118,9 @@ class NotifySettingsForm(QDialog):
     def checkbox_show_time_state_changed(self):
         self.config.set("General", "show_time", str(self.ui.checkBoxShowTime.isChecked()))
         self.ui.lineEditHeader.setEnabled(not self.ui.checkBoxShowTime.isChecked())
+
+    def line_edit_time_format_text_changed(self):
+        self.config.set("General", "time_format", self.ui.lineEditTimeFormat.text())
 
     def checkbox_play_sound_state_changed(self):
         self.config.set("General", "play_sound", str(self.ui.checkBoxPlaySound.isChecked()))
@@ -161,14 +165,15 @@ class NotifySettingsForm(QDialog):
         self.config.set("Body", "txt", self.ui.plainTextEditBody.toPlainText())
 
     def pushbutton_ok_clicked(self):
-        self.set_controls()
+        pass
 
     def pushbutton_cancel_clicked(self):
         self.cancel = True
         application.close()
 
     def pushbutton_test_clicked(self):
-        self.set_combo_sound()
+        write_config(self.config, NOTIFY_CFG)
+        NotifyForm().exec_()
 
 
 if __name__ == '__main__':
