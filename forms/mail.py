@@ -71,9 +71,7 @@ class MailForm(QDialog):
                 exit(0)
 
         else:
-            folder = dirname(MAIL_CFG)
-            if not exists(folder):
-                makedirs(folder)
+            make_cfg_folder(MAIL_CFG)
             pw = self.pw_dlg("Enter a new password:\n\nThis password will not be stored.\n"
                              "If this is lost or forgotten, the data can not be recovered")
             if pw is not None:
@@ -94,9 +92,8 @@ class MailForm(QDialog):
                     self.config.set("Encrypted", "subject", empty)
                     self.config.set("Encrypted", "body", empty)
                     self.config.set("Encrypted", "attachment", empty)
+                    write_config(self.config, MAIL_CFG)
 
-                    with open(MAIL_CFG, "w") as file:
-                        self.config.write(file)
                 else:
                     msg_dlg("Both string do not match", icon=QMessageBox.Warning)
                     self.set_config()

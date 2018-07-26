@@ -10,9 +10,9 @@ import statux.temp as temp
 from os import makedirs
 from os.path import dirname
 from ui.main_window import *
-from PyQt5.QtWidgets import QStyleFactory
+from PyQt5.QtWidgets import QStyleFactory, QMainWindow
 from PyQt5.QtCore import QDateTime, QTimer
-from forms.configform import ConfigForm
+from forms.main_settings import ConfigForm
 from common.enums import *
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
@@ -23,7 +23,7 @@ from common.common import *
 from provisional import MAIN_CFG
 
 
-class SetMainForm(QtWidgets.QMainWindow):
+class SetMainForm(QMainWindow):
     # <editor-fold desc=" Init and close "
     def __init__(self):
         #QtWidgets.QWidget.__init__(self, None)
@@ -126,7 +126,7 @@ class SetMainForm(QtWidgets.QMainWindow):
         self.timer_mon.timeout.connect(self.timer_mon_tick)
         self.timer.timeout.connect(self.timer_tick)
         
-        self.settings = ConfigForm()
+        self.config_form = ConfigForm()
 
     # TEST
     def test_event(self, event):
@@ -261,9 +261,7 @@ class SetMainForm(QtWidgets.QMainWindow):
             self.ui.checkBoxPttFor.setChecked(self.config.getboolean("Partitions", "check_for"))
 
         else:
-            folder = dirname(MAIN_CFG)
-            if not exists(folder):
-                makedirs(folder)
+            make_cfg_folder(MAIN_CFG)
             make_geometry(self.config, 657, 424)
             self.config.add_section("General")
             self.config.set("General", "qstyle", QStyleFactory.keys()[0])
@@ -331,8 +329,7 @@ class SetMainForm(QtWidgets.QMainWindow):
 
             self.temp_symbol = "°C"
             self.temp_scale = "celsius"
-            with open(MAIN_CFG, "w") as file:
-                self.config.write(file)
+            write_config(self.config, MAIN_CFG)
 
     def set_sys_load(self):
         self.timer_mon.start(1000)

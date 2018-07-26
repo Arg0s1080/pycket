@@ -1,4 +1,4 @@
-from forms.setmainform import *
+from forms.setmain import *
 from actions import execute
 from statux.net import *
 from statux.battery import *
@@ -102,11 +102,6 @@ class MainForm(SetMainForm):
         print("start clicked")
 
     def pushbutton_cancel_clicked(self):
-        from PyQt5.QtWidgets import QStyleFactory
-
-        print(QStyleFactory.keys())  # Listar estilos disponibles
-        app.setStyle("Windows")
-        input("??")
         self.set_finish(False)
 
     def timer_tick(self):
@@ -217,7 +212,6 @@ class MainForm(SetMainForm):
                     self.alarm_count = 0
                     self.set_progressbar(0, 1)
 
-
     def timer_ptt_tick(self):
         ptt = self.ui.comboBoxPttPartitions.currentText()
         if self.ui.radioButtonPttSpace.isChecked():
@@ -299,7 +293,7 @@ class MainForm(SetMainForm):
         self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), -3600)
 
     def action_settings_triggered(self):
-        if self.settings.exec_() == 0:
+        if self.config_form.exec_() == 0:
             self.config.read(MAIN_CFG)
 
 

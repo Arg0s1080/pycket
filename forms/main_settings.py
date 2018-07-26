@@ -1,7 +1,7 @@
 from ui.settings_window import *
 from PyQt5.QtWidgets import QStyleFactory
 from configparser import ConfigParser
-from common.common import close_widget
+from common.common import close_widget, test_cfg
 import sys
 
 # TODO: Move
@@ -39,7 +39,7 @@ class ConfigForm(QtWidgets.QDialog):
         self.close()
 
     def get_config(self):
-        self.config.read(MAIN_CFG)
+        self.config.read(test_cfg(MAIN_CFG))
         self.ui.lineEditShutdown.setText(self.config.get("Commands", "shutdown"))
         self.ui.lineEditReboot.setText(self.config.get("Commands", "reboot"))
         self.ui.lineEditCloseSession.setText(self.config.get("Commands", "close_session"))
