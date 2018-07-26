@@ -177,7 +177,7 @@
         <item row="3" column="0">
          <widget class="QCheckBox" name="checkBoxShowTime">
           <property name="text">
-           <string>Show time</string>
+           <string>Show time in header</string>
           </property>
          </widget>
         </item>
@@ -213,7 +213,14 @@
          </widget>
         </item>
         <item row="5" column="2">
-         <widget class="QDoubleSpinBox" name="doubleSpinBoxOpacity"/>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxOpacity">
+          <property name="maximum">
+           <double>100.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>100.000000000000000</double>
+          </property>
+         </widget>
         </item>
         <item row="4" column="4">
          <widget class="QCheckBox" name="checkBoxInLoop">
@@ -252,6 +259,13 @@
          <widget class="QLabel" name="labelSeconds">
           <property name="text">
            <string>seconds</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLineEdit" name="lineEditTimeFormat">
+          <property name="text">
+           <string>hh:mm:ss</string>
           </property>
          </widget>
         </item>

@@ -113,6 +113,8 @@ class Ui_NotifySettingsDialog(object):
         self.labelOpacity.setObjectName("labelOpacity")
         self.gridLayout.addWidget(self.labelOpacity, 5, 0, 1, 1)
         self.doubleSpinBoxOpacity = QtWidgets.QDoubleSpinBox(self.groupBoxGeneral)
+        self.doubleSpinBoxOpacity.setMaximum(100.0)
+        self.doubleSpinBoxOpacity.setProperty("value", 100.0)
         self.doubleSpinBoxOpacity.setObjectName("doubleSpinBoxOpacity")
         self.gridLayout.addWidget(self.doubleSpinBoxOpacity, 5, 2, 1, 1)
         self.checkBoxInLoop = QtWidgets.QCheckBox(self.groupBoxGeneral)
@@ -133,6 +135,9 @@ class Ui_NotifySettingsDialog(object):
         self.labelSeconds = QtWidgets.QLabel(self.groupBoxGeneral)
         self.labelSeconds.setObjectName("labelSeconds")
         self.gridLayout.addWidget(self.labelSeconds, 2, 3, 1, 1)
+        self.lineEditTimeFormat = QtWidgets.QLineEdit(self.groupBoxGeneral)
+        self.lineEditTimeFormat.setObjectName("lineEditTimeFormat")
+        self.gridLayout.addWidget(self.lineEditTimeFormat, 3, 2, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
         self.gridLayout_4.addWidget(self.groupBoxGeneral, 0, 0, 1, 1)
 
@@ -156,7 +161,7 @@ class Ui_NotifySettingsDialog(object):
         self.plainTextEditBody.setPlainText(_translate("NotifySettingsDialog", "ALARM"))
         self.plainTextEditBody.setPlaceholderText(_translate("NotifySettingsDialog", "Body"))
         self.groupBoxGeneral.setTitle(_translate("NotifySettingsDialog", "General"))
-        self.checkBoxShowTime.setText(_translate("NotifySettingsDialog", "Show time"))
+        self.checkBoxShowTime.setText(_translate("NotifySettingsDialog", "Show time in header"))
         self.checkBoxAlwaysOnTop.setText(_translate("NotifySettingsDialog", "Always on top"))
         self.checkBoxCloseAuto.setText(_translate("NotifySettingsDialog", "Close dialog automatically"))
         self.checkBoxPlaySound.setText(_translate("NotifySettingsDialog", "Play sound"))
@@ -165,4 +170,5 @@ class Ui_NotifySettingsDialog(object):
         self.pushButtonPlaySound.setText(_translate("NotifySettingsDialog", "▶"))
         self.labelPercent.setText(_translate("NotifySettingsDialog", "%"))
         self.labelSeconds.setText(_translate("NotifySettingsDialog", "seconds"))
+        self.lineEditTimeFormat.setText(_translate("NotifySettingsDialog", "hh:mm:ss"))
 
