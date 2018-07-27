@@ -47,27 +47,27 @@ def close_widget(widget: QWidget, config: ConfigParser, file_cfg: str, cancel=Fa
         print("Goodbye!")
 
 
-def save_geometry(config: ConfigParser, geometry: QWidget.geometry):
-    config.set("Geometry", "x", str(geometry.x()))
-    config.set("Geometry", "y", str(geometry.y()))
-    config.set("Geometry", "width", str(geometry.width()))
-    config.set("Geometry", "height", str(geometry.height()))
+def save_geometry(config: ConfigParser, geometry: QWidget.geometry, section="Geometry"):
+    config.set(section, "x", str(geometry.x()))
+    config.set(section, "y", str(geometry.y()))
+    config.set(section, "width", str(geometry.width()))
+    config.set(section, "height", str(geometry.height()))
 
 
-def set_geometry(config: ConfigParser, geometry: QWidget.setGeometry):
-    x = config.getint("Geometry", "x")
-    y = config.getint("Geometry", "y")
-    width = config.getint("Geometry", "width")
-    height = config.getint("Geometry", "height")
+def set_geometry(config: ConfigParser, geometry: QWidget.setGeometry, section="Geometry"):
+    x = config.getint(section, "x")
+    y = config.getint(section, "y")
+    width = config.getint(section, "width")
+    height = config.getint(section, "height")
     geometry(x, y, width, height)
 
 
-def make_geometry(config: ConfigParser, width: int, height: int, x=0, y=0):
+def make_geometry(config: ConfigParser, width: int, height: int, section="Geometry", x=0, y=0):
     config.add_section("Geometry")
-    config.set("Geometry", "x", str(x))
-    config.set("Geometry", "y", str(y))
-    config.set("Geometry", "width", str(width))
-    config.set("Geometry", "height", str(height))
+    config.set(section, "x", str(x))
+    config.set(section, "y", str(y))
+    config.set(section, "width", str(width))
+    config.set(section, "height", str(height))
 
 
 def execute(*args, **kwargs):
