@@ -6,6 +6,7 @@ from configparser import ConfigParser
 from sys import argv, exit
 from os.path import exists, join
 from common.common import test_cfg
+from scripts.sound import Sound
 
 # TODO: Move
 from provisional import NOTIFY_CFG
@@ -17,12 +18,17 @@ class NotifyForm(QDialog):
         self.ui = Ui_NotifyDialog()
         self.ui.setupUi(self)
         self.config = ConfigParser()
+        self.ui.pushButtonClose.clicked.connect(self.pushbutton_close_clicked)
         self.timer_ac = QTimer()
         self.timer_st = QTimer()
+        self.timer_sl = QTimer()
         self.timer_ac.timeout.connect(self.timer_ac_tick)  # AutoClose
         self.timer_st.timeout.connect(self.timer_st_tick)  # ShowTime
+        self.timer_sl.timeout.connect(self.timer_sl_tick)  # SoundLoop
         self.delay = None
         self.time_format = None
+        self.sound = None
+        self.play = None
         self.set_config()
 
     def set_config(self):
@@ -45,6 +51,20 @@ class NotifyForm(QDialog):
         body_font.setBold(self.config.getboolean("Body", "bold"))
         self.ui.labelBody.setFont(body_font)
         self.ui.labelBody.setText(self.config.get("Body", "txt"))
+        play_sound = self.config.getboolean("General", "play_sound")
+        if play_sound:
+            self.sound = Sound(self.config.get("General", "sound"))
+            self.play = self.sound.play_wav()
+            if self.config.getboolean("General", "in_loop"):
+                self.timer_sl.start(self.sound.duration())
+
+    def closeEvent(self, a0: QCloseEvent):
+        # TODO set_geometry
+        if self.play is not None:
+            self.play.terminate()
+
+    def timer_sl_tick(self):
+        self.play = self.sound.play_wav()
 
     def timer_ac_tick(self):
         if self.delay <= 0:
@@ -53,6 +73,9 @@ class NotifyForm(QDialog):
 
     def timer_st_tick(self):
         self.ui.labelHeader.setText(QDateTime.currentDateTime().toString(self.time_format))
+
+    def pushbutton_close_clicked(self):
+        self.close()
 
 
 if __name__ == '__main__':
