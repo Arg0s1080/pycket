@@ -70,6 +70,7 @@ class NotifySettingsForm(QDialog):
         else:
             make_cfg_folder(NOTIFY_CFG)
             make_geometry(self.config, 400, 600)
+            # TODO: make_geometry("Geometry_notify")
             self.config.add_section("General")
             self.config.set("General", "on_top", "False")
             self.config.set("General", "auto_close", "False")
