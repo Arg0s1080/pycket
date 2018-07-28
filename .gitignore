@@ -12,7 +12,7 @@ Notes
 *.cfg
 
 # Symbolic links to other projects
-/statux/
+# /statux/
 ProgramatorCS/
 
 # PyQt ui's backups #& support scripts
