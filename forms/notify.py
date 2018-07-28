@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt, QTimer, QDateTime
 from configparser import ConfigParser
 from sys import argv, exit
 from os.path import exists, join
-from common.common import test_cfg
+from common.common import test_cfg, set_geometry, save_geometry, close_widget
 from scripts.sound import Sound
 
 # TODO: Move
@@ -33,6 +33,7 @@ class NotifyForm(QDialog):
 
     def set_config(self):
         self.config.read(test_cfg(NOTIFY_CFG))
+        set_geometry(self.config, self.setGeometry)
         self.setWindowFlag(Qt.WindowStaysOnTopHint, self.config.getboolean("General", "on_top"))
         self.delay = self.config.getint("General", "seconds")
         self.config.getboolean("General", "auto_close") and self.timer_ac.start(1000)
@@ -59,7 +60,8 @@ class NotifyForm(QDialog):
                 self.timer_sl.start(self.sound.duration())
 
     def closeEvent(self, a0: QCloseEvent):
-        # TODO set_geometry
+        save_geometry(self.config, self.geometry())
+        close_widget(self, self.config, NOTIFY_CFG)
         if self.play is not None:
             self.play.terminate()
 

@@ -46,7 +46,7 @@ class NotifySettingsForm(QDialog):
     def set_config(self):
         if exists(NOTIFY_CFG):
             self.config.read(NOTIFY_CFG)
-            set_geometry(self.config, self.setGeometry)
+            set_geometry(self.config, self.setGeometry, "Geometry_Settings")
             self.ui.checkBoxAlwaysOnTop.setChecked(self.config.getboolean("General", "on_top"))
             self.ui.checkBoxCloseAuto.setChecked(self.config.getboolean("General", "auto_close"))
             self.ui.spinBoxSecondsClose.setValue(self.config.getint("General", "seconds"))
@@ -69,8 +69,8 @@ class NotifySettingsForm(QDialog):
             self.ui.plainTextEditBody.setPlainText(self.config.get("Body", "txt"))
         else:
             make_cfg_folder(NOTIFY_CFG)
-            make_geometry(self.config, 400, 600)
-            # TODO: make_geometry("Geometry_notify")
+            make_geometry(self.config, 400, 600, "Geometry_Settings")
+            make_geometry(self.config, 550, 350)
             self.config.add_section("General")
             self.config.set("General", "on_top", "False")
             self.config.set("General", "auto_close", "False")
@@ -104,7 +104,7 @@ class NotifySettingsForm(QDialog):
                 self.ui.comboBoxSounds.addItem(rn(file))
 
     def closeEvent(self, a0: QCloseEvent):
-        save_geometry(self.config, self.geometry())
+        save_geometry(self.config, self.geometry(), "Geometry_Settings")
         close_widget(self, self.config, NOTIFY_CFG, self.cancel)
 
     def checkbox_always_on_top_state_changed(self):
@@ -174,7 +174,8 @@ class NotifySettingsForm(QDialog):
 
     def pushbutton_test_clicked(self):
         write_config(self.config, NOTIFY_CFG)
-        NotifyForm().exec_()
+        if NotifyForm().exec_() == 0:
+            self.config.read(NOTIFY_CFG)
 
 
 if __name__ == '__main__':

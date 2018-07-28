@@ -63,7 +63,7 @@ def set_geometry(config: ConfigParser, geometry: QWidget.setGeometry, section="G
 
 
 def make_geometry(config: ConfigParser, width: int, height: int, section="Geometry", x=0, y=0):
-    config.add_section("Geometry")
+    config.add_section(section)
     config.set(section, "x", str(x))
     config.set(section, "y", str(y))
     config.set(section, "width", str(width))
