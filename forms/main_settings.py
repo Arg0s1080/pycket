@@ -1,7 +1,8 @@
 from ui.settings_window import *
 from PyQt5.QtWidgets import QStyleFactory
+from PyQt5.QtCore import QTranslator
 from configparser import ConfigParser
-from common.common import close_widget, test_cfg
+from common.common import close_widget, test_cfg, get_loc_file
 import sys
 
 # TODO: Move
@@ -88,7 +89,9 @@ class ConfigForm(QtWidgets.QDialog):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    translator = QTranslator()
+    translator.load(get_loc_file("mail"))
+    app.installTranslator(translator)
     application = ConfigForm()
     application.show()
-
     sys.exit(app.exec_())

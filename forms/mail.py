@@ -1,6 +1,7 @@
 from ui.mail_window import Ui_MailDialog
 from PyQt5.QtWidgets import QApplication, QDialog, QInputDialog, QLineEdit, QFileDialog
 from PyQt5.QtGui import QCloseEvent
+from PyQt5.QtCore import QTranslator
 from os.path import dirname, expanduser
 from os import makedirs, remove
 from scripts.aes import AESManaged
@@ -183,10 +184,11 @@ class MailForm(QDialog):
         return
 
 
-
 if __name__ == "__main__":
     app = QApplication(argv)
+    translator = QTranslator()
+    translator.load(get_loc_file("mail"))
+    app.installTranslator(translator)
     application = MailForm()
     application.show()
-
     exit(app.exec_())

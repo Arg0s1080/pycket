@@ -11,7 +11,7 @@ from os import makedirs
 from os.path import dirname
 from ui.main_window import *
 from PyQt5.QtWidgets import QStyleFactory, QMainWindow
-from PyQt5.QtCore import QDateTime, QTimer
+from PyQt5.QtCore import Qt, QCoreApplication, QDateTime, QTimer
 from forms.main_settings import ConfigForm
 from common.enums import *
 from statux.net import get_interfaces
@@ -19,18 +19,19 @@ from statux.disks import mounted_partitions
 from statux.system import session_id
 from common.common import *
 
+from typing import Optional
 # TODO: Move
 from provisional import MAIN_CFG
 
+tr = lambda x: QCoreApplication.translate("SetMainForm", x)
 
 class SetMainForm(QMainWindow):
     # <editor-fold desc=" Init and close "
     def __init__(self):
         #QtWidgets.QWidget.__init__(self, None)
         super().__init__()
-        self.ui = Ui_SetMainForm()
+        self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
         # Section: Widgets parameters
         # self.ui.dateTimeEdit.setDateTime(QDateTime.currentDateTime().addSecs(10))  # TODO Change addSecs
         self.ui.tabWidget.setCurrentIndex(0)
@@ -70,7 +71,9 @@ class SetMainForm(QMainWindow):
 
         self.config = ConfigParser()
         self.set_config()
-        self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, False)
+        #self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, False)
+        self.setWindowFlag(Qt.WindowStaysOnTopHint, True)
+
         self.set_sys_load()
 
         # Section: Events
@@ -527,13 +530,12 @@ class SetMainForm(QMainWindow):
 
     def check_ptt_for_state_changed(self):
         self.config.set("Partitions", "check_for", str(self.ui.checkBoxPttFor.isChecked()))
-
     # </editor-fold>
 
     def set_controls(self):
         if self.state == State.Activated:
             self.ui.frame.setStyleSheet("background-color: rgb(0, 85, 0);")
-            self.ui.labelState.setText("Activated")
+            self.ui.labelState.setText(tr("Activated"))
             self.ui.tabWidget.setEnabled(False)
             self.ui.groupBoxActions.setEnabled(False)
             self.ui.pushButtonStart.setEnabled(False)
@@ -541,13 +543,11 @@ class SetMainForm(QMainWindow):
         elif self.state == State.Stopped:
             self.ui.frame.setStyleSheet("background-color: rgb(170, 0, 0);")
             self.ui.labelData.setText("")
-            self.ui.labelState.setText("Stopped")
+            self.ui.labelState.setText(tr("Stopped"))
             self.ui.tabWidget.setEnabled(True)
             self.ui.groupBoxActions.setEnabled(True)
             self.ui.pushButtonStart.setEnabled(True)
             self.ui.pushButtonCancel.setEnabled(False)
-
-        self.ui.labelState.setText(self.state.name)
 
     def set_progressbar(self, value: int, maximum: int):
         self.ui.progressBar.setMaximum(maximum)
@@ -564,9 +564,9 @@ class SetMainForm(QMainWindow):
         ptt = self.ui.comboBoxPttPartitions.currentText()
         mounted = mounted_partitions().keys()
         if ptt not in mounted:
-            return msg_dlg("%s is not mounted yet" % ptt, "Do you want continue?",
+            return msg_dlg(tr("%s is not mounted yet") % ptt, tr("Do you want continue?"),
                            QMessageBox.Yes | QMessageBox.No,
-                           details="Current mounted partitions:\n%s" % "\n".join(mounted))
+                           details=tr("Current mounted partitions:\n%s") % "\n".join(mounted))
 
     def set_spin_sl_unit(self):
         if self.ui.radioButtonSystemLoadCPUTemp.isChecked():

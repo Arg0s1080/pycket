@@ -26,7 +26,7 @@ def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information,
 def get_loc_file(context):
     # Ex: if context == "main": loc_file = "./translate/main_es_ES.qm"
     locale = QLocale.system().name()
-    path = join(getcwd().replace("common", ""), "translate")
+    path = join(getcwd().replace("forms", ""), "translate")
     loc_file = join(path, "%s_%s.qm" % (context, locale))
     if not exists(loc_file):
         loc_file = join(path, "%s_%s.qm" % (context, locale[:-3]))

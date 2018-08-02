@@ -4,6 +4,7 @@ from statux.net import *
 from statux.battery import *
 from statux.disks import *
 from datetime import timedelta
+from PyQt5.QtCore import QTranslator
 
 
 class MainForm(SetMainForm):
@@ -299,8 +300,9 @@ class MainForm(SetMainForm):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    translator = QtCore.QTranslator()
-    translator.load(get_loc_file("main"))
+    translator = QTranslator()
+    print("QQQQ", get_loc_file("pycket"))
+    translator.load(get_loc_file("pycket"))
     app.installTranslator(translator)
     application = MainForm()
     application.show()
