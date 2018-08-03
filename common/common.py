@@ -1,10 +1,11 @@
 from configparser import ConfigParser
-from PyQt5.QtWidgets import QWidget, QMessageBox
-from PyQt5.QtCore import QLocale
+from PyQt5.QtWidgets import QWidget, QMessageBox, QApplication
+from PyQt5.QtCore import QLocale, QCoreApplication, QTranslator
 from sys import exc_info
-from os.path import join, exists, dirname
-from os import getcwd, makedirs
+from os.path import join, exists, dirname, pardir
+from os import getcwd, makedirs, listdir
 from subprocess import run, Popen, PIPE
+from typing import Optional
 from common.errors import ConfigFileNotFoundError
 
 
@@ -23,14 +24,36 @@ def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information,
     return msg.exec()
 
 
-def get_loc_file(context):
-    # Ex: if context == "main": loc_file = "./translate/main_es_ES.qm"
+def get_loc_file():
+    # E.g.:
+    # locale = de_AT
+    # translations = [es, de_DE, de_LU, en_GB, it]
+    # - Search for de_AT -> Not found
+    # - Search for de    -> Not found
+    # - Search for de_*  -> Found = [de_DE, de_LU] -> Choose Found[0]
+    def get_file():
+        filename = "pycket_%s.qm"
+        return join(path, filename % locale)
     locale = QLocale.system().name()
-    path = join(getcwd().replace("forms", ""), "translate")
-    loc_file = join(path, "%s_%s.qm" % (context, locale))
+    path = join(pardir, "translate")  # relative
+    loc_file = get_file()
     if not exists(loc_file):
-        loc_file = join(path, "%s_%s.qm" % (context, locale[:-3]))
+        locale = locale[:-3]
+        if exists(get_file()):
+            loc_file = get_file()
+        else:
+            compatible = []
+            for file in listdir(dirname(loc_file)):
+                if file.endswith(".qm") and file[7:-3].startswith(locale):
+                    compatible.append(file)
+            if len(compatible) > 0:
+                # TODO: if len(compatible) > 1: can choose
+                loc_file = join(path, compatible[0])
     return loc_file
+
+
+def trl(cls, string: str):
+    return QCoreApplication.translate(cls.__class__.__name__, string)
 
 
 def close_widget(widget: QWidget, config: ConfigParser, file_cfg: str, cancel=False):
@@ -93,3 +116,7 @@ def make_cfg_folder(cfg_file: str):
 def write_config(config: ConfigParser, cfg_file: str):
     with open(cfg_file, "w") as cfg_file:
         config.write(cfg_file)
+
+
+def name(cls):
+    return cls.__class__.__name__

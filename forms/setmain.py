@@ -8,12 +8,13 @@ import statux.cpu2 as cpu
 import statux.temp as temp
 
 from os import makedirs
-from os.path import dirname
+from os.path import dirname, exists
 from ui.main_window import *
 from PyQt5.QtWidgets import QStyleFactory, QMainWindow
 from PyQt5.QtCore import Qt, QCoreApplication, QDateTime, QTimer
 from forms.main_settings import ConfigForm
 from common.enums import *
+from configparser import ConfigParser
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
 from statux.system import session_id
@@ -23,7 +24,6 @@ from typing import Optional
 # TODO: Move
 from provisional import MAIN_CFG
 
-tr = lambda x: QCoreApplication.translate("SetMainForm", x)
 
 class SetMainForm(QMainWindow):
     # <editor-fold desc=" Init and close "
@@ -535,7 +535,7 @@ class SetMainForm(QMainWindow):
     def set_controls(self):
         if self.state == State.Activated:
             self.ui.frame.setStyleSheet("background-color: rgb(0, 85, 0);")
-            self.ui.labelState.setText(tr("Activated"))
+            self.ui.labelState.setText(self.tr("Activated"))
             self.ui.tabWidget.setEnabled(False)
             self.ui.groupBoxActions.setEnabled(False)
             self.ui.pushButtonStart.setEnabled(False)
@@ -543,7 +543,7 @@ class SetMainForm(QMainWindow):
         elif self.state == State.Stopped:
             self.ui.frame.setStyleSheet("background-color: rgb(170, 0, 0);")
             self.ui.labelData.setText("")
-            self.ui.labelState.setText(tr("Stopped"))
+            self.ui.labelState.setText(self.tr("Stopped"))
             self.ui.tabWidget.setEnabled(True)
             self.ui.groupBoxActions.setEnabled(True)
             self.ui.pushButtonStart.setEnabled(True)
@@ -564,9 +564,9 @@ class SetMainForm(QMainWindow):
         ptt = self.ui.comboBoxPttPartitions.currentText()
         mounted = mounted_partitions().keys()
         if ptt not in mounted:
-            return msg_dlg(tr("%s is not mounted yet") % ptt, tr("Do you want continue?"),
+            return msg_dlg(self.tr("%s is not mounted yet") % ptt, self.tr("Do you want continue?"),
                            QMessageBox.Yes | QMessageBox.No,
-                           details=tr("Current mounted partitions:\n%s") % "\n".join(mounted))
+                           details=self.tr("Current mounted partitions:\n%s") % "\n".join(mounted))
 
     def set_spin_sl_unit(self):
         if self.ui.radioButtonSystemLoadCPUTemp.isChecked():
@@ -588,6 +588,9 @@ class SetMainForm(QMainWindow):
             minimum = 0
         self.ui.spinBoxSystemLoadUnit.setMaximum(maximum)
         self.ui.spinBoxSystemLoadUnit.setMinimum(minimum)
+
+    def tr(self, sourceText: str, context: Optional[int]=0, n: int = ...):
+        return QCoreApplication.translate(name(self) if context else "SetMainForm", sourceText)
 
 
 if __name__ == "__main__":

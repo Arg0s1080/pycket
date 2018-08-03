@@ -47,7 +47,7 @@ class MailForm(QDialog):
                 msg_dlg(msg, "The data has been deleted", icon=QMessageBox.Critical,
                              details="The maximum number of attempts has been exceeded")
                 exit(msg)
-            pw = self.pw_dlg("Enter the password")
+            pw = self.pw_dlg(self.tr("Enter the password"))
             if pw is not None:
                 self.aes = AESManaged(pw)
                 self.config.read(MAIL_CFG)
@@ -104,6 +104,9 @@ class MailForm(QDialog):
     def closeEvent(self, a0: QCloseEvent):
         save_geometry(self.config, self.geometry())
         close_widget(self, self.config, MAIL_CFG, self.cancel)
+
+    def tr(self, sourceText: str, disambiguation: Optional[str] = ..., n: int = ...):
+        return QCoreApplication.translate(name(self), sourceText)
 
     def line_edit_from_text_changed(self):
         self.config.set("Encrypted", "from", self.aes.encrypt(self.ui.lineEditFrom.text()))
@@ -187,7 +190,7 @@ class MailForm(QDialog):
 if __name__ == "__main__":
     app = QApplication(argv)
     translator = QTranslator()
-    translator.load(get_loc_file("mail"))
+    translator.load(get_loc_file())
     app.installTranslator(translator)
     application = MailForm()
     application.show()

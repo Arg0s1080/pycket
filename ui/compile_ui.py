@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 # -*- coding UTF-8 -*-
 
-from os import getcwd, listdir, path
+from os import getcwd, listdir
+from os.path import exists, join as p_join
 from shutil import copyfile
 from subprocess import run, PIPE
 
@@ -16,7 +17,7 @@ class CompileUI:
         return file_path.split("/")[-1]
 
     def backup(self, file):
-        if path.exists(self.ui_file):
+        if exists(self.ui_file):
             copyfile(self.ui_file, file)
             print("- Make %s backup" % self.filename(self.ui_file))
 
@@ -41,7 +42,7 @@ class CompileUI:
 
 bak = lambda x: "%s.old" % x
 out = lambda x: x.replace(".ui", "_window.py")
-join = lambda x: path.join(getcwd(), x)
+join = lambda x: p_join(getcwd(), x)
 
 sets = [(file, out(file), bak(file)) for file in listdir(getcwd()) if file.endswith("ui")]
 

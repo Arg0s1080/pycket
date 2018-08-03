@@ -449,24 +449,27 @@
            </item>
            <item>
             <widget class="QComboBox" name="comboBoxTempScale">
+             <property name="currentText">
+              <string notr="true">Celsius</string>
+             </property>
              <item>
               <property name="text">
-               <string>Celsius</string>
+               <string notr="true">Celsius</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Fahrenheit</string>
+               <string notr="true">Fahrenheit</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Kelvin</string>
+               <string notr="true">Kelvin</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Rankine</string>
+               <string notr="true">Rankine</string>
               </property>
              </item>
             </widget>

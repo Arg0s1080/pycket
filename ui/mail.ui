@@ -28,7 +28,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>From</string>
+      <string>From:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -67,7 +67,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>Alias</string>
+      <string>Alias:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -97,7 +97,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>Server</string>
+      <string>Server:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -130,7 +130,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>Password</string>
+      <string>Password:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -162,19 +162,22 @@
        <pointsize>11</pointsize>
       </font>
      </property>
+     <property name="currentText">
+      <string notr="true">TSL</string>
+     </property>
      <item>
       <property name="text">
-       <string>TSL</string>
+       <string notr="true">TSL</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>SSL</string>
+       <string notr="true">SSL</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>NONE</string>
+       <string notr="true">NONE</string>
       </property>
      </item>
     </widget>
@@ -190,7 +193,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>Port</string>
+      <string>Port:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -235,7 +238,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>Subject</string>
+      <string>Subject:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -272,7 +275,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>Body</string>
+      <string>Body:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -351,7 +354,7 @@
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>To</string>
+      <string>To:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt, QTimer, QDateTime
 from configparser import ConfigParser
 from sys import argv, exit
 from os.path import exists, join
-from common.common import test_cfg, set_geometry, save_geometry, close_widget
+from common.common import *
 from scripts.sound import Sound
 
 # TODO: Move
@@ -82,6 +82,9 @@ class NotifyForm(QDialog):
 
 if __name__ == '__main__':
     app = QApplication(argv)
+    translator = QTranslator()
+    translator.load(get_loc_file())
+    app.installTranslator(translator)
     dialog = NotifyForm()
     dialog.show()
     exit(app.exec_())

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SetMainForm</class>
- <widget class="QMainWindow" name="SetMainForm">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -2519,11 +2519,11 @@ background-color: rgb(0, 85, 0);</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroupActions"/>
   <buttongroup name="buttonGroupSystemLoad"/>
+  <buttongroup name="buttonGroupPowerSnd"/>
+  <buttongroup name="buttonGroupActions"/>
   <buttongroup name="buttonGroupPartitions"/>
   <buttongroup name="buttonGroupNetwork"/>
-  <buttongroup name="buttonGroupPowerSnd"/>
   <buttongroup name="buttonGroupPowerMain"/>
  </buttongroups>
 </ui>

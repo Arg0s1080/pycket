@@ -170,7 +170,7 @@ class NotifySettingsForm(QDialog):
 
     def pushbutton_cancel_clicked(self):
         self.cancel = True
-        application.close()
+        dlg.close()
 
     def pushbutton_test_clicked(self):
         write_config(self.config, NOTIFY_CFG)
@@ -180,7 +180,9 @@ class NotifySettingsForm(QDialog):
 
 if __name__ == '__main__':
     app = QApplication(argv)
-    application = NotifySettingsForm()
-    application.show()
-
+    translator = QTranslator()
+    translator.load(get_loc_file())
+    app.installTranslator(translator)
+    dlg = NotifySettingsForm()
+    dlg.show()
     exit(app.exec_())

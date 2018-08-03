@@ -20,7 +20,7 @@ class MainForm(SetMainForm):
             print("Debug AtTime:", self.delay)
             if datetime.datetime.now() >= self.ui.dateTimeEditAtTime.dateTime():
                 print("Log: error, date after now")
-                msg_dlg("Pycket cannot start", "Date before now", icon=QMessageBox.Warning)
+                msg_dlg(self.tr("Pycket cannot start", 1), self.tr("Date before now", 1), icon=QMessageBox.Warning)
                 return
             self.ui.progressBar.setMaximum(self.delay)
         elif self.condition == Condition.Countdown:  ###########################################
@@ -45,14 +45,14 @@ class MainForm(SetMainForm):
                 self.index_radio = 1
                 self.scale = self.ui.comboBoxNetworkUnit.currentText()
                 self.index_combo = self.ui.comboBoxNetworkFinished.currentIndex()
-                self.title = "Downloaded" if self.index_combo == 0 else "Uploaded"
+                self.title = self.tr("Downloaded", 1) if self.index_combo == 0 else self.tr("Uploaded", 1)
                 self.spin_value = self.ui.spinBoxNetworkUnit.value()
             else:
                 self.index_radio = 0
                 self.index = self.ui.comboBoxNetworkMoreLess.currentIndex()
                 self.scale = self.ui.comboBoxNetworkUnitSpeed.currentText()
                 self.index_combo = self.ui.comboBoxNetworkSpeed.currentIndex()
-                self.title = "Download" if self.index_combo == 0 else "Upload"
+                self.title = self.tr("Download", 1) if self.index_combo == 0 else self.tr("Upload", 1)
                 self.spin_value = self.ui.spinBoxNetworkUnitSpeed.value()
                 self.minutes = self.ui.spinBoxNetworkMinutes.value()
                 self.check_for = self.ui.checkBoxNetworkFor.isChecked()
@@ -62,7 +62,7 @@ class MainForm(SetMainForm):
                 self.alarm_count = 0
                 self.index_radio = 0
                 self.index = self.ui.comboBoxPowerACDC.currentIndex()
-                self.title = "Power"
+                self.title = self.tr("Power", 1)
                 self.check_for = self.ui.checkBoxPowerFor.isChecked()
                 self.minutes = self.ui.spinBoxPowerMinutes.value()
             else:
@@ -72,12 +72,12 @@ class MainForm(SetMainForm):
                     self.index_radio2 = 0
                     time_ = self.ui.timeEditPower.time()
                     self.spin_value = time_.hour() * 3600 + time_.minute() * 60
-                    self.title = "Remaining Time"
+                    self.title = self.tr("Remaining Time", 1)
                     self.scale = ""
                 else:
                     self.index_radio2 = 1
                     self.spin_value = self.ui.spinBoxPowerPercent.value()
-                    self.title = "Capacity"
+                    self.title = self.tr("Capacity", 1)
                     self.scale = "%"
         elif self.condition == Condition.Partitions: ###############################################
             if self.check_ptt() == QMessageBox.No:
@@ -301,8 +301,7 @@ class MainForm(SetMainForm):
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     translator = QTranslator()
-    print("QQQQ", get_loc_file("pycket"))
-    translator.load(get_loc_file("pycket"))
+    translator.load(get_loc_file())
     app.installTranslator(translator)
     application = MainForm()
     application.show()
