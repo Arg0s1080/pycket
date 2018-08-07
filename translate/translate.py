@@ -1,6 +1,6 @@
 # TODO: Add to .gitignore
 
-from os.path import join
+from os.path import join, pardir
 from os import getcwd, listdir
 from subprocess import run, PIPE, Popen
 
@@ -12,16 +12,15 @@ translations = ["es"]  # Thought for ["es", "fr_FR", "de", "pt", etc]
 class Translate:
     def __init__(self):
         self._translate_path = getcwd()
-        self._uis_path = self._translate_path.replace("translate", "ui")
+        self._uis_path = join(pardir, "ui")
         ui_files = listdir(self._uis_path)
         compile_uis = [file for file in ui_files if file.endswith("window.py")]  # ui/*window.py
-        print("XXXXX", compile_uis)
         self._to_translate = [ui for ui in compile_uis if ui in context]
 
     def files_to_translate(self):
         return self._to_translate
 
-    def pylupdate(self):
+    def pylupdate(self):  # NOTE: Obsolete: Made qt_tr.pro
         """Make .ts files of each ui compiled"""
         tr_couples = []
         for tr in translations:
@@ -51,5 +50,5 @@ class Translate:
 
 tr = Translate()
 
-tr.pylupdate()
-#tr.lrelease()
+#tr.pylupdate()
+tr.lrelease()

@@ -146,7 +146,7 @@ class Ui_NotifySettingsDialog(object):
 
     def retranslateUi(self, NotifySettingsDialog):
         _translate = QtCore.QCoreApplication.translate
-        NotifySettingsDialog.setWindowTitle(_translate("NotifySettingsDialog", "Dialog"))
+        NotifySettingsDialog.setWindowTitle(_translate("NotifySettingsDialog", "Pycket - Notify Settings"))
         self.pushButtonOk.setText(_translate("NotifySettingsDialog", "Ok"))
         self.pushButtonCancel.setText(_translate("NotifySettingsDialog", "Cancel"))
         self.pushButtonTest.setText(_translate("NotifySettingsDialog", "Test"))

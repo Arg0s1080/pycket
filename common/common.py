@@ -6,7 +6,7 @@ from os.path import join, exists, dirname, pardir
 from os import getcwd, makedirs, listdir
 from subprocess import run, Popen, PIPE
 from typing import Optional
-from common.errors import ConfigFileNotFoundError
+#from common.errors import ConfigFileNotFoundError
 
 
 def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information, details=""):
@@ -24,6 +24,10 @@ def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information,
     return msg.exec()
 
 
+def translations() -> list:
+    return [file[7:-3] for file in listdir(join(pardir, "translate")) if file.endswith(".qm")]
+
+
 def get_loc_file():
     # E.g.:
     # locale = de_AT
@@ -31,8 +35,9 @@ def get_loc_file():
     # - Search for de_AT -> Not found
     # - Search for de    -> Not found
     # - Search for de_*  -> Found = [de_DE, de_LU] -> Choose Found[0]
+    filename = "pycket_%s.qm"
+
     def get_file():
-        filename = "pycket_%s.qm"
         return join(path, filename % locale)
     locale = QLocale.system().name()
     path = join(pardir, "translate")  # relative
@@ -42,13 +47,10 @@ def get_loc_file():
         if exists(get_file()):
             loc_file = get_file()
         else:
-            compatible = []
-            for file in listdir(dirname(loc_file)):
-                if file.endswith(".qm") and file[7:-3].startswith(locale):
-                    compatible.append(file)
-            if len(compatible) > 0:
+            compatibles = [filename % tr for tr in translations() if tr.startswith(locale)]
+            if len(compatibles) > 0:
                 # TODO: if len(compatible) > 1: can choose
-                loc_file = join(path, compatible[0])
+                loc_file = join(path, compatibles[0])
     return loc_file
 
 

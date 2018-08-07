@@ -43,9 +43,9 @@ class MailForm(QDialog):
         if exists(MAIL_CFG):
             if self.attempts < 1:
                 remove(MAIL_CFG)
-                msg = "Bad Password"
-                msg_dlg(msg, "The data has been deleted", icon=QMessageBox.Critical,
-                             details="The maximum number of attempts has been exceeded")
+                msg = self.tr("Bad Password")
+                msg_dlg(msg, self.tr("The data has been deleted"), icon=QMessageBox.Critical,
+                        details=self.tr("The maximum number of attempts has been exceeded"))
                 exit(msg)
             pw = self.pw_dlg(self.tr("Enter the password"))
             if pw is not None:
@@ -66,17 +66,17 @@ class MailForm(QDialog):
 
                 else:
                     self.attempts -= 1
-                    msg_dlg("Password incorrect", "Attempts: %d" % self.attempts)
+                    msg_dlg(self.tr("Password incorrect"), self.tr("Attempts: %d") % self.attempts)
                     self.set_config()
             else:
                 exit(0)
 
         else:
             make_cfg_folder(MAIL_CFG)
-            pw = self.pw_dlg("Enter a new password:\n\nThis password will not be stored.\n"
-                             "If this is lost or forgotten, the data can not be recovered")
+            pw = self.pw_dlg(self.tr("Enter a new password:\n\nThis password will not be stored.\n"
+                             "If this is lost or forgotten, the data can not be recovered"))
             if pw is not None:
-                if pw == self.pw_dlg("Type the password again"):
+                if pw == self.pw_dlg(self.tr("Type the password again")):
                     self.aes = AESManaged(pw)
                     make_geometry(self.config, 769, 514)
                     self.config.add_section("General")
@@ -96,7 +96,7 @@ class MailForm(QDialog):
                     write_config(self.config, MAIL_CFG)
 
                 else:
-                    msg_dlg("Both string do not match", icon=QMessageBox.Warning)
+                    msg_dlg(self.tr("Both string do not match"), icon=QMessageBox.Warning)
                     self.set_config()
             else:
                 exit(0)
@@ -149,7 +149,8 @@ class MailForm(QDialog):
         options |= QFileDialog.DontUseNativeDialog
         attachment = self.aes.decrypt(self.config.get("Encrypted", "attachment"))
         directory = dirname(attachment) or expanduser("~")
-        filename, _ = QFileDialog.getOpenFileName(self, "Select a file", directory, "All Files (*)", options=options)
+        filename, _ = QFileDialog.getOpenFileName(self, self.tr("Select a file"), directory,
+                                                  self.tr("All Files (*)"), options=options)
         if filename:
             self.config.set("Encrypted", "attachment", self.aes.encrypt(filename))
 
@@ -162,7 +163,7 @@ class MailForm(QDialog):
         application.close()
 
     def pushbutton_test_clicked(self):
-        pw = self.pw_dlg("Enter the password:")
+        pw = self.pw_dlg(self.tr("Enter the password:"))
         ok = True
         if pw is not None:
             try:
@@ -170,18 +171,17 @@ class MailForm(QDialog):
                 mail.send()
             except BadPasswordError as ex:
                 ok = False
-                msg_dlg(ex.msg, "Aborted operation", icon=QMessageBox.Critical)
+                msg_dlg(ex.msg, self.tr("Aborted operation"), icon=QMessageBox.Critical)
             except Exception as ex:
                 ok = False
                 msg_dlg(ex.args[0])
             finally:
                 if ok:
-                    msg_dlg("Operation performed", "Please, check your mailbox")
+                    msg_dlg(self.tr("Operation performed"), self.tr("Please, check your mailbox"))
 
-    @staticmethod
-    def pw_dlg(msg):
+    def pw_dlg(self, msg):
         dlg = QInputDialog()
-        txt, ok = dlg.getText(None, "Mail Settings Password", msg, QLineEdit.Password)
+        txt, ok = dlg.getText(None, self.tr("Mail Settings Password"), msg, QLineEdit.Password)
         if ok:
             return txt
         return
