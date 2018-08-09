@@ -69,8 +69,8 @@ class NotifySettingsForm(QDialog):
             self.ui.plainTextEditBody.setPlainText(self.config.get("Body", "txt"))
         else:
             make_cfg_folder(NOTIFY_CFG)
-            make_geometry(self.config, 400, 600, "Geometry_Settings")
             make_geometry(self.config, 550, 350)
+            make_geometry(self.config, 400, 600, "Geometry_Settings")
             self.config.add_section("General")
             self.config.set("General", "on_top", "False")
             self.config.set("General", "auto_close", "False")
