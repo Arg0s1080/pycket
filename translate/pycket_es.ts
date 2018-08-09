@@ -89,7 +89,7 @@
     <message>
         <location filename="../forms/mail.py" line="47"/>
         <source>The data has been deleted</source>
-        <translation type="unfinished">Los datos han sido eliminados</translation>
+        <translation>Los datos han sido eliminados</translation>
     </message>
     <message>
         <location filename="../forms/mail.py" line="47"/>
@@ -214,349 +214,369 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/main_window.py" line="1096"/>
+        <location filename="../ui/main_window.py" line="1098"/>
         <source>Pycket</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1097"/>
+        <location filename="../ui/main_window.py" line="1099"/>
         <source>Actions</source>
         <translation>Acciones</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1098"/>
+        <location filename="../ui/main_window.py" line="1100"/>
         <source>&amp;Lock Screen</source>
         <translation>&amp;Bloquear Pantalla</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1099"/>
+        <location filename="../ui/main_window.py" line="1101"/>
         <source>Hi&amp;bernate</source>
         <translation>&amp;Hibernar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1100"/>
+        <location filename="../ui/main_window.py" line="1102"/>
         <source>E&amp;xecute</source>
         <translation>&amp;Ejecutar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1101"/>
+        <location filename="../ui/main_window.py" line="1103"/>
         <source>S&amp;hutdown</source>
         <translation>&amp;Apagar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1102"/>
+        <location filename="../ui/main_window.py" line="1104"/>
         <source>S&amp;uspend</source>
         <translation>&amp;Suspender</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1103"/>
+        <location filename="../ui/main_window.py" line="1105"/>
         <source>&amp;Reboot</source>
         <translation>&amp;Reiniciar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1104"/>
+        <location filename="../ui/main_window.py" line="1106"/>
         <source>Notif&amp;y</source>
         <translation>&amp;Notificar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1105"/>
+        <location filename="../ui/main_window.py" line="1107"/>
         <source>Close Session</source>
         <translation>Cerrar Sesión</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1177"/>
+        <location filename="../ui/main_window.py" line="1179"/>
         <source>Send &amp;Mail</source>
         <translation>Enviar &amp;Mail</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1107"/>
+        <location filename="../ui/main_window.py" line="1109"/>
         <source>Stopped</source>
         <translation>Parado</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1108"/>
+        <location filename="../ui/main_window.py" line="1110"/>
         <source>Start</source>
         <translation>Comenzar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1109"/>
+        <location filename="../ui/main_window.py" line="1111"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1110"/>
+        <location filename="../ui/main_window.py" line="1111"/>
         <source>MM/dd/yyyy - HH:mm:ss</source>
-        <translation type="unfinished">dd/MM/yyyy - HH:mm:ss</translation>
+        <translation type="obsolete">dd/MM/yyyy - HH:mm:ss</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1111"/>
+        <location filename="../ui/main_window.py" line="1113"/>
         <source>Now</source>
         <translation>Ahora</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1112"/>
+        <location filename="../ui/main_window.py" line="1114"/>
         <source>- 1 H</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1113"/>
+        <location filename="../ui/main_window.py" line="1115"/>
         <source>+ 1 H</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1114"/>
+        <location filename="../ui/main_window.py" line="1116"/>
         <source>At time</source>
         <translation>A la hora</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1115"/>
+        <location filename="../ui/main_window.py" line="1117"/>
         <source>Hours</source>
         <translation>Horas</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1116"/>
+        <location filename="../ui/main_window.py" line="1118"/>
         <source>Minutes</source>
         <translation>Minutos</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1117"/>
+        <location filename="../ui/main_window.py" line="1119"/>
         <source>Seconds</source>
         <translation>Segundos</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1118"/>
+        <location filename="../ui/main_window.py" line="1120"/>
         <source>Countdown</source>
         <translation>Cuenta Atrás</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1119"/>
+        <location filename="../ui/main_window.py" line="1121"/>
         <source>&amp;RAM Used (%)</source>
         <translation>&amp;RAM Usada (%)</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1120"/>
+        <location filename="../ui/main_window.py" line="1122"/>
         <source>CPU Fre&amp;quecy (%)</source>
         <translation>&amp;Frecuencia CPU (%)</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1121"/>
+        <location filename="../ui/main_window.py" line="1123"/>
         <source>CPU &amp;Load (%)</source>
         <translation>&amp;Carga CPU (%)</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1122"/>
+        <location filename="../ui/main_window.py" line="1124"/>
         <source>CPU Temp (degrees)</source>
         <translation>Temperatura CPU (grados)</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1123"/>
+        <location filename="../ui/main_window.py" line="1125"/>
         <source>RAM Used</source>
         <translation>RAM Usada</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1149"/>
+        <location filename="../ui/main_window.py" line="1126"/>
         <source>less</source>
         <translation type="unfinished">menor</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1150"/>
+        <location filename="../ui/main_window.py" line="1127"/>
         <source>more</source>
         <translation type="unfinished">mayor</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1151"/>
+        <location filename="../ui/main_window.py" line="1128"/>
         <source>than</source>
         <translation type="unfinished">que</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1127"/>
+        <location filename="../ui/main_window.py" line="1129"/>
         <source>%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1157"/>
+        <location filename="../ui/main_window.py" line="1159"/>
         <source>min.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1154"/>
+        <location filename="../ui/main_window.py" line="1156"/>
         <source>for</source>
         <translation>durante</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1130"/>
+        <location filename="../ui/main_window.py" line="1132"/>
         <source>is</source>
         <translation>es</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1131"/>
+        <location filename="../ui/main_window.py" line="1133"/>
         <source>System Load</source>
         <translation type="unfinished">Carga Sistema</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1132"/>
+        <location filename="../ui/main_window.py" line="1134"/>
         <source>With the network interface</source>
         <translation type="unfinished">Con la interfaz de red</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1133"/>
+        <location filename="../ui/main_window.py" line="1135"/>
         <source>download speed is</source>
         <translation type="unfinished">la velocidad de bajada es</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1134"/>
+        <location filename="../ui/main_window.py" line="1136"/>
         <source>upload speed is</source>
         <translation type="unfinished">la velocidad de subida es</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1135"/>
+        <location filename="../ui/main_window.py" line="1137"/>
         <source>less than</source>
         <translation type="unfinished">menos que</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1136"/>
+        <location filename="../ui/main_window.py" line="1138"/>
         <source>more than</source>
         <translation type="unfinished">más que</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1139"/>
+        <location filename="../ui/main_window.py" line="1141"/>
         <source>is finished downloading</source>
         <translation type="unfinished">se finaliza de bajar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1140"/>
+        <location filename="../ui/main_window.py" line="1142"/>
         <source>is finished uploading</source>
         <translation type="unfinished">se finaliza de subur</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1141"/>
+        <location filename="../ui/main_window.py" line="1143"/>
         <source>Network</source>
         <translation type="unfinished">Red</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1142"/>
+        <location filename="../ui/main_window.py" line="1144"/>
         <source>Po&amp;wer is</source>
         <translation type="unfinished">&amp;La alimentación es</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1143"/>
+        <location filename="../ui/main_window.py" line="1145"/>
         <source>AC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1144"/>
+        <location filename="../ui/main_window.py" line="1146"/>
         <source>DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1147"/>
+        <location filename="../ui/main_window.py" line="1149"/>
         <source>The &amp;battery has</source>
         <translation type="unfinished">La &amp;batería tiene</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1152"/>
+        <location filename="../ui/main_window.py" line="1154"/>
         <source>remaining time</source>
         <translation type="unfinished">vida restante</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1153"/>
+        <location filename="../ui/main_window.py" line="1155"/>
         <source>Power</source>
         <translation type="unfinished">Alimentación</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1155"/>
+        <location filename="../ui/main_window.py" line="1157"/>
         <source>With the mounted partition:</source>
         <translation type="unfinished">Con la partición montada:</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1167"/>
+        <location filename="../ui/main_window.py" line="1169"/>
         <source>If it&apos;s</source>
         <translation type="unfinished">Si su</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1162"/>
+        <location filename="../ui/main_window.py" line="1164"/>
         <source>is less than</source>
         <translation type="unfinished">es menos de</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1163"/>
+        <location filename="../ui/main_window.py" line="1165"/>
         <source>is more than</source>
         <translation type="unfinished">es más de</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1160"/>
+        <location filename="../ui/main_window.py" line="1162"/>
         <source>read speed rate</source>
         <translation type="unfinished">velocidad de lectura</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1161"/>
+        <location filename="../ui/main_window.py" line="1163"/>
         <source>write speed rate</source>
         <translation type="unfinished">velocidad de escritura</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1164"/>
+        <location filename="../ui/main_window.py" line="1166"/>
         <source>free space</source>
         <translation type="unfinished">espacio libre</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1165"/>
+        <location filename="../ui/main_window.py" line="1167"/>
         <source>used space</source>
         <translation type="unfinished">espacio usado</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1166"/>
+        <location filename="../ui/main_window.py" line="1168"/>
         <source>total size</source>
         <translation type="unfinished">tamaño total</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1168"/>
+        <location filename="../ui/main_window.py" line="1170"/>
         <source>Partition</source>
         <translation type="unfinished">Partición</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1169"/>
+        <location filename="../ui/main_window.py" line="1171"/>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;Archivo</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1170"/>
+        <location filename="../ui/main_window.py" line="1172"/>
         <source>C&amp;onfig</source>
         <translation type="unfinished">&amp;Configuración</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1171"/>
+        <location filename="../ui/main_window.py" line="1173"/>
         <source>&amp;See</source>
         <translation type="unfinished">&amp;Ver</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1172"/>
+        <location filename="../ui/main_window.py" line="1174"/>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Cerrar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1173"/>
+        <location filename="../ui/main_window.py" line="1175"/>
         <source>&amp;Settings</source>
         <translation type="unfinished">&amp;Ajustes</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1174"/>
+        <location filename="../ui/main_window.py" line="1176"/>
         <source>&amp;Notify</source>
         <translation type="unfinished">&amp;Notificaciones</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1175"/>
+        <location filename="../ui/main_window.py" line="1177"/>
         <source>Style</source>
         <translation type="unfinished">Estilo</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1176"/>
+        <location filename="../ui/main_window.py" line="1178"/>
         <source>&amp;Execute</source>
         <translation type="unfinished">&amp;Ejecuciones</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1178"/>
+        <location filename="../ui/main_window.py" line="1180"/>
         <source>&amp;Always on top</source>
         <translation type="unfinished">&amp;Siempre encima</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window.py" line="1151"/>
+        <source>less </source>
+        <translation type="unfinished">menos </translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window.py" line="1152"/>
+        <source>more </source>
+        <translation type="unfinished">más </translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window.py" line="1153"/>
+        <source>than </source>
+        <translation type="unfinished">de </translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window.py" line="1112"/>
+        <source>MM/dd/yyyy - hh:mm:ss</source>
+        <translation type="unfinished">dd/MM/yyyy - hh:mm:ss</translation>
     </message>
 </context>
 <context>
@@ -692,135 +712,150 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
     <message>
         <location filename="../ui/notify_settings_window.py" line="170"/>
         <source>▶</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SetMainForm</name>
     <message>
-        <location filename="../forms/setmain.py" line="538"/>
+        <location filename="../forms/setmain.py" line="545"/>
         <source>Activated</source>
         <translation>Activado</translation>
     </message>
     <message>
-        <location filename="../forms/setmain.py" line="546"/>
+        <location filename="../forms/setmain.py" line="553"/>
         <source>Stopped</source>
         <translation>Parado</translation>
     </message>
     <message>
-        <location filename="../forms/setmain.py" line="567"/>
+        <location filename="../forms/setmain.py" line="574"/>
         <source>%s is not mounted yet</source>
         <translation>%s aún no está montada</translation>
     </message>
     <message>
-        <location filename="../forms/setmain.py" line="567"/>
+        <location filename="../forms/setmain.py" line="574"/>
         <source>Do you want continue?</source>
         <translation>¿Desea continuar?</translation>
     </message>
     <message>
-        <location filename="../forms/setmain.py" line="567"/>
+        <location filename="../forms/setmain.py" line="574"/>
         <source>Current mounted partitions:
 %s</source>
         <translation>Particiones montadas ahora:
 %s</translation>
     </message>
+    <message>
+        <location filename="../forms/setmain.py" line="273"/>
+        <source>yyyy/MM/dd hh:mm:ss</source>
+        <translation type="obsolete">dd/MM/yyyy hh:mm:ss</translation>
+    </message>
+    <message>
+        <location filename="../forms/setmain.py" line="274"/>
+        <source>MM/dd/yyyy - hh:mm:ss</source>
+        <translation type="unfinished">dd/MM/yyyy - hh:mm:ss</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../ui/settings_window.py" line="279"/>
+        <location filename="../ui/settings_window.py" line="282"/>
         <source>Pycket Settings</source>
         <translation>Ajustes Pycket</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="280"/>
+        <location filename="../ui/settings_window.py" line="285"/>
         <source>Commands</source>
         <translation>Comandos</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="281"/>
+        <location filename="../ui/settings_window.py" line="286"/>
         <source>Shutdown</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="282"/>
+        <location filename="../ui/settings_window.py" line="287"/>
         <source>Reboot</source>
         <translation>Reiniciar</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="283"/>
+        <location filename="../ui/settings_window.py" line="288"/>
         <source>Close Session</source>
         <translation>Cerrar Sesión</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="284"/>
+        <location filename="../ui/settings_window.py" line="289"/>
         <source>Lock Screen</source>
         <translation>Bloquear Pantalla</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="285"/>
+        <location filename="../ui/settings_window.py" line="290"/>
         <source>Suspend</source>
         <translation>Suspender</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="286"/>
+        <location filename="../ui/settings_window.py" line="291"/>
         <source>Hibernate</source>
         <translation>Hibernar</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="287"/>
+        <location filename="../ui/settings_window.py" line="292"/>
         <source>Execute</source>
         <translation>Ejecutar</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="288"/>
+        <location filename="../ui/settings_window.py" line="299"/>
         <source>Notify</source>
         <translation>Notificar</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="289"/>
+        <location filename="../ui/settings_window.py" line="300"/>
         <source>Send Mail</source>
         <translation>Enviar Mail</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="290"/>
+        <location filename="../ui/settings_window.py" line="293"/>
         <source>Actions</source>
         <translation>Acciones</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="291"/>
+        <location filename="../ui/settings_window.py" line="294"/>
         <source>Qt Style</source>
         <translation>Estilo Qt</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="292"/>
+        <location filename="../ui/settings_window.py" line="295"/>
         <source>DateTimeEdit format</source>
         <translation>formato DateTimeEdit</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="293"/>
+        <location filename="../ui/settings_window.py" line="296"/>
         <source>Temperature scale</source>
         <translation>Escala de temperatura</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="294"/>
+        <location filename="../ui/settings_window.py" line="297"/>
         <source>Text visible in progressbar</source>
         <translation>Texto visible en barra de progreso</translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="295"/>
+        <location filename="../ui/settings_window.py" line="301"/>
         <source>Misc.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="296"/>
+        <location filename="../ui/settings_window.py" line="283"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/settings_window.py" line="297"/>
+        <location filename="../ui/settings_window.py" line="284"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../ui/settings_window.py" line="298"/>
+        <source>Always on top</source>
+        <translation>Siempre encima</translation>
     </message>
 </context>
 </TS>
