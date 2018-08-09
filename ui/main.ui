@@ -240,8 +240,9 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 0, 0);
-background-color: rgb(0, 85, 0);</string>
+             <string notr="true">background-color: rgb(0, 85, 0);
+background-color: rgb(170, 0, 0);
+</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::Panel</enum>
@@ -370,7 +371,7 @@ background-color: rgb(0, 85, 0);</string>
              <enum>QTabWidget::Rounded</enum>
             </property>
             <property name="currentIndex">
-             <number>5</number>
+             <number>4</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideNone</enum>
@@ -430,6 +431,13 @@ background-color: rgb(0, 85, 0);</string>
                     <day>1</day>
                    </date>
                   </property>
+                  <property name="time">
+                   <time>
+                    <hour>16</hour>
+                    <minute>0</minute>
+                    <second>0</second>
+                   </time>
+                  </property>
                   <property name="minimumDate">
                    <date>
                     <year>1818</year>
@@ -441,7 +449,7 @@ background-color: rgb(0, 85, 0);</string>
                    <enum>QDateTimeEdit::MonthSection</enum>
                   </property>
                   <property name="displayFormat">
-                   <string>MM/dd/yyyy - HH:mm:ss</string>
+                   <string>MM/dd/yyyy - hh:mm:ss</string>
                   </property>
                   <property name="calendarPopup">
                    <bool>true</bool>
@@ -1792,16 +1800,16 @@ background-color: rgb(0, 85, 0);</string>
                      <locale language="English" country="UnitedStates"/>
                     </property>
                     <property name="currentText">
-                     <string extracomment="context: The battery has LESS than">less</string>
+                     <string extracomment="context: The battery has LESS than">less </string>
                     </property>
                     <item>
                      <property name="text">
-                      <string>less</string>
+                      <string>less </string>
                      </property>
                     </item>
                     <item>
                      <property name="text">
-                      <string extracomment="context: The battery has MORE than">more</string>
+                      <string extracomment="context: The battery has MORE than">more </string>
                      </property>
                     </item>
                    </widget>
@@ -1817,7 +1825,7 @@ background-color: rgb(0, 85, 0);</string>
                      <locale language="English" country="UnitedStates"/>
                     </property>
                     <property name="text">
-                     <string extracomment="context: The battery has less|more THAN">than</string>
+                     <string extracomment="context: The battery has less|more THAN">than </string>
                     </property>
                    </widget>
                   </item>
@@ -2520,10 +2528,10 @@ background-color: rgb(0, 85, 0);</string>
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroupSystemLoad"/>
-  <buttongroup name="buttonGroupPowerSnd"/>
   <buttongroup name="buttonGroupActions"/>
-  <buttongroup name="buttonGroupPartitions"/>
+  <buttongroup name="buttonGroupPowerSnd"/>
   <buttongroup name="buttonGroupNetwork"/>
+  <buttongroup name="buttonGroupPartitions"/>
   <buttongroup name="buttonGroupPowerMain"/>
  </buttongroups>
 </ui>
