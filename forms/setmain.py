@@ -20,7 +20,7 @@ from statux.disks import mounted_partitions
 from statux.system import session_id
 from common.common import *
 
-from typing import Optional
+
 # TODO: Move
 from provisional import MAIN_CFG
 
@@ -72,7 +72,7 @@ class SetMainForm(QMainWindow):
         self.config = ConfigParser()
         self.set_config()
         #self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, False)
-        self.setWindowFlag(Qt.WindowStaysOnTopHint, True)
+        #self.setWindowFlag(Qt.WindowStaysOnTopHint, True)
 
         self.set_sys_load()
 
@@ -145,7 +145,7 @@ class SetMainForm(QMainWindow):
             set_geometry(self.config, self.setGeometry)
 
             # Section: General
-            # self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, self.config.getboolean("General", "on_top"))
+            self.setWindowFlag(Qt.WindowStaysOnTopHint, self.config.getboolean("General", "on_top"))
             self.setStyle(QtWidgets.QApplication.setStyle(self.config.get("General", "qstyle")))
             self.ui.dateTimeEditAtTime.setDisplayFormat(self.config.get("General", "date_time_format"))
             scale = self.config.get("General", "temp_scale")
@@ -229,16 +229,9 @@ class SetMainForm(QMainWindow):
             self.ui.spinBoxNetworkMinutes.setValue(self.config.getint("Network", "spin_minutes"))
             self.ui.spinBoxNetworkUnit.setValue(self.config.getint("Network", "spin_unit"))
 
-
             # Section Power
-            if self.config.getboolean("Power", "group_index_1"):
-                self.ui.radioButtonPowerTheBatteryHas.setChecked(True)
-            else:
-                self.ui.radioButtonPowerIs.setChecked(True) # TODO Try delete (only 2 options)
-            if self.config.getboolean("Power", "group_index_2"):
-                self.ui.radioButtonPowerBatteryPercent.setChecked(True)
-            else:
-                self.ui.radioButtonPowerBatteryTime.setChecked(True)  # TODO Try Delete
+            self.ui.radioButtonPowerTheBatteryHas.setChecked(self.config.getboolean("Power", "group_index_1"))
+            self.ui.radioButtonPowerBatteryPercent.setChecked(self.config.getboolean("Power", "group_index_2"))
             self.ui.comboBoxPowerMoreLess.setCurrentIndex(self.config.getboolean("Power", "combo_more_less"))
             self.ui.comboBoxPowerACDC.setCurrentIndex(self.config.getboolean("Power", "combo_acdc"))
             self.ui.spinBoxPowerMinutes.setValue(self.config.getint("Power", "spin_minutes"))
@@ -247,10 +240,7 @@ class SetMainForm(QMainWindow):
             self.ui.timeEditPower.setDateTime(QDateTime.fromString(self.config.get("Power", "time_edit"), "h:mm"))
 
             # Section Partitions
-            if self.config.getboolean("Partitions", "group_index"):
-                self.ui.radioButtonPttIOPS.setChecked(True)
-            else:
-                self.ui.radioButtonPttSpace.setChecked(True)
+            self.ui.radioButtonPttIOPS.setChecked(self.config.getboolean("Partitions", "group_index"))
             self.ui.comboBoxPttPartitions.setCurrentText(self.config.get("Partitions", "combo_partitions"))
             self.ui.comboBoxPttSpace.setCurrentIndex(self.config.getint("Partitions", "combo_space"))
             self.ui.comboBoxPttSpaceLessMore.setCurrentIndex(self.config.getboolean("Partitions", "combo_spc_less_more"))
@@ -266,11 +256,13 @@ class SetMainForm(QMainWindow):
         else:
             make_cfg_folder(MAIN_CFG)
             make_geometry(self.config, 657, 424)
+            make_geometry(self.config, 350, 430, "Geometry_Settings")
             self.config.add_section("General")
             self.config.set("General", "qstyle", QStyleFactory.keys()[0])
             self.config.set("General", "temp_scale", "Celsius")
-            self.config.set("General", "date_time_format", "dd/MM/yyyy - HH:mm:ss")
+            self.config.set("General", "date_time_format", self.tr("MM/dd/yyyy - hh:mm:ss"))
             self.config.set("General", "progressbar_text", "False")
+            self.config.set("General", "on_top", "False")
             self.config.add_section("Main")
             self.config.set("Main", "actions", "Shutdown")
             self.config.set("Main", "conditions", "AtTime")
@@ -533,15 +525,19 @@ class SetMainForm(QMainWindow):
     # </editor-fold>
 
     def set_controls(self):
+        def set_color(*frames: QtWidgets.QFrame, green):
+            style_sheet = "background-color: rgb(0, 85, 0);" if green else "background-color: rgb(170, 0, 0);"
+            for frame in frames:
+                frame.setStyleSheet(style_sheet)
         if self.state == State.Activated:
-            self.ui.frame.setStyleSheet("background-color: rgb(0, 85, 0);")
+            set_color(self.ui.frame, self.ui.labelState, self.ui.labelData, green=True)
             self.ui.labelState.setText(self.tr("Activated"))
             self.ui.tabWidget.setEnabled(False)
             self.ui.groupBoxActions.setEnabled(False)
             self.ui.pushButtonStart.setEnabled(False)
             self.ui.pushButtonCancel.setEnabled(True)
         elif self.state == State.Stopped:
-            self.ui.frame.setStyleSheet("background-color: rgb(170, 0, 0);")
+            set_color(self.ui.frame, self.ui.labelState, self.ui.labelData, green=False)
             self.ui.labelData.setText("")
             self.ui.labelState.setText(self.tr("Stopped"))
             self.ui.tabWidget.setEnabled(True)
@@ -589,8 +585,8 @@ class SetMainForm(QMainWindow):
         self.ui.spinBoxSystemLoadUnit.setMaximum(maximum)
         self.ui.spinBoxSystemLoadUnit.setMinimum(minimum)
 
-    def tr(self, sourceText: str, context: Optional[int]=0, n: int = ...):
-        return QCoreApplication.translate(name(self) if context else "SetMainForm", sourceText)
+    def tr(self, source_text: str, context: Optional[int]=0, n: int = ...) -> str:
+        return QCoreApplication.translate(name(self) if context else "SetMainForm", source_text)
 
 
 if __name__ == "__main__":
