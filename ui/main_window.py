@@ -1029,7 +1029,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuSee.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.pushButtonStart, self.pushButtonCancel)
         MainWindow.setTabOrder(self.pushButtonCancel, self.radioButtonShutdown)

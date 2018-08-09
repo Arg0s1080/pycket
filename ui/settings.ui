@@ -526,14 +526,14 @@
        <item row="4" column="0" colspan="2">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="pushButtonNotify">
            <property name="text">
             <string>Notify</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="pushButtonSendMail">
            <property name="text">
             <string>Send Mail</string>
            </property>
