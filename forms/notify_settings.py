@@ -166,11 +166,11 @@ class NotifySettingsForm(QDialog):
         self.config.set("Body", "txt", self.ui.plainTextEditBody.toPlainText())
 
     def pushbutton_ok_clicked(self):
-        pass
+        self.close()
 
     def pushbutton_cancel_clicked(self):
         self.cancel = True
-        dlg.close()
+        self.close()
 
     def pushbutton_test_clicked(self):
         write_config(self.config, NOTIFY_CFG)

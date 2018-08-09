@@ -20,6 +20,8 @@ class ConfigForm(QtWidgets.QDialog):
         self.get_config()
         self.ui.pushButtonOk.clicked.connect(self.close)
         self.ui.pushButtonCancel.clicked.connect(self.canceled)
+        self.ui.pushButtonNotify.clicked.connect(self.pushbutton_notify_clicked)
+        self.ui.pushButtonSendMail.clicked.connect(self.pushbutton_send_mail_clicked)
         self.ui.lineEditShutdown.textChanged.connect(self.line_edit_shutdown_text_changed)
         self.ui.lineEditReboot.textChanged.connect(self.line_edit_reboot_text_changed)
         self.ui.lineEditCloseSession.textChanged.connect(self.line_edit_close_session_text_changed)
@@ -92,6 +94,16 @@ class ConfigForm(QtWidgets.QDialog):
 
     def checkbox_always_on_top_state_changed(self):
         self.config.set("General", "on_top", str(self.ui.checkBoxAlwaysOnTop.isChecked()))
+
+    @staticmethod
+    def pushbutton_notify_clicked():
+        from forms.notify_settings import NotifySettingsForm
+        NotifySettingsForm().exec_()
+
+    @staticmethod
+    def pushbutton_send_mail_clicked():
+        from forms.mail import MailForm
+        MailForm().exec_()
 
 
 if __name__ == "__main__":

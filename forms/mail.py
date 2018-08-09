@@ -156,11 +156,10 @@ class MailForm(QDialog):
 
     def pushbutton_cancel_clicked(self):
         self.cancel = True
-        application.close()
+        self.close()
 
-    @staticmethod
-    def pushbutton_ok_clicked():
-        application.close()
+    def pushbutton_ok_clicked(self):
+        self.close()
 
     def pushbutton_test_clicked(self):
         pw = self.pw_dlg(self.tr("Enter the password:"))

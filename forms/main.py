@@ -256,8 +256,19 @@ class MainForm(SetMainForm):
         self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), -3600)
 
     def action_settings_triggered(self):
-        if self.config_form.exec_() == 0:
-            self.config.read(MAIN_CFG)
+        from forms.main_settings import ConfigForm
+        if ConfigForm().exec_() == 0:
+            self.set_config()
+
+    @staticmethod
+    def action_notify_triggered():
+        from forms.notify_settings import NotifySettingsForm
+        NotifySettingsForm().exec_()
+
+    @staticmethod
+    def action_send_mail_triggered():
+        from forms.mail import MailForm
+        MailForm().exec_()
 
 
 if __name__ == '__main__':

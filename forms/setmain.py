@@ -12,7 +12,6 @@ from os.path import dirname, exists
 from ui.main_window import *
 from PyQt5.QtWidgets import QStyleFactory, QMainWindow
 from PyQt5.QtCore import Qt, QCoreApplication, QDateTime, QTimer
-from forms.main_settings import ConfigForm
 from common.enums import *
 from configparser import ConfigParser
 from statux.net import get_interfaces
@@ -70,8 +69,6 @@ class SetMainForm(QMainWindow):
 
         self.config = ConfigParser()
         self.set_config()
-        #self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint, False)
-        #self.setWindowFlag(Qt.WindowStaysOnTopHint, True)
 
         self.set_sys_load()
 
@@ -125,10 +122,11 @@ class SetMainForm(QMainWindow):
         self.ui.spinBoxPttMinutes.valueChanged.connect(self.spin_ptt_minutes_value_changed)
         self.ui.checkBoxPttFor.stateChanged.connect(self.check_ptt_for_state_changed)
         self.ui.actionSettings.triggered.connect(self.action_settings_triggered)
+        self.ui.actionNotify.triggered.connect(self.action_notify_triggered)
+        self.ui.actionSendMail.triggered.connect(self.action_send_mail_triggered)
         self.timer_mon.timeout.connect(self.timer_mon_tick)
         self.timer.timeout.connect(self.timer_tick)
         
-        self.config_form = ConfigForm()
 
     # TEST
     def test_event(self, event):
