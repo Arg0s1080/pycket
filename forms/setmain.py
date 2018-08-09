@@ -59,7 +59,6 @@ class SetMainForm(QMainWindow):
         self.cpu_mon = None
         self.cpu_load = None
         self.alarm_count = None   # to use only one alarm
-        self.alarm_count_ptt = None  # to use only one alarm
         self.count_bytes = None
         self.unit_panel = None
         self.temp_symbol = None

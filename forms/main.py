@@ -213,44 +213,6 @@ class MainForm(SetMainForm):
                     self.alarm_count = 0
                     self.set_progressbar(0, 1)
 
-    def timer_ptt_tick(self):
-        ptt = self.ui.comboBoxPttPartitions.currentText()
-        if self.ui.radioButtonPttSpace.isChecked():
-            index = self.ui.comboBoxPttSpaceLessMore.currentIndex()
-            spin_value = self.ui.spinBoxPttSpace.value()
-            index_size = self.ui.comboBoxPttSpace.currentIndex()
-            scale = self.ui.comboBoxPttSpaceUnit.currentText()
-            if index_size == 0:
-                value = free_space(ptt, scale)
-                fun = "free"
-            elif index_size == 1:
-                value = used_space(ptt, scale)
-                fun = "used"
-            else:
-                value = total_size(ptt, scale)
-                fun = "total"
-            self.ui.labelData.setText("%s: %s %s %s" % (ptt, value, scale, fun))
-            if (value < spin_value and index == 0) or (value > spin_value and index == 1):
-                self.set_finish(True)
-        else:  # IOPS
-            index = self.ui.comboBoxPttIOPSLessMore.currentIndex()
-            spin_value = self.ui.spinBoxPttIOPS.value()
-            scale = self.ui.comboBoxPttIOPSUnit.currentText().split("/")[0]
-            value = bytes_read_write(ptt, scale=scale)[index]
-            self.ui.labelData.setText("%s: %s %s/sec" % (ptt, value, scale))
-            # DEBUG:
-            print(value, scale)
-            if (value < spin_value and index == 0) or (value > spin_value and index == 1):
-                if self.ui.checkBoxPttFor.isChecked():
-                    self.alarm_count_ptt += 1
-                    self.set_progressbar(self.alarm_count_ptt, self.ui.spinBoxPttMinutes.value())  # TODO: Multiply by 60
-                    if self.alarm_count_ptt >= self.ui.spinBoxPttMinutes.value():  # TODO * 60
-                        self.set_finish(True)
-                else:
-                    self.set_finish(True)
-            else:
-                self.alarm_count_ptt = 0
-
     def get_net_value(self):
         if self.ui.radioButtonNetworkUploadDownloadSpeed.isChecked():
             return down_up_speed(self.net_interface, 0, self.scale.split("/")[0])[self.index_combo]
