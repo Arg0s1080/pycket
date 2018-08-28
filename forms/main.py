@@ -13,6 +13,8 @@ class MainForm(SetMainForm):
         close_widget(self, self.config, MAIN_CFG)
 
     def pushbutton_start_clicked(self):
+        if not self.check_action():
+            return
         self.state = State.Activated
         if self.condition == Condition.AtTime: ###############################################
             import datetime
@@ -234,13 +236,13 @@ class MainForm(SetMainForm):
         self.spin_value = None
         self.alarm_count = None
 
-        xx, yy, zz = (None,) * 3
+        #xx, yy, zz = (None,) * 3
 
         self.state = State.Stopped
         self.set_controls()
 
         if execute_:
-            execute(self.action)
+            execute(self.action, self.mail_pw)
 
     def set_time_edit(self, dt: QDateTime, secs: int):
         self.ui.dateTimeEditAtTime.setDateTime(dt.addSecs(secs))

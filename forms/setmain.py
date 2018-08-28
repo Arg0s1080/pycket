@@ -17,11 +17,12 @@ from configparser import ConfigParser
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
 from statux.system import session_id
+from statux.system import init
 from common.common import *
 
 
 # TODO: Move
-from provisional import MAIN_CFG
+from provisional import MAIN_CFG, MAIL_CFG, NOTIFY_CFG
 
 
 class SetMainForm(QMainWindow):
@@ -62,6 +63,7 @@ class SetMainForm(QMainWindow):
         self.unit_panel = None
         self.temp_symbol = None
         self.temp_scale = None
+        self.mail_pw = None
 
         # Section: Declarations
         self.timer_mon = QTimer()   # SysLoad TabWidget monitoring
@@ -584,6 +586,55 @@ class SetMainForm(QMainWindow):
 
     def tr(self, source_text: str, context: Optional[int]=0, n: int = ...) -> str:
         return QCoreApplication.translate(name(self) if context else "SetMainForm", source_text)
+
+    def check_action(self):
+        def msg(txt):
+            hint = self.tr("Please, go to settings and configure it.")
+            msg_dlg(txt, hint, icon=QMessageBox.Warning)
+
+        def get_val(option):
+            return self.config.get("Commands", option)
+
+        def check_command(option):
+            command = get_val(option)
+            print("command", command)
+            if command == "":
+                return False
+            elif init() != "systemd":
+                cmd = command.split()[0]
+                if cmd == "systemctl" or cmd == "loginctl":
+                    q = msg_dlg(self.tr("Init is not systemd and the command associated with '%s' is %s") %
+                                (option.replace("_", " "), command),
+                                self.tr("It seems that it will not work.\n\nDo you wish to continue?"),
+                                QMessageBox.Yes|QMessageBox.No, QMessageBox.Warning)
+                    return False if q == QMessageBox.No else True
+            return True
+        if self.action == Action.Mail:
+            if not exists(MAIL_CFG):
+                msg(self.tr("It seems that mail is not configured"))
+                return False
+            self.mail_pw = pw_dlg(self.tr("Enter mail password"))
+        elif self.action == Action.Notify:
+            if not exists(NOTIFY_CFG):
+                msg(self.tr("It seems that notifications are not configured"))
+                return False
+        elif self.action == Action.Execute:
+            if get_val("execute") == "":
+                msg(self.tr("It seems that executions are not configured"))
+                return False
+        elif self.action == Action.Shutdown:
+            return check_command("shutdown")
+        elif self.action == Action.Reboot:
+            return check_command("reboot")
+        elif self.action == Action.CloseSession:
+            return check_command("close_session")
+        elif self.action == Action.Lock:
+            return check_command("lock_screen")
+        elif self.action == Action.Suspend:
+            return check_command("suspend")
+        elif self.action == Action.Hibernate:
+            return check_command("hibernate")
+        return True
 
 
 if __name__ == "__main__":
