@@ -5,11 +5,12 @@ from os.path import dirname
 from forms.notify import NotifyForm
 from os import makedirs, listdir
 from sys import argv, exit
+from scripts.sound import Sound
 from common.common import *
 
 # TODO: Delete:
 from provisional import NOTIFY_CFG
-
+#import resources.images
 
 class NotifySettingsForm(QDialog):
     def __init__(self):
@@ -27,6 +28,7 @@ class NotifySettingsForm(QDialog):
         self.ui.lineEditTimeFormat.textChanged.connect(self.line_edit_time_format_text_changed)
         self.ui.checkBoxPlaySound.stateChanged.connect(self.checkbox_play_sound_state_changed)
         self.ui.comboBoxSounds.currentTextChanged.connect(self.combobox_sounds_text_changed)
+        self.ui.pushButtonPlaySound.clicked.connect(self.pushbutton_play_clicked)
         self.ui.checkBoxInLoop.stateChanged.connect(self.checkbox_in_loop_state_changed)
         self.ui.doubleSpinBoxOpacity.valueChanged.connect(self.double_spinbox_opacity_value_changed)
         self.ui.fontComboBoxHeader.currentTextChanged.connect(self.font_combobox_header_text_changed)
@@ -42,6 +44,7 @@ class NotifySettingsForm(QDialog):
         self.ui.pushButtonOk.clicked.connect(self.pushbutton_ok_clicked)
         self.ui.pushButtonCancel.clicked.connect(self.pushbutton_cancel_clicked)
         self.ui.pushButtonTest.clicked.connect(self.pushbutton_test_clicked)
+
 
     def set_config(self):
         if exists(NOTIFY_CFG):
@@ -99,7 +102,7 @@ class NotifySettingsForm(QDialog):
     def set_combo_sound(self):
         def rn(filename):
             return filename.replace("-", " ")[:-4].title()
-        for file in listdir(join(getcwd().replace("forms", ""), "sounds")):
+        for file in listdir(join(pardir, "resources", "sounds")):
             if file.endswith(".wav"):
                 self.ui.comboBoxSounds.addItem(rn(file))
 
@@ -128,6 +131,10 @@ class NotifySettingsForm(QDialog):
 
     def combobox_sounds_text_changed(self):
         self.config.set("General", "sound", self.ui.comboBoxSounds.currentText())
+
+    def pushbutton_play_clicked(self):
+        # TODO: Switch Play/Stop
+        Sound(self.config.get("General", "sound")).play_wav()
 
     def checkbox_in_loop_state_changed(self):
         self.config.set("General", "in_loop", str(self.ui.checkBoxInLoop.isChecked()))
