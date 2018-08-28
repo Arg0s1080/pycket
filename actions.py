@@ -38,3 +38,4 @@ def execute(action: Action, app_pw=None):
             command = config.get("Commands", "hibernate")
         elif action is Action.Execute:
             command = config.get("Commands", "execute")
+
