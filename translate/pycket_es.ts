@@ -346,7 +346,8 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
     <message>
         <location filename="../ui/main_window.py" line="1124"/>
         <source>CPU Temp (degrees)</source>
-        <translation>Temperatura CPU (grados)</translation>
+        <translatorcomment>Se abrevia Temperatura a  Temp. para que el txt entre bien en el panel (QFrame)</translatorcomment>
+        <translation>Temp. CPU (grados)</translation>
     </message>
     <message>
         <location filename="../ui/main_window.py" line="1125"/>
@@ -805,7 +806,7 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
     <message>
         <location filename="../ui/settings_window.py" line="299"/>
         <source>Notify</source>
-        <translation>Notificar</translation>
+        <translation>Notificaciones</translation>
     </message>
     <message>
         <location filename="../ui/settings_window.py" line="300"/>
