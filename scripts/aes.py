@@ -1,12 +1,13 @@
 from base64 import b64encode, b64decode
-from hashlib import sha3_256
+
+from hashlib import sha256
 from Crypto import Random
 from Crypto.Cipher import AES
 
 
 class AESManaged:
     def __init__(self, key: str):
-        self.key = sha3_256(key.encode()).digest()
+        self.key = sha256(key.encode()).digest()
 
     def encrypt(self, msg: str) -> str:
         pad = lambda s: s + ((AES.block_size - len(s) % AES.block_size) *

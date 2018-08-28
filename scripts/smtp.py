@@ -71,7 +71,6 @@ class SMPTMail:
         else:
             raise ValueError("Bad email address syntax", address)
 
-
 """
 # TODO: Delete
 from provisional import GMAIL_APP_PW

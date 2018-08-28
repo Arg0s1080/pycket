@@ -4,8 +4,7 @@ from common.errors import BadPasswordError
 from common.common import test_cfg
 from scripts.smtp import SMPTMail, Encrypt
 from math import pi, e
-# from os.path import join  # Unused
-# from os import getcwd     # Unused
+
 
 # TODO: Delete
 from provisional import MAIL_CFG
