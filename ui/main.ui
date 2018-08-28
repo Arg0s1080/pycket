@@ -2410,7 +2410,6 @@ background-color: rgb(170, 0, 0);
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
     <addaction name="actionNotify"/>
-    <addaction name="actionExecute"/>
     <addaction name="actionSendMail"/>
    </widget>
    <widget class="QMenu" name="menuSee">
@@ -2419,9 +2418,17 @@ background-color: rgb(170, 0, 0);
     </property>
     <addaction name="actionAlways_on_top"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout_2"/>
+    <addaction name="actionAbout_Qt"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuConfig"/>
    <addaction name="menuSee"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionClose">
@@ -2457,6 +2464,16 @@ background-color: rgb(170, 0, 0);
   <action name="actionAlways_on_top">
    <property name="text">
     <string>&amp;Always on top</string>
+   </property>
+  </action>
+  <action name="actionAbout_2">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
    </property>
   </action>
  </widget>
@@ -2529,9 +2546,9 @@ background-color: rgb(170, 0, 0);
  <buttongroups>
   <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupActions"/>
+  <buttongroup name="buttonGroupPartitions"/>
   <buttongroup name="buttonGroupPowerSnd"/>
   <buttongroup name="buttonGroupNetwork"/>
-  <buttongroup name="buttonGroupPartitions"/>
   <buttongroup name="buttonGroupPowerMain"/>
  </buttongroups>
 </ui>

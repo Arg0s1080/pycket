@@ -8,6 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_NotifySettingsDialog(object):
     def setupUi(self, NotifySettingsDialog):
         NotifySettingsDialog.setObjectName("NotifySettingsDialog")
@@ -25,6 +26,9 @@ class Ui_NotifySettingsDialog(object):
         self.pushButtonCancel.setObjectName("pushButtonCancel")
         self.horizontalLayout_2.addWidget(self.pushButtonCancel)
         self.pushButtonTest = QtWidgets.QPushButton(NotifySettingsDialog)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/images/aim.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButtonTest.setIcon(icon)
         self.pushButtonTest.setObjectName("pushButtonTest")
         self.horizontalLayout_2.addWidget(self.pushButtonTest)
         self.gridLayout_4.addLayout(self.horizontalLayout_2, 2, 0, 1, 1)
@@ -171,4 +175,3 @@ class Ui_NotifySettingsDialog(object):
         self.labelPercent.setText(_translate("NotifySettingsDialog", "%"))
         self.labelSeconds.setText(_translate("NotifySettingsDialog", "seconds"))
         self.lineEditTimeFormat.setText(_translate("NotifySettingsDialog", "hh:mm:ss"))
-
