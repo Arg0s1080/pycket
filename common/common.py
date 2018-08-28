@@ -1,12 +1,12 @@
 from configparser import ConfigParser
-from PyQt5.QtWidgets import QWidget, QMessageBox, QApplication
+from PyQt5.QtWidgets import QWidget, QMessageBox, QApplication, QInputDialog, QLineEdit
 from PyQt5.QtCore import QLocale, QCoreApplication, QTranslator
 from sys import exc_info
 from os.path import join, exists, dirname, pardir
 from os import getcwd, makedirs, listdir
 from subprocess import run, Popen, PIPE
 from typing import Optional
-#from common.errors import ConfigFileNotFoundError
+from common.errors import ConfigFileNotFoundError
 
 
 def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information, details=""):
@@ -22,6 +22,14 @@ def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information,
         msg.setDetailedText(details)
 
     return msg.exec()
+
+
+def pw_dlg(msg, title="Pycket"):
+    dlg = QInputDialog()
+    txt, ok = dlg.getText(None, title, msg, QLineEdit.Password)
+    if ok:
+        return txt
+    return
 
 
 def translations() -> list:
@@ -122,3 +130,4 @@ def write_config(config: ConfigParser, cfg_file: str):
 
 def name(cls):
     return cls.__class__.__name__
+
