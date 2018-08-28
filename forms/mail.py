@@ -1,11 +1,10 @@
 from ui.mail_window import Ui_MailDialog
-from PyQt5.QtWidgets import QApplication, QDialog, QInputDialog, QLineEdit, QFileDialog
+from PyQt5.QtWidgets import QDialog, QInputDialog, QLineEdit, QFileDialog
 from PyQt5.QtGui import QCloseEvent
-from PyQt5.QtCore import QTranslator
-from os.path import dirname, expanduser
-from os import makedirs, remove
+from os.path import expanduser
+from os import remove
 from scripts.aes import AESManaged
-from sendmail import SendMail, CONTROL
+from scripts.sendmail import SendMail, CONTROL
 from sys import argv, exit
 from common.common import *
 from common.errors import BadPasswordError
@@ -24,6 +23,7 @@ class MailForm(QDialog):
         self.attempts = 3
         self.cancel = None
         self.aes = None
+        self.title = self.tr("Mail Settings Password")
         self.set_config()
         self.ui.lineEditFrom.textChanged.connect(self.line_edit_from_text_changed)
         self.ui.lineEditAlias.textChanged.connect(self.line_edit_alias_text_changed)
@@ -47,7 +47,7 @@ class MailForm(QDialog):
                 msg_dlg(msg, self.tr("The data has been deleted"), icon=QMessageBox.Critical,
                         details=self.tr("The maximum number of attempts has been exceeded"))
                 exit(msg)
-            pw = self.pw_dlg(self.tr("Enter the password"))
+            pw = pw_dlg(self.tr("Enter the password"), self.title)
             if pw is not None:
                 self.aes = AESManaged(pw)
                 self.config.read(MAIL_CFG)
@@ -73,8 +73,8 @@ class MailForm(QDialog):
 
         else:
             make_cfg_folder(MAIL_CFG)
-            pw = self.pw_dlg(self.tr("Enter a new password:\n\nThis password will not be stored.\n"
-                             "If this is lost or forgotten, the data can not be recovered"))
+            pw = pw_dlg(self.tr("Enter a new password:\n\nThis password will not be stored.\nIf this is lost "
+                                "or forgotten, the data can not be recovered"), self.title)
             if pw is not None:
                 if pw == self.pw_dlg(self.tr("Type the password again")):
                     self.aes = AESManaged(pw)
@@ -162,7 +162,11 @@ class MailForm(QDialog):
         self.close()
 
     def pushbutton_test_clicked(self):
-        pw = self.pw_dlg(self.tr("Enter the password:"))
+        if self.send_mail():
+            msg_dlg(self.tr("Operation performed"), self.tr("Please, check your mailbox"))
+
+    def send_mail(self):
+        pw = pw_dlg(self.tr("Enter the password:"), self.title)
         ok = True
         if pw is not None:
             try:
@@ -173,18 +177,10 @@ class MailForm(QDialog):
                 msg_dlg(ex.msg, self.tr("Aborted operation"), icon=QMessageBox.Critical)
             except Exception as ex:
                 ok = False
-                msg_dlg(ex.args[0])
+                msg_dlg("Mail error", "An error occurred while sending mail", icon=QMessageBox.Critical,
+                        details="\n-".join(list(map(str, ex.args))))
             finally:
-                if ok:
-                    msg_dlg(self.tr("Operation performed"), self.tr("Please, check your mailbox"))
-
-    def pw_dlg(self, msg):
-        dlg = QInputDialog()
-        txt, ok = dlg.getText(None, self.tr("Mail Settings Password"), msg, QLineEdit.Password)
-        if ok:
-            return txt
-        return
-
+                return ok
 
 if __name__ == "__main__":
     app = QApplication(argv)
