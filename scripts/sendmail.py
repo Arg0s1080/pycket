@@ -7,7 +7,7 @@ from math import pi, e
 
 
 # TODO: Delete
-from provisional import MAIL_CFG
+from paths import MAIL_CFG
 
 CONTROL = "%.15f%s%.14f%s" % (pi, "ck", e, "t")
 

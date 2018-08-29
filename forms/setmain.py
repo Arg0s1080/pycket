@@ -22,7 +22,7 @@ from common.common import *
 
 
 # TODO: Move
-from provisional import MAIN_CFG, MAIL_CFG, NOTIFY_CFG
+from paths import MAIN_CFG, MAIL_CFG, NOTIFY_CFG
 
 
 class SetMainForm(QMainWindow):
@@ -597,7 +597,6 @@ class SetMainForm(QMainWindow):
 
         def check_command(option):
             command = get_val(option)
-            print("command", command)
             if command == "":
                 return False
             elif init() != "systemd":

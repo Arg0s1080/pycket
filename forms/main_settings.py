@@ -6,7 +6,7 @@ from common.common import *
 import sys
 
 # TODO: Move
-from provisional import MAIN_CFG
+from paths import MAIN_CFG
 
 
 class ConfigForm(QtWidgets.QDialog):

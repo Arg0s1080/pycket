@@ -10,7 +10,7 @@ from common.common import *
 from common.errors import BadPasswordError
 
 # TODO: Delete
-from provisional import MAIL_CFG
+from paths import MAIL_CFG
 
 
 class MailForm(QDialog):

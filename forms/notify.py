@@ -9,7 +9,7 @@ from common.common import *
 from scripts.sound import Sound
 
 # TODO: Move
-from provisional import NOTIFY_CFG
+from paths import NOTIFY_CFG
 
 
 class NotifyForm(QDialog):

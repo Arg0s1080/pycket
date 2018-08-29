@@ -1,9 +1,8 @@
+from os import devnull
 from os.path import dirname, join, pardir
 from subprocess import Popen, PIPE, STDOUT, check_output
 import wave
 from math import ceil
-
-import os
 
 
 class Sound:
@@ -23,4 +22,4 @@ class Sound:
             return ceil(10 * frames / float(rate)) * 100
 
     def play_wav(self) -> Popen:
-        return Popen(["aplay", self.wave_file], stdout=open(os.devnull, 'w'), stderr=STDOUT)
+        return Popen(["aplay", self.wave_file], stdout=open(devnull, 'w'), stderr=STDOUT)

@@ -9,7 +9,7 @@ from scripts.sound import Sound
 from common.common import *
 
 # TODO: Delete:
-from provisional import NOTIFY_CFG
+from paths import NOTIFY_CFG
 #import resources.images
 
 class NotifySettingsForm(QDialog):
