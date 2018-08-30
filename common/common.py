@@ -2,7 +2,8 @@ from configparser import ConfigParser
 from PyQt5.QtWidgets import QWidget, QMessageBox, QApplication, QInputDialog, QLineEdit
 from PyQt5.QtCore import QLocale, QCoreApplication, QTranslator
 from sys import exc_info
-from os.path import join, exists, dirname, pardir
+from os.path import join, exists, dirname
+from paths import PARENT
 from os import getcwd, makedirs, listdir
 from subprocess import run, Popen, PIPE
 from typing import Optional
@@ -33,7 +34,7 @@ def pw_dlg(msg, title="Pycket"):
 
 
 def translations() -> list:
-    return [file[7:-3] for file in listdir(join(pardir, "translate")) if file.endswith(".qm")]
+    return [file[7:-3] for file in listdir(join(PARENT, "translate")) if file.endswith(".qm")]
 
 
 def get_loc_file():
@@ -48,7 +49,7 @@ def get_loc_file():
     def get_file():
         return join(path, filename % locale)
     locale = QLocale.system().name()
-    path = join(pardir, "translate")  # relative
+    path = join(PARENT, "translate")
     loc_file = get_file()
     if not exists(loc_file):
         locale = locale[:-3]
