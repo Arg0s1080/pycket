@@ -1,6 +1,7 @@
 from os import devnull
-from os.path import dirname, join, pardir
+from os.path import dirname, join
 from subprocess import Popen, PIPE, STDOUT, check_output
+from paths import SOUNDS_PTH
 import wave
 from math import ceil
 
@@ -11,8 +12,7 @@ class Sound:
 
     @staticmethod
     def _get_file(filename: str):
-        sounds_path = join(pardir, "resources", "sounds")
-        return join(sounds_path, "%s.wav" % filename.replace(" ", "-").lower())
+        return join(SOUNDS_PTH, "%s.wav" % filename.replace(" ", "-").lower())
 
     def duration(self):
         # milliseconds
