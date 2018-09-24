@@ -82,7 +82,7 @@ class NotifySettingsForm(QDialog):
             self.config.set("General", "time_format", "hh:mm:ss")
             self.config.set("General", "play_sound", "False")
             self.config.set("General", "in_loop", "False")
-            self.config.set("General", "sound", "?")  # TODO set a sound
+            self.config.set("General", "sound", "Alarm Clock Short")
             self.config.set("General", "opacity", "100.0")
             self.config.add_section("Header")
             self.config.set("Header", "font", "Noto Sans")
@@ -102,6 +102,7 @@ class NotifySettingsForm(QDialog):
     def set_combo_sound(self):
         def rn(filename):
             return filename.replace("-", " ")[:-4].title()
+        from os.path import pardir
         for file in listdir(join(pardir, "resources", "sounds")):
             if file.endswith(".wav"):
                 self.ui.comboBoxSounds.addItem(rn(file))
