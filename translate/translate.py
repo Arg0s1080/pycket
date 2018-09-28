@@ -20,7 +20,7 @@ class Translate:
     def files_to_translate(self):
         return self._to_translate
 
-    def pylupdate(self):  # NOTE: Obsolete: Made qt_tr.pro
+    def pylupdateOLD(self):  # NOTE: Obsolete: Run pylupdate5 qt_tr.pro
         """Make .ts files of each ui compiled"""
         tr_couples = []
         for tr in translations:
