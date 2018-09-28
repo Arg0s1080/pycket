@@ -9,5 +9,5 @@ SOURCES         = ui/main_window.py \
                   forms/mail.py \
                   forms/notify.py \
                   forms/notify_settings.py
-TRANSLATIONS    = translate/pycket_es.ts
+TRANSLATIONS    = translate/es/pycket.ts
 CODECFORTR      = UTF-8

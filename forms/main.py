@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import sys
-from os.path import abspath, curdir, pardir, dirname
+
 #sys.path.append(abspath(curdir))
 sys.path.append('/media/ivan/Acer/Users/ivanr/Proyectos/Python/PyCharmProjects/pycket/forms')
 sys.path.append('/media/ivan/Acer/Users/ivanr/Proyectos/Python/PyCharmProjects/pycket/')
 
 from forms.setmain import *
-from actions import execute
+from misc.actions import execute
 from statux.net import *
 from statux.battery import *
 from statux.disks import *
