@@ -1,15 +1,13 @@
 from ui.notify_settings_window import Ui_NotifySettingsDialog
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtGui import QCloseEvent
-from os.path import dirname
 from forms.notify import NotifyForm
-from os import makedirs, listdir
 from sys import argv, exit
 from scripts.sound import Sound
 from common.common import *
 
 # TODO: Delete:
-from paths import NOTIFY_CFG
+from misc.paths import NOTIFY_CFG
 #import resources.images
 
 class NotifySettingsForm(QDialog):

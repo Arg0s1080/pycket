@@ -1,7 +1,7 @@
 from os import devnull
-from os.path import dirname, join
-from subprocess import Popen, PIPE, STDOUT, check_output
-from paths import SOUNDS_PTH
+from os.path import join
+from subprocess import Popen, STDOUT
+from misc.paths import SOUNDS_PTH
 import wave
 from math import ceil
 

@@ -1,15 +1,13 @@
 from ui.notify_window import Ui_NotifyDialog
-from PyQt5.QtWidgets import QApplication, QDialog
+from PyQt5.QtWidgets import QDialog
 from PyQt5.QtGui import QCloseEvent, QFont
 from PyQt5.QtCore import Qt, QTimer, QDateTime
-from configparser import ConfigParser
 from sys import argv, exit
-from os.path import exists, join
 from common.common import *
 from scripts.sound import Sound
 
 # TODO: Move
-from paths import NOTIFY_CFG
+from misc.paths import NOTIFY_CFG
 
 
 class NotifyForm(QDialog):

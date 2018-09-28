@@ -7,13 +7,10 @@ import statux.ram as ram
 import statux.cpu2 as cpu
 import statux.temp as temp
 
-from os import makedirs
-from os.path import dirname, exists
 from ui.main_window import *
 from PyQt5.QtWidgets import QStyleFactory, QMainWindow
-from PyQt5.QtCore import Qt, QCoreApplication, QDateTime, QTimer
+from PyQt5.QtCore import Qt, QDateTime, QTimer
 from common.enums import *
-from configparser import ConfigParser
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
 from statux.system import session_id
@@ -22,7 +19,7 @@ from common.common import *
 
 
 # TODO: Move
-from paths import MAIN_CFG, MAIL_CFG, NOTIFY_CFG
+from misc.paths import MAIN_CFG, MAIL_CFG, NOTIFY_CFG
 
 
 class SetMainForm(QMainWindow):

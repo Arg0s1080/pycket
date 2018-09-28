@@ -1,6 +1,6 @@
 from common.enums import Action
 from common.common import msg_dlg
-from paths import MAIL_CFG, MAIN_CFG
+from misc.paths import MAIL_CFG, MAIN_CFG
 from PyQt5.QtWidgets import QMessageBox
 
 

@@ -1,5 +1,5 @@
 from ui.mail_window import Ui_MailDialog
-from PyQt5.QtWidgets import QDialog, QInputDialog, QLineEdit, QFileDialog
+from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5.QtGui import QCloseEvent
 from os.path import expanduser
 from os import remove
@@ -10,7 +10,7 @@ from common.common import *
 from common.errors import BadPasswordError
 
 # TODO: Delete
-from paths import MAIL_CFG
+from misc.paths import MAIL_CFG
 
 
 class MailForm(QDialog):

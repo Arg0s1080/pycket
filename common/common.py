@@ -1,14 +1,13 @@
 from configparser import ConfigParser
-from PyQt5.QtWidgets import QWidget, QMessageBox, QApplication, QInputDialog, QLineEdit
-from PyQt5.QtCore import QLocale, QCoreApplication, QTranslator
+from PyQt5.QtWidgets import QWidget, QMessageBox, QInputDialog, QLineEdit
+from PyQt5.QtCore import QLocale, QCoreApplication
 from sys import exc_info
 from os.path import join, exists, dirname, isdir
-from paths import PARENT
-from os import getcwd, makedirs, listdir
-from subprocess import run, Popen, PIPE
+from os import makedirs, listdir
+from subprocess import run, Popen
+from misc.paths import LOCALE_PTH, TRANSLATION_PTH, PARENT
+from common.errors import ConfigFileNotFoundError
 from typing import Optional
-from paths import LOCALE_PTH, TRANSLATION_PTH
-#from common.errors import ConfigFileNotFoundError
 
 
 def msg_dlg(body, info="", buttons=QMessageBox.Ok, icon=QMessageBox.Information, details=""):
@@ -57,7 +56,7 @@ def get_loc_fileOLD():
 
 def translations():
     locs = [item for item in listdir(LOCALE_PTH) if isdir(join(LOCALE_PTH, item))]
-    return [loc for loc in locs if exists(join(TRANSLATION_PTH % loc, "apt.mo"))]
+    return [loc for loc in locs if exists(join(TRANSLATION_PTH % loc, "pycket.qm"))]
 
 
 def get_loc_file():
@@ -66,7 +65,7 @@ def get_loc_file():
     # translations = [es, de_DE, de_LU, en_GB, it]
     # - Search for de_AT -> Not found
     # - Search for de    -> Not found
-    # - Search for de_*  -> Found = [de_DE, de_LU] -> Choose Found[0]
+    # - Search for de_*  -> Found = [de_DE, de_LU] -> Choose Found[0] -> /usr/share/locale/de_DE/LC_MESSAGES/pycket.qm
     locale = QLocale.system().name()
     trl = lambda x: join(TRANSLATION_PTH % x, "pycket.qm")
     loc_file = trl(locale)
@@ -77,6 +76,7 @@ def get_loc_file():
             compatibles = [TRANSLATION_PTH % tr for tr in translations() if tr.startswith(locale)]
             loc_file = compatibles[0]
     return loc_file
+
 
 def trl(cls, string: str):
     return QCoreApplication.translate(cls.__class__.__name__, string)

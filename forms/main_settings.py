@@ -1,12 +1,10 @@
 from ui.settings_window import *
 from PyQt5.QtWidgets import QStyleFactory
-from PyQt5.QtCore import QTranslator
-from configparser import ConfigParser
 from common.common import *
 import sys
 
 # TODO: Move
-from paths import MAIN_CFG
+from misc.paths import MAIN_CFG
 
 
 class ConfigForm(QtWidgets.QDialog):
