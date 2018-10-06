@@ -19,8 +19,8 @@ installed_files*
 ProgramatorCS/
 
 # PyQt ui's backups #& support scripts
-ui/compile_ui.py
-/ui/*.ui.old*
+pycket/ui/compile_ui.py
+pycket/ui/*.ui.old*
 # /translate/translate.py
 
 
