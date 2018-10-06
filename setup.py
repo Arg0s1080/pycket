@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 # -*- coding: UTF8 -*-
 
-from setuptools import setup
-from os import path, listdir
-from os.path import join, exists, isdir
-from common import __version__ as version
-from misc.paths import PARENT, LOCALE_PTH, TRANSLATION_PTH
+#from setuptools import setup
+from distutils.core import setup
+from setuptools.command.install import install
+from os import path, listdir, chmod
+from os.path import join, exists, isfile, basename
+from pycket.common import __version__ as version
+from misc.paths import PARENT, TRANSLATION_PTH
 
 
 try:
@@ -17,18 +19,38 @@ except FileNotFoundError:
 
 def locale_files() -> list:
     tr_src = path.join(PARENT, "translate")
-    locs = [item for item in listdir(tr_src) if isdir(join("%s/%s" % (tr_src, item)))]
+    locs = [item for item in listdir(tr_src) if exists(join(tr_src, item, "pycket.qm"))]
     return [(TRANSLATION_PTH % loc, ["translate/%s/pycket.qm" % loc]) for loc in locs]
 
 
 def get_files(dir_) -> list:
-    return ["%s/%s" % (dir_, file) for file in listdir(join(PARENT, dir_)) if not isdir(file)]
+    return ["%s/%s" % (dir_, file) for file in listdir(join(PARENT, dir_)) if isfile(join(PARENT, dir_, file))]
 
-input()
+
+data_files = [
+        ("/usr/share/applications", ["pycket.desktop"]),
+        ("/usr/share/pixmaps", ["resources/images/256x256/pycket.png"]),
+        ("/usr/share/sounds/pycket", get_files("resources/sounds")),
+    ] + locale_files()
+
+
+def get_data_files():
+    return [join(pth, basename(file)) for pth, files in data_files for file in files]
+
+
+class ChangePermissions(install):
+    # Based Oz123's answer in https://stackoverflow.com/questions/5932804/set-file-permissions-in-setup-py-file
+    def run(self):
+        mode = 0o644
+        install.run(self)
+        for file in get_data_files():
+            print("Changing permissions of %s to %s" % (file, oct(mode)))
+            chmod(file, mode)
+
 setup(
     name="pycket",
     version=version,
-    description="System monitor that can react to user chosen conditions",
+    description="System monitor that can react to chosen conditions by the user",
     license="GPLv3",
     long_description=long_description,
     author='Ivan Rincon',
@@ -44,10 +66,11 @@ setup(
         "Topic :: System :: Monitoring",
         "Topic :: Utilities"
     ],
-    data_files=[
-        ("/usr/share/applications", ["data/pycket.desktop"]),
-        ("/usr/share/pixmaps", ["resources/pycket.png"]),
-        ("/usr/share/sounds/pycket", get_files("resources/sounds")),
-        ('/usr/share/multibootusb/data/tools', ["data/tools/mbr.bin"])
-    ] + locale_files()
+    data_files=data_files,
+    cmdclass={'install': ChangePermissions}
 )
+
+
+def change_permissions():
+    for file in get_data_files():
+        chmod(file, 0o755)
