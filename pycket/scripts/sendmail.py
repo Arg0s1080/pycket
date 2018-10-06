@@ -1,8 +1,8 @@
 from configparser import ConfigParser
-from scripts.aes import AESManaged
-from common.errors import BadPasswordError
-from common.common import test_cfg
-from scripts.smtp import SMPTMail, Encrypt
+from pycket.scripts.aes import AESManaged
+from pycket.common.errors import BadPasswordError
+from pycket.common.common import test_cfg
+from pycket.scripts.smtp import SMPTMail, Encrypt
 from math import pi, e
 
 

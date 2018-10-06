@@ -1,12 +1,12 @@
 from configparser import ConfigParser
-from PyQt5.QtWidgets import QWidget, QMessageBox, QInputDialog, QLineEdit
-from PyQt5.QtCore import QLocale, QCoreApplication
+from PyQt5.QtWidgets import QWidget, QMessageBox, QInputDialog, QLineEdit, QApplication
+from PyQt5.QtCore import QLocale, QCoreApplication, QTranslator
 from sys import exc_info
 from os.path import join, exists, dirname, isdir
 from os import makedirs, listdir
 from subprocess import run, Popen
-from misc.paths import LOCALE_PTH, TRANSLATION_PTH, PARENT
-from common.errors import ConfigFileNotFoundError
+from pycket.misc.paths import LOCALE_PTH, TRANSLATION_PTH, PARENT
+from pycket.common.errors import ConfigFileNotFoundError
 from typing import Optional
 
 

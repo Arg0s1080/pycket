@@ -1,10 +1,10 @@
-from ui.settings_window import *
+from pycket.ui.settings_window import *
+from pycket.common.common import *
 from PyQt5.QtWidgets import QStyleFactory
-from common.common import *
 import sys
 
 # TODO: Move
-from misc.paths import MAIN_CFG
+from pycket.misc.paths import MAIN_CFG
 
 
 class ConfigForm(QtWidgets.QDialog):
@@ -95,12 +95,12 @@ class ConfigForm(QtWidgets.QDialog):
 
     @staticmethod
     def pushbutton_notify_clicked():
-        from forms.notify_settings import NotifySettingsForm
+        from pycket.forms.notify_settings import NotifySettingsForm
         NotifySettingsForm().exec_()
 
     @staticmethod
     def pushbutton_send_mail_clicked():
-        from forms.mail import MailForm
+        from pycket.forms.mail import MailForm
         MailForm().exec_()
 
 

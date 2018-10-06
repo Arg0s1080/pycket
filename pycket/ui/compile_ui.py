@@ -23,7 +23,8 @@ class CompileUI:
 
     def execute(self):
         process = run(["pyuic5", self.ui_file, "-o", self.ui_output], stdout=PIPE)
-        print("- Compile %s" % self.filename(self.ui_file))
+        if process.returncode == 0:
+            print("- Compile %s" % self.filename(self.ui_file))
 
     def header_lines(self):
         with open(self.ui_output, "r") as f:

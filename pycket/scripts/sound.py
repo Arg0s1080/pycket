@@ -1,7 +1,7 @@
 from os import devnull
 from os.path import join
 from subprocess import Popen, STDOUT
-from misc.paths import SOUNDS_PTH
+from pycket.misc.paths import SOUNDS_PTH
 import wave
 from math import ceil
 

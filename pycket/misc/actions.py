@@ -1,6 +1,6 @@
-from common.enums import Action
-from common.common import msg_dlg
-from misc.paths import MAIL_CFG, MAIN_CFG
+from pycket.common.enums import Action
+from pycket.common.common import msg_dlg
+from pycket.misc.paths import MAIL_CFG, MAIN_CFG
 from PyQt5.QtWidgets import QMessageBox
 
 
@@ -8,11 +8,11 @@ def execute(action: Action, app_pw=None):
     ok = None
     try:
         if action is Action.Notify:
-            from forms.notify import NotifyForm
+            from pycket.forms.notify import NotifyForm
             ok = not NotifyForm().exec_()
             print("Notify!!")
         elif action is Action.Mail:
-            from scripts.sendmail import SendMail
+            from pycket.scripts.sendmail import SendMail
             if app_pw is not None:
                 try:
                     mail = SendMail(app_pw, MAIL_CFG)
