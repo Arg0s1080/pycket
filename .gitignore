@@ -1,12 +1,15 @@
-# Hidden folders
+# Hidden folders & files
 .idea/
-/.directory
+.directory
+.*.kate-swp
 
-# Personal notes and test files
-Notes
+# test files
 /test*.py
 /provisional.py
 
+# text files
+Notes*
+installed_files*
 
 # Config files
 *.cfg
@@ -16,7 +19,7 @@ Notes
 ProgramatorCS/
 
 # PyQt ui's backups #& support scripts
-#ui/compile_ui.py
+ui/compile_ui.py
 /ui/*.ui.old*
 # /translate/translate.py
 
