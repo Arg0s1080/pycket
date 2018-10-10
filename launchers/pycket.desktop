@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=pycket
+Comment=System monitor that can react to chosen conditions by the user
+Icon=pycket
+Exec=pycket
+Categories=System;Monitor;Utility;Qt
+StartupNotify=true
