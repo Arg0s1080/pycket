@@ -74,7 +74,8 @@ def get_loc_file():
         loc_file = trl(locale)
         if not exists(loc_file):
             compatibles = [TRANSLATION_PTH % tr for tr in translations() if tr.startswith(locale)]
-            loc_file = compatibles[0]
+            if len(compatibles) > 0:
+                loc_file = compatibles[0]
     return loc_file
 
 
