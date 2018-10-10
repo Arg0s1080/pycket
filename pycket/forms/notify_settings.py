@@ -7,7 +7,7 @@ from pycket.scripts.sound import Sound
 from pycket.common.common import *
 
 # TODO: Delete:
-from pycket.misc.paths import NOTIFY_CFG
+from pycket.misc.paths import NOTIFY_CFG, SOUNDS_PTH
 #import resources.images
 
 class NotifySettingsForm(QDialog):
@@ -101,7 +101,7 @@ class NotifySettingsForm(QDialog):
         def rn(filename):
             return filename.replace("-", " ")[:-4].title()
         from os.path import pardir
-        for file in listdir(join(pardir, "resources", "sounds")):
+        for file in listdir(SOUNDS_PTH):
             if file.endswith(".wav"):
                 self.ui.comboBoxSounds.addItem(rn(file))
 
