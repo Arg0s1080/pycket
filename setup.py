@@ -5,15 +5,25 @@
 from distutils.core import setup
 from setuptools.command.install import install
 from os import path, listdir, chmod
-from os.path import join, exists, isfile, basename
-from pycket.common import __version__ as version
-from misc.paths import PARENT, TRANSLATION_PTH
+from os.path import join, exists, isfile, basename, realpath, dirname
+from pycket import __version__ as version
+from pycket.misc.paths import TRANSLATION_PTH
 
+PARENT = realpath(dirname(__file__))
+
+# TODO: Delete #############################################################
+from pycket.misc.paths import provisional
+if provisional:
+    print("PROVISIONAL PATHS")
+    if input("Press 'X' to continue. (Other key to exit)").upper() != "X":
+        exit("ABORTED: PROVISIONAL PATHS")
+# TODO #####################################################################
 
 try:
     with open(path.join(PARENT, "README.rst"), 'r') as readme:
         long_description = readme.read()
 except FileNotFoundError:
+    # TODO: Make README
     long_description = "System monitor that can react to user chosen conditions"
 
 
@@ -28,9 +38,9 @@ def get_files(dir_) -> list:
 
 
 data_files = [
-        ("/usr/share/applications", ["pycket.desktop"]),
-        ("/usr/share/pixmaps", ["resources/images/256x256/pycket.png"]),
-        ("/usr/share/sounds/pycket", get_files("resources/sounds")),
+        ("/usr/share/applications", ["launchers/pycket.desktop"]),
+        ("/usr/share/pixmaps", ["pycket/resources/images/256x256/pycket.png"]),
+        ("/usr/share/sounds/pycket", get_files("pycket/resources/sounds")),
     ] + locale_files()
 
 
@@ -38,14 +48,18 @@ def get_data_files():
     return [join(pth, basename(file)) for pth, files in data_files for file in files]
 
 
-class ChangePermissions(install):
+class ChangeMode(install):
     # Based Oz123's answer in https://stackoverflow.com/questions/5932804/set-file-permissions-in-setup-py-file
     def run(self):
-        mode = 0o644
+        def change_mode(files: list):
+            for file in files:
+                mode = 0o664 if not file.endswith("/pycket") else 0o755
+                print("Changing permissions of %s to %s" % (file, oct(mode)))
+                chmod(file, mode)
         install.run(self)
-        for file in get_data_files():
-            print("Changing permissions of %s to %s" % (file, oct(mode)))
-            chmod(file, mode)
+        change_mode(self.get_outputs())
+        change_mode(get_data_files())
+
 
 setup(
     name="pycket",
@@ -58,7 +72,10 @@ setup(
     url="https://github.com/Arg0s1080/pycket",
     keywords="system monitor scheduler ",
     platforms=['Linux'],
-    packages=["common", "forms", "misc", "scripts", "statux", "ui"],
+    scripts=['launchers/pycket'],
+    packages=["pycket", "pycket/common", "pycket/forms", "pycket/misc", "pycket/scripts", "pycket/ui", "statux"],
+    #packages=["pycket", "statux"],
+    #include_package_data=True,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
@@ -67,10 +84,5 @@ setup(
         "Topic :: Utilities"
     ],
     data_files=data_files,
-    cmdclass={'install': ChangePermissions}
+    cmdclass={'install': ChangeMode}
 )
-
-
-def change_permissions():
-    for file in get_data_files():
-        chmod(file, 0o755)
