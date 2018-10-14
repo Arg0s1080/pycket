@@ -4,7 +4,7 @@ from PyQt5.QtCore import QLocale, QCoreApplication, QTranslator
 from sys import exc_info
 from os.path import join, exists, dirname, isdir
 from os import makedirs, listdir
-from subprocess import run, Popen
+from subprocess import Popen
 from pycket.misc.paths import LOCALE_PTH, TRANSLATION_PTH, PARENT
 from pycket.common.errors import ConfigFileNotFoundError
 from typing import Optional
@@ -121,7 +121,7 @@ def make_geometry(config: ConfigParser, width: int, height: int, section="Geomet
 
 
 def execute(*args, **kwargs):
-    return run(*args, **kwargs)
+    return Popen(*args, **kwargs)
 
 
 def exe_async(*args, **kwargs):
