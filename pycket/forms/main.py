@@ -1,18 +1,17 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import sys
 
 #sys.path.append(abspath(curdir))
-sys.path.append('/media/ivan/Acer/Users/ivanr/Proyectos/Python/PyCharmProjects/pycket/forms')
-sys.path.append('/media/ivan/Acer/Users/ivanr/Proyectos/Python/PyCharmProjects/pycket/')
+#sys.path.append('/media/ivan/Acer/Users/ivanr/Proyectos/Python/PyCharmProjects/pycket/forms')
+#sys.path.append('/media/ivan/Acer/Users/ivanr/Proyectos/Python/PyCharmProjects/pycket/')
 
+from datetime import timedelta
 from pycket.forms.setmain import *
 from pycket.misc.actions import execute
-from statux.net import *
-from statux.battery import *
-from statux.disks import *
-from datetime import timedelta
-from PyQt5.QtCore import QTranslator
+from statux.battery import ac_adapter_online, capacity, remaining_time
+from statux.disks import bytes_read_write, free_space, total_size, used_space
+from statux.net import down_up_bytes, down_up_speed
+from sys import argv, exit
 
 
 class MainForm(SetMainForm):
@@ -281,11 +280,11 @@ class MainForm(SetMainForm):
         MailForm().exec_()
 
 
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(argv)
     translator = QTranslator()
     translator.load(get_loc_file())
     app.installTranslator(translator)
     application = MainForm()
     application.show()
-    sys.exit(app.exec_())
+    exit(app.exec_())

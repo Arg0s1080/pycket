@@ -1,25 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-#import os
-import sys
 import statux.ram as ram
 import statux.cpu2 as cpu
 import statux.temp as temp
 
-from pycket.ui.main_window import *
 from PyQt5.QtWidgets import QStyleFactory, QMainWindow
 from PyQt5.QtCore import Qt, QDateTime, QTimer
+from pycket.ui.main_window import *
+from pycket.common.common import *
 from pycket.common.enums import *
+from pycket.misc.paths import MAIN_CFG, MAIL_CFG, NOTIFY_CFG
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
 from statux.system import session_id
 from statux.system import init
-from pycket.common.common import *
-
-
-# TODO: Move
-from pycket.misc.paths import MAIN_CFG, MAIL_CFG, NOTIFY_CFG
 
 
 class SetMainForm(QMainWindow):
@@ -131,7 +126,7 @@ class SetMainForm(QMainWindow):
     def test_event(self, event):
         print("TEST EVENT")
         print(type(QtCore.Qt.WindowStaysOnTopHint))
-        application.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
+        #application.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
 
     def set_config(self):
         if exists(MAIN_CFG):
@@ -632,10 +627,3 @@ class SetMainForm(QMainWindow):
             return check_command("hibernate")
         return True
 
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    application = SetMainForm()
-    application.show()
-
-    sys.exit(app.exec_())
