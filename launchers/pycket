@@ -7,17 +7,23 @@
 # using a licensed work, under the same license. Copyright and license notices must be
 # preserved. Contributors provide an express grant of patent rights.
 #
-# For more information on this, and how to apply and follow theGNU GPL, see:
+# For more information on this, and how to apply and follow the GNU GPL, see:
 # http://www.gnu.org/licenses
 #
 # (ɔ) Iván Rincón 2018
 
-from pycket.forms.main import MainForm, QApplication
 from sys import argv, exit
 
 if __name__ == '__main__':
-    app = QApplication(argv)
-    pycket = MainForm()
-    pycket.show()
-    exit(app.exec_())
-
+    if len(argv) == 1:
+        from pycket.forms.main import MainForm, QApplication, QTranslator, get_loc_file
+        app = QApplication(argv)
+        translator = QTranslator()
+        translator.load(get_loc_file())
+        app.installTranslator(translator)
+        application = MainForm()
+        application.show()
+        exit(app.exec_())
+    elif len(argv) == 2 and argv[1] == "--uninstall":
+        from pycket.scripts.uninstall import uninstall
+        uninstall()
