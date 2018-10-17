@@ -100,7 +100,6 @@ class NotifySettingsForm(QDialog):
     def set_combo_sound(self):
         def rn(filename):
             return filename.replace("-", " ")[:-4].title()
-        from os.path import pardir
         for file in listdir(SOUNDS_PTH):
             if file.endswith(".wav"):
                 self.ui.comboBoxSounds.addItem(rn(file))
