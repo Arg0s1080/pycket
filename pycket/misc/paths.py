@@ -26,9 +26,9 @@ else:
     TRANSLATION_PTH = realpath(join(PARENT, "translate", "%s"))
 
 # Debug:
-print("MAIN_CFG", MAIN_CFG)
-print("MAIL_CFG", MAIL_CFG)
-print("NOTIFY_CFG", NOTIFY_CFG)
+# print("MAIN_CFG", MAIN_CFG)
+# print("MAIL_CFG", MAIL_CFG)
+# print("NOTIFY_CFG", NOTIFY_CFG)
 
 # todo delete
 GMAIL_APP_PW = "geuipfkvdhhxtmxi"
