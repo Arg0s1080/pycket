@@ -3,13 +3,27 @@
 
 #from setuptools import setup
 from distutils.core import setup
-from setuptools.command.install import install
-from os import path, listdir, chmod
-from os.path import join, exists, isfile, basename, realpath, dirname
+from setuptools.command.install import * #install
+from os import path, listdir, chmod, makedirs, R_OK, getuid
+from os.path import join, exists, isfile, basename, realpath, dirname, expanduser
 from pycket import __version__ as version
-from pycket.misc.paths import TRANSLATION_PTH
+from pycket.misc.paths import TRANSLATION_PTH, CONFIG
+from sys import argv, platform, version_info
 
 PARENT = realpath(dirname(__file__))
+
+getuid() and exit("This file must be run with root privileges.")
+platform != "linux" and exit("Pycked can only be installed on Linux")
+version_info[0] + version_info[1] / 10 < 3.5 and exit("Python version must be >= 3.5")
+
+if argv[1] == "install":
+    if "--record" not in argv:
+        argv.append("--record")
+        installed_files = join(expanduser("~"), ".local", "share", "pycket", "installed_files")
+        if not exists(dirname(installed_files)):
+            makedirs(dirname(installed_files))
+        argv.append(installed_files)
+
 
 # TODO: Delete #############################################################
 from pycket.misc.paths import provisional
@@ -54,7 +68,7 @@ class ChangeMode(install):
         def change_mode(files: list):
             for file in files:
                 mode = 0o664 if not file.endswith("/pycket") else 0o755
-                print("Changing permissions of %s to %s" % (file, oct(mode)))
+                print("changing mode of %s to %s" % (file, oct(mode)[2:]))
                 chmod(file, mode)
         install.run(self)
         change_mode(self.get_outputs())
@@ -72,6 +86,7 @@ setup(
     url="https://github.com/Arg0s1080/pycket",
     keywords="system monitor scheduler ",
     platforms=['Linux'],
+    #install_requires=["pycrypto"],  # "PyQt5"
     scripts=['launchers/pycket'],
     packages=["pycket", "pycket/common", "pycket/forms", "pycket/misc", "pycket/scripts", "pycket/ui", "statux"],
     #packages=["pycket", "statux"],
@@ -86,3 +101,4 @@ setup(
     data_files=data_files,
     cmdclass={'install': ChangeMode}
 )
+
