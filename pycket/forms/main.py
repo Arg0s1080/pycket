@@ -1,10 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-#sys.path.append(abspath(curdir))
-#sys.path.append('/media/ivan/Acer/Users/ivanr/Proyectos/Python/PyCharmProjects/pycket/forms')
-#sys.path.append('/media/ivan/Acer/Users/ivanr/Proyectos/Python/PyCharmProjects/pycket/')
-
 from datetime import timedelta
 from pycket.forms.setmain import *
 from pycket.misc.actions import execute
