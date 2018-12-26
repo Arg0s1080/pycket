@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 #
@@ -1037,7 +1037,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(4)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.pushButtonStart, self.pushButtonCancel)
         MainWindow.setTabOrder(self.pushButtonCancel, self.radioButtonShutdown)
@@ -1117,7 +1117,7 @@ class Ui_MainWindow(object):
         self.labelState.setText(_translate("MainWindow", "Stopped"))
         self.pushButtonStart.setText(_translate("MainWindow", "Start"))
         self.pushButtonCancel.setText(_translate("MainWindow", "Cancel"))
-        self.dateTimeEditAtTime.setDisplayFormat(_translate("MainWindow", "MM/dd/yyyy - hh:mm:ss"))
+        self.dateTimeEditAtTime.setDisplayFormat(_translate("MainWindow", "MM/dd/yyyy - HH:mm:ss"))
         self.pushButtonAtTimeNow.setText(_translate("MainWindow", "Now"))
         self.pushButtonAtTimeMinus1H.setText(_translate("MainWindow", "- 1 H"))
         self.pushButtonAtTimePlus1H.setText(_translate("MainWindow", "+ 1 H"))
@@ -1187,6 +1187,6 @@ class Ui_MainWindow(object):
         self.actionExecute.setText(_translate("MainWindow", "&Execute"))
         self.actionSendMail.setText(_translate("MainWindow", "Send &Mail"))
         self.actionAlways_on_top.setText(_translate("MainWindow", "&Always on top"))
-        self.actionAbout_2.setText(_translate("MainWindow", "About"))
-        self.actionAbout_Qt.setText(_translate("MainWindow", "About Qt"))
+        self.actionAbout_2.setText(_translate("MainWindow", "&About"))
+        self.actionAbout_Qt.setText(_translate("MainWindow", "About &Qt"))
 

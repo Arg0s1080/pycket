@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 #
 # (ɔ) Iván Rincón 2018
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_NotifySettingsDialog(object):
     def setupUi(self, NotifySettingsDialog):
@@ -26,9 +25,6 @@ class Ui_NotifySettingsDialog(object):
         self.pushButtonCancel.setObjectName("pushButtonCancel")
         self.horizontalLayout_2.addWidget(self.pushButtonCancel)
         self.pushButtonTest = QtWidgets.QPushButton(NotifySettingsDialog)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/images/aim.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButtonTest.setIcon(icon)
         self.pushButtonTest.setObjectName("pushButtonTest")
         self.horizontalLayout_2.addWidget(self.pushButtonTest)
         self.gridLayout_4.addLayout(self.horizontalLayout_2, 2, 0, 1, 1)

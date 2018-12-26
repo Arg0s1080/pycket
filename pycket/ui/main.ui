@@ -371,7 +371,7 @@ background-color: rgb(170, 0, 0);
              <enum>QTabWidget::Rounded</enum>
             </property>
             <property name="currentIndex">
-             <number>4</number>
+             <number>0</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideNone</enum>
@@ -449,7 +449,7 @@ background-color: rgb(170, 0, 0);
                    <enum>QDateTimeEdit::MonthSection</enum>
                   </property>
                   <property name="displayFormat">
-                   <string>MM/dd/yyyy - hh:mm:ss</string>
+                   <string>MM/dd/yyyy - HH:mm:ss</string>
                   </property>
                   <property name="calendarPopup">
                    <bool>true</bool>
@@ -2468,12 +2468,12 @@ background-color: rgb(170, 0, 0);
   </action>
   <action name="actionAbout_2">
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
   </action>
   <action name="actionAbout_Qt">
    <property name="text">
-    <string>About Qt</string>
+    <string>About &amp;Qt</string>
    </property>
   </action>
  </widget>
