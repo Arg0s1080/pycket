@@ -14,9 +14,9 @@ installed_files*
 # Config files
 *.cfg
 
-# Symbolic links to other projects
+# Symbolic links to other projects, files or folders
 # /statux/
-ProgramatorCS/
+*link_to*
 
 # PyQt ui's backups #& support scripts
 pycket/ui/compile_ui.py
