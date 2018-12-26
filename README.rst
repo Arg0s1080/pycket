@@ -1,5 +1,7 @@
-|image| # Pycket System monitor that can react to chosen conditions by
-the user
+Pycket
+======
+
+System monitor that can react to chosen conditions by the user
 
 Screenshots:
 ------------
@@ -19,7 +21,11 @@ Thanks in advance
 
 Arg0s ivan.rincon76@gmail.com
 
-.. |image| image:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/zzz_under_construction.png
+.. figure:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/zzz_under_construction.png
+   :alt: image
+
+   image
+
 .. |image| image:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/en_at_time_stopped.png
 .. |image| image:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/en_countdown_activated.png
 .. |image| image:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/en_system_load_stopped.png
