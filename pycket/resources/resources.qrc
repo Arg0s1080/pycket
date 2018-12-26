@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="images">
+    <file>images/256x256/pycket.png</file>
+  </qresource>
+  <qresource prefix="sounds"/>
+</RCC>
