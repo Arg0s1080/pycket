@@ -23,5 +23,3 @@ Thanks in advance
 
 Arg0s
 ivan.rincon76@gmail.com
-
-![image](https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/zzz_under_construction.png)

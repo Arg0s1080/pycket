@@ -19,11 +19,6 @@ Thanks in advance
 
 Arg0s ivan.rincon76@gmail.com
 
-.. figure:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/zzz_under_construction.png
-   :alt: image
-
-   image
-
 .. |image| image:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/zzz_under_construction.png
 .. |image| image:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/en_at_time_stopped.png
 .. |image| image:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/en_countdown_activated.png
