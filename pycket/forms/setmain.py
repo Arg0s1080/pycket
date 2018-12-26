@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import statux.ram as ram
-import statux.cpu2 as cpu
+import statux.cpu as cpu
 import statux.temp as temp
 
 from PyQt5.QtWidgets import QStyleFactory, QMainWindow
@@ -13,8 +13,8 @@ from pycket.common.enums import *
 from pycket.misc.paths import MAIN_CFG, MAIL_CFG, NOTIFY_CFG
 from statux.net import get_interfaces
 from statux.disks import mounted_partitions
-from statux.system import session_id
-from statux.system import init
+from statux.system import session_id, init
+from statux._errors import StatuxError
 
 
 class SetMainForm(QMainWindow):
