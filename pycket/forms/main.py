@@ -36,7 +36,7 @@ class MainForm(SetMainForm):
             # Debug
             print("Debug Countdown:", self.delay)
         elif self.condition == Condition.SystemLoad: ###########################################
-            self.cpu_load = cpu.Load()
+            self.cpu_load = cpu.Load(True)
             self.alarm_count = 0
             self.title = self.ui.labelSystemLoadTitle.text()
             self.index = self.ui.comboBoxSystemLoad.currentIndex()
@@ -144,7 +144,7 @@ class MainForm(SetMainForm):
                 self.set_progressbar(0, 1)
         elif self.condition == Condition.Network: ############################################################
             value = self.get_net_value() if not self.index_radio else self.get_net_value() - self.count_bytes
-            self.ui.labelData.setText("%s: %s %s" % (self.title, value, self.scale))
+            self.ui.labelData.setText("%s: %s %s" % (self.title, round(value, 2), self.scale))
             if self.index_radio == 0:  # Network speed
                 if ((self.index == 0 and value < self.spin_value)
                         or (self.index == 1 and value > self.spin_value)):
