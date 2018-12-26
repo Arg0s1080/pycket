@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es" sourcelanguage="en">
+<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="en">
 <context>
     <name>MailDialog</name>
     <message>
@@ -166,47 +165,47 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
 <context>
     <name>MainForm</name>
     <message>
-        <location filename="../../pycket/forms/main.py" line="31"/>
+        <location filename="../../pycket/forms/main.py" line="28"/>
         <source>Date before now</source>
         <translation>La fecha es anterior a hoy</translation>
     </message>
     <message>
-        <location filename="../../pycket/forms/main.py" line="56"/>
+        <location filename="../../pycket/forms/main.py" line="53"/>
         <source>Downloaded</source>
         <translation>Bajado</translation>
     </message>
     <message>
-        <location filename="../../pycket/forms/main.py" line="56"/>
+        <location filename="../../pycket/forms/main.py" line="53"/>
         <source>Uploaded</source>
         <translation>Subido</translation>
     </message>
     <message>
-        <location filename="../../pycket/forms/main.py" line="63"/>
+        <location filename="../../pycket/forms/main.py" line="60"/>
         <source>Download</source>
         <translation>Bajada</translation>
     </message>
     <message>
-        <location filename="../../pycket/forms/main.py" line="63"/>
+        <location filename="../../pycket/forms/main.py" line="60"/>
         <source>Upload</source>
         <translation>Subida</translation>
     </message>
     <message>
-        <location filename="../../pycket/forms/main.py" line="73"/>
+        <location filename="../../pycket/forms/main.py" line="70"/>
         <source>Power</source>
         <translation>Alimentación</translation>
     </message>
     <message>
-        <location filename="../../pycket/forms/main.py" line="83"/>
+        <location filename="../../pycket/forms/main.py" line="80"/>
         <source>Remaining Time</source>
         <translation>Tiempo restante</translation>
     </message>
     <message>
-        <location filename="../../pycket/forms/main.py" line="89"/>
+        <location filename="../../pycket/forms/main.py" line="86"/>
         <source>Capacity</source>
         <translation>Capacidad</translation>
     </message>
     <message>
-        <location filename="../../pycket/forms/main.py" line="31"/>
+        <location filename="../../pycket/forms/main.py" line="28"/>
         <source>Pycket cannot start</source>
         <translation>Pycket no puede comenzar</translation>
     </message>
@@ -284,9 +283,9 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="1111"/>
+        <location filename="../../pycket/ui/main_window.py" line="1120"/>
         <source>MM/dd/yyyy - HH:mm:ss</source>
-        <translation type="obsolete">dd/MM/yyyy - HH:mm:ss</translation>
+        <translation type="unfinished">dd/MM/yyyy - HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../../pycket/ui/main_window.py" line="1121"/>
@@ -576,7 +575,7 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
     <message>
         <location filename="../../pycket/ui/main_window.py" line="1120"/>
         <source>MM/dd/yyyy - hh:mm:ss</source>
-        <translation>dd/MM/yyyy - hh:mm:ss</translation>
+        <translation type="obsolete">dd/MM/yyyy - hh:mm:ss</translation>
     </message>
     <message>
         <location filename="../../pycket/ui/main_window.py" line="1182"/>
@@ -586,12 +585,22 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
     <message>
         <location filename="../../pycket/ui/main_window.py" line="1190"/>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation type="obsolete">Sobre</translation>
     </message>
     <message>
         <location filename="../../pycket/ui/main_window.py" line="1191"/>
         <source>About Qt</source>
-        <translation>Sobre Qt</translation>
+        <translation type="obsolete">Sobre Qt</translation>
+    </message>
+    <message>
+        <location filename="../../pycket/ui/main_window.py" line="1190"/>
+        <source>&amp;About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../pycket/ui/main_window.py" line="1191"/>
+        <source>About &amp;Qt</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -620,114 +629,114 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
 <context>
     <name>NotifySettingsDialog</name>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="154"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="150"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="155"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="151"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="156"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="152"/>
         <source>Test</source>
         <translation>Probar</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="157"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="153"/>
         <source>Text</source>
         <translation>Texto</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="162"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="158"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="163"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="159"/>
         <source>Bold</source>
         <translation>Negrita</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="164"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="160"/>
         <source>Italic</source>
         <translation>Cursiva</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="161"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="157"/>
         <source>Header</source>
         <translation>Cabecera</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="165"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="161"/>
         <source>ALARM</source>
         <translation>ALARMA</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="166"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="162"/>
         <source>Body</source>
         <translation>Cuerpo</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="167"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="163"/>
         <source>General</source>
         <translation>General</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="168"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="164"/>
         <source>Show time in header</source>
         <translation>Mostrar hora en la cabecera</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="169"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="165"/>
         <source>Always on top</source>
         <translation>Siempre encima</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="170"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="166"/>
         <source>Close dialog automatically</source>
         <translation>Cerrar diálogo automáticamente</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="171"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="167"/>
         <source>Play sound</source>
         <translation>Reproducir sonido</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="172"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="168"/>
         <source>Opacity</source>
         <translation>Opacidad</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="173"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="169"/>
         <source>in loop</source>
         <translation>en bucle</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="175"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="171"/>
         <source>%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="176"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="172"/>
         <source>seconds</source>
         <translation>segundos</translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="177"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="173"/>
         <source>hh:mm:ss</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="153"/>
+        <location filename="../../pycket/ui/notify_settings_window.py" line="149"/>
         <source>Pycket - Notify Settings</source>
         <translation>Pycket - Ajustes Notificación</translation>
     </message>
-    <message>
-        <location filename="../../pycket/ui/notify_settings_window.py" line="174"/>
+    <message encoding="UTF-8">
+        <location filename="../../pycket/ui/notify_settings_window.py" line="170"/>
         <source>▶</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
