@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Pycket</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/resources.qrc">
+    <normaloff>:/images/images/256x256/pycket.png</normaloff>:/images/images/256x256/pycket.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
@@ -2541,14 +2545,16 @@ background-color: rgb(170, 0, 0);
   <tabstop>tabWidget</tabstop>
   <tabstop>dateTimeEditAtTime</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../resources/resources.qrc"/>
+ </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroupSystemLoad"/>
-  <buttongroup name="buttonGroupActions"/>
   <buttongroup name="buttonGroupPartitions"/>
+  <buttongroup name="buttonGroupSystemLoad"/>
   <buttongroup name="buttonGroupPowerSnd"/>
-  <buttongroup name="buttonGroupNetwork"/>
   <buttongroup name="buttonGroupPowerMain"/>
+  <buttongroup name="buttonGroupNetwork"/>
+  <buttongroup name="buttonGroupActions"/>
  </buttongroups>
 </ui>

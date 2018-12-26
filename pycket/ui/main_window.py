@@ -12,6 +12,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(652, 424)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/images/images/256x256/pycket.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
@@ -1190,3 +1193,5 @@ class Ui_MainWindow(object):
         self.actionAbout_2.setText(_translate("MainWindow", "&About"))
         self.actionAbout_Qt.setText(_translate("MainWindow", "About &Qt"))
 
+#import resources_rc
+import pycket.resources.resources
