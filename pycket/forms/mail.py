@@ -76,7 +76,7 @@ class MailForm(QDialog):
             pw = pw_dlg(self.tr("Enter a new password:\n\nThis password will not be stored.\nIf this is lost "
                                 "or forgotten, the data can not be recovered"), self.title)
             if pw is not None:
-                if pw == self.pw_dlg(self.tr("Type the password again")):
+                if pw == pw_dlg(self.tr("Type the password again")):
                     self.aes = AESManaged(pw)
                     make_geometry(self.config, 769, 514)
                     self.config.add_section("General")
