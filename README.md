@@ -15,7 +15,7 @@ System monitor that can react to chosen conditions by the user
 ![image](https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/en_notify_settings.png)
 
 ### Note:
-If you want to collaborate with the project translating pycket, please contact me by mail or open a problem.
+If you want to collaborate with the project translating pycket, please contact me by mail or open a issue.
 
 If someone sees linguistic errors in some screenshot, corrections are also appreciated.
 
