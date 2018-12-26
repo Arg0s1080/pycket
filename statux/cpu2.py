@@ -117,11 +117,10 @@ def frequency(per_core=True, scale="mhz", precision=3):
         :precision (int): Number of rounding decimals
 
     """
-
     with open(_CPUINFO, "rb") as file:
         stat = file.readlines()
         r = [round(set_mhz(float(line.split()[-1]), scale), precision) for line in stat if line.startswith(b"cpu MHz")]
-        return r if per_core else round(sum(r) / float(len(r)), precision)
+        return None if not len(r) else r if per_core else round(sum(r) / float(len(r)), precision)
 
 
 def max_frequency(per_core=True, scale="mhz", precision=3):
@@ -144,6 +143,8 @@ def max_frequency(per_core=True, scale="mhz", precision=3):
                     with open(join(_FREQUENCY_POLICY, policy, file), "rb") as stat:
                         r.insert(int(policy[-1]), int(stat.readline()) / 1000)
                     break
+    if len(r) == 0:
+        return None  # TODO: or return -1?
     if _MAX_FREQUENCY is None:
         _MAX_FREQUENCY = r
     r = list(map(lambda x: round(set_mhz(x, scale), precision), r))
