@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="en">
+<!DOCTYPE TS>
+<TS version="2.1" language="es" sourcelanguage="en">
 <context>
     <name>MailDialog</name>
     <message>
@@ -285,7 +286,7 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
     <message>
         <location filename="../../pycket/ui/main_window.py" line="1120"/>
         <source>MM/dd/yyyy - HH:mm:ss</source>
-        <translation type="unfinished">dd/MM/yyyy - HH:mm:ss</translation>
+        <translation>dd/MM/yyyy - HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../../pycket/ui/main_window.py" line="1121"/>
@@ -733,7 +734,7 @@ Si se pierde u olvida los datos no podrán ser recuperados</translation>
         <source>Pycket - Notify Settings</source>
         <translation>Pycket - Ajustes Notificación</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../pycket/ui/notify_settings_window.py" line="170"/>
         <source>▶</source>
         <translation type="unfinished"></translation>
