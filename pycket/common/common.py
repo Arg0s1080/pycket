@@ -35,8 +35,11 @@ def pw_dlg(msg, title="Pycket"):
 
 def translationsOLD() -> list:
     return [file[7:-3] for file in listdir(join(PARENT, "translate")) if file.endswith(".qm")]
+
+
 def get_loc_fileOLD():
     filename = "pycket_%s.qm"
+
     def get_file():
         return join(path, filename % locale)
     locale = QLocale.system().name()
