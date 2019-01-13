@@ -29,6 +29,7 @@ def execute_action(action: Action, app_pw=None):
             from shlex import split
             config = ConfigParser()
             config.read(MAIN_CFG)   # To get commands
+            config.write(MAIN_CFG)  # To save widgets values (useful in shutdowns, reboots, etc)
             command = ""
             if action is Action.Shutdown:
                 command = config.get("Commands", "shutdown")
