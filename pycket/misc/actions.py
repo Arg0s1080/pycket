@@ -4,7 +4,7 @@ from pycket.misc.paths import MAIL_CFG, MAIN_CFG
 from PyQt5.QtWidgets import QMessageBox
 
 
-def execute(action: Action, app_pw=None):
+def execute_action(action: Action, app_pw=None):
     ok = None
     try:
         if action is Action.Notify:
@@ -19,7 +19,7 @@ def execute(action: Action, app_pw=None):
                     mail.send()
                     print("Sent Mail")
                     ok = True
-                except Exception as ex:
+                except Exception as ex:  # TODO: Handle exception better (too generic)
                     msg_dlg("Mail error", "An error occurred while sending mail", icon=QMessageBox.Critical,
                             details="\n-".join(list(map(str, ex.args))))
                     ok = False
@@ -28,7 +28,7 @@ def execute(action: Action, app_pw=None):
             from subprocess import run, PIPE, Popen
             from shlex import split
             config = ConfigParser()
-            config.read(MAIN_CFG)
+            config.read(MAIN_CFG)   # To get commands
             command = ""
             if action is Action.Shutdown:
                 command = config.get("Commands", "shutdown")
