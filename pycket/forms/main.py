@@ -3,7 +3,7 @@
 
 from datetime import timedelta
 from pycket.forms.setmain import *
-from pycket.misc.actions import execute
+from pycket.misc.actions import execute_action
 from statux.battery import ac_adapter_online, capacity, remaining_time
 from statux.disks import bytes_read_write, free_space, total_size, used_space
 from statux.net import down_up_bytes, down_up_speed
@@ -224,7 +224,7 @@ class MainForm(SetMainForm):
         elif self.ui.radioButtonNetworkIsUpDownloading.isChecked():
             return down_up_bytes(self.net_interface, self.scale)[self.index_combo]
 
-    def set_finish(self, execute_=False):
+    def set_finish(self, run_action=False):
         self.set_timer(0, self.timer)
         self.delay = None
         self.scale = None
@@ -244,8 +244,8 @@ class MainForm(SetMainForm):
         self.state = State.Stopped
         self.set_controls()
 
-        if execute_:
-            execute(self.action, self.mail_pw)
+        if run_action:
+            execute_action(self.action, self.mail_pw)
 
     def set_time_edit(self, dt: QDateTime, secs: int):
         self.ui.dateTimeEditAtTime.setDateTime(dt.addSecs(secs))
