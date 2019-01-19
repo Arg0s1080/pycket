@@ -2,7 +2,7 @@ from os.path import join, expanduser, realpath, dirname, pardir
 from os import getcwd
 from math import pi, e
 
-provisional = True
+provisional = False
 
 HOME = expanduser("~")
 PARENT = realpath(join(dirname(__file__), pardir))
