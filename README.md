@@ -1,6 +1,22 @@
 # Pycket
 System monitor that can react to chosen conditions by the user
 
+## Install:
+```
+git clone https://github.com/Arg0s1080/pycket
+cd pycket
+sudo python3 setup.py install
+```
+
+## Uninstall:
+```
+sudo python3 setup.py uninstall
+```
+Normally, uninstall script can also be found in:
+```
+# Replace python3.X with your Python version
+/usr/local/lib/python3.X/dist-packages/pycket/scripts/uninstall.py
+```
 
 ## Screenshots:
 ![image](https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/en_at_time_stopped.png)
