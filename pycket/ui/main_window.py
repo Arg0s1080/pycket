@@ -1194,4 +1194,4 @@ class Ui_MainWindow(object):
         self.actionAbout_Qt.setText(_translate("MainWindow", "About &Qt"))
 
 #import resources_rc
-import pycket.resources.resources
+import pycket.common.resources
