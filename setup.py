@@ -16,20 +16,24 @@ getuid() and exit("This file must be run with root privileges.")
 platform != "linux" and exit("Pycked can only be installed on Linux")
 version_info[0] + version_info[1] / 10 < 3.5 and exit("Python version must be >= 3.5")
 
-if argv[1] == "install":
-    if "--record" not in argv:
-        argv.append("--record")
-        installed_files = join(expanduser("~"), ".local", "share", "pycket", "installed_files")
-        if not exists(dirname(installed_files)):
-            makedirs(dirname(installed_files))
-        argv.append(installed_files)
-
+if len(argv) > 0:
+    if argv[1] == "install":
+        if "--record" not in argv:
+            argv.append("--record")
+            installed_files = join(expanduser("~"), ".local", "share", "pycket", "installed_files")
+            if not exists(dirname(installed_files)):
+                makedirs(dirname(installed_files))
+            argv.append(installed_files)
+    elif argv[1] == "uninstall":
+        from pycket.scripts.uninstall import uninstall
+        uninstall()
+        exit()
 
 # TODO: Delete #############################################################
 from pycket.misc.paths import provisional
 if provisional:
     print("PROVISIONAL PATHS")
-    if input("Press 'X' to continue. (Other key to exit)").upper() != "X":
+    if input("Press 'X' to continue. (Other key to exit): ").upper() != "X":
         exit("ABORTED: PROVISIONAL PATHS")
 # TODO #####################################################################
 
