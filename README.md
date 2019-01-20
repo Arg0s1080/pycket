@@ -1,6 +1,11 @@
 # Pycket
 System monitor that can react to chosen conditions by the user
 
+## Requirements
+- Linux (probably >= 4.12)
+- Python >= 3.5
+- Python 3 binding for Qt5 (python3-pyqt5)
+
 ## Install:
 ```
 git clone https://github.com/Arg0s1080/pycket
