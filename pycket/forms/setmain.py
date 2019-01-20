@@ -305,6 +305,8 @@ class SetMainForm(QMainWindow):
             self.config.set("Partitions", "spin_minutes", "0")
             self.config.set("Partitions", "check_for", "False")
             self.config.add_section("Commands")
+            # Note: There is the possibility to import statux.system values as commands typing the method name
+            # between number signs (E.g: echo Linux #kernel_version# #architecture# -> "Linux 4.15.0 x86_64")
             self.config.set("Commands", "shutdown", "systemctl poweroff")
             self.config.set("Commands", "reboot", "systemctl reboot")
             self.config.set("Commands", "close_session", "%s %s" % ("loginctl terminate-session", "#session_id#"))
