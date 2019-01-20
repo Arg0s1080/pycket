@@ -45,6 +45,17 @@ def execute_action(action: Action, app_pw=None):
             elif action is Action.Execute:
                 command = config.get("Commands", "execute")
             try:
+                if "#" in command:
+                    import statux.system
+                    for arg in command.split():
+                        if arg[0] == "#" and arg[-1] == "#":
+                            name = arg.strip("#")
+                            try:
+                                obj = getattr(statux.system, name)
+                                command = command.replace(arg, str(obj()))
+                            except AttributeError:
+                                pass
+                    
                 sp = Popen(split(command), stderr=PIPE)
                 _, std_err = sp.communicate()
                 if sp.returncode != 0:
