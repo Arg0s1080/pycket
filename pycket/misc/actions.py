@@ -1,5 +1,5 @@
 from pycket.common.enums import Action
-from pycket.common.common import msg_dlg
+from pycket.common.common import msg_dlg, write_config
 from pycket.misc.paths import MAIL_CFG, MAIN_CFG
 from PyQt5.QtWidgets import QMessageBox
 
@@ -29,7 +29,6 @@ def execute_action(action: Action, app_pw=None):
             from shlex import split
             config = ConfigParser()
             config.read(MAIN_CFG)   # To get commands
-            config.write(MAIN_CFG)  # To save widgets values (useful in shutdowns, reboots, etc)
             command = ""
             if action is Action.Shutdown:
                 command = config.get("Commands", "shutdown")
