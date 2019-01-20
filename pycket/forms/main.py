@@ -245,6 +245,7 @@ class MainForm(SetMainForm):
         self.set_controls()
 
         if run_action:
+            write_config(self.config, MAIN_CFG)
             execute_action(self.action, self.mail_pw)
 
     def set_time_edit(self, dt: QDateTime, secs: int):
