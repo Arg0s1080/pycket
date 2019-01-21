@@ -25,5 +25,14 @@ if __name__ == '__main__':
         application.show()
         exit(app.exec_())
     elif len(argv) == 2 and argv[1] == "--uninstall":
+        def confirmation():
+            answer = input("Pycket will be uninstalled completely. Do you want to continue? [y] / n: ").lower()
+            yes = ["", "y", "yes", "si", "sí", "s"]
+            no = ["no", "n"]
+            if answer in yes: return True
+            elif answer in no: return False
+            else:
+                print("Invalid answer.")
+                confirmation()
         from pycket.scripts.uninstall import uninstall
-        uninstall()
+        confirmation() and uninstall()

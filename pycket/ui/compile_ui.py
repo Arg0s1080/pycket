@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # -*- coding UTF-8 -*-
+# (ɔ) Iván Rincón 2018
 
 from os import getcwd, listdir
 from os.path import exists, join as p_join

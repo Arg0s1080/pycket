@@ -3,6 +3,35 @@ Pycket
 
 System monitor that can react to chosen conditions by the user
 
+Requirements
+------------
+
+-  Linux (probably >= 4.12)
+-  Python >= 3.5
+-  Python 3 binding for Qt5 (python3-pyqt5)
+
+Install:
+--------
+
+::
+
+    git clone https://github.com/Arg0s1080/pycket.git
+    cd pycket
+    sudo python3 setup.py install
+
+Uninstall:
+----------
+
+::
+
+    sudo python3 setup.py uninstall
+
+or:
+
+::
+
+    sudo pycket --uninstall
+
 Screenshots:
 ------------
 
@@ -19,7 +48,9 @@ also appreciated.
 
 Thanks in advance
 
-Arg0s ivan.rincon76@gmail.com
+Arg0s
+
+ivan.rincon76@gmail.com
 
 .. figure:: https://raw.githubusercontent.com/Arg0s1080/pycket/master/screenshots/zzz_under_construction.png
    :alt: image

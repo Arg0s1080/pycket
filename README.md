@@ -8,7 +8,7 @@ System monitor that can react to chosen conditions by the user
 
 ## Install:
 ```
-git clone https://github.com/Arg0s1080/pycket
+git clone https://github.com/Arg0s1080/pycket.git
 cd pycket
 sudo python3 setup.py install
 ```
@@ -17,10 +17,9 @@ sudo python3 setup.py install
 ```
 sudo python3 setup.py uninstall
 ```
-Normally, uninstall script can also be found in:
+or:
 ```
-# Replace python3.X with your Python version
-/usr/local/lib/python3.X/dist-packages/pycket/scripts/uninstall.py
+sudo pycket --uninstall
 ```
 
 ## Screenshots:
