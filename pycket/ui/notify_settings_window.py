@@ -4,7 +4,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 #
-# (ɔ) Iván Rincón 2018
+# (ɔ) Iván Rincón 2019
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -171,3 +171,5 @@ class Ui_NotifySettingsDialog(object):
         self.labelPercent.setText(_translate("NotifySettingsDialog", "%"))
         self.labelSeconds.setText(_translate("NotifySettingsDialog", "seconds"))
         self.lineEditTimeFormat.setText(_translate("NotifySettingsDialog", "hh:mm:ss"))
+
+import images_rc

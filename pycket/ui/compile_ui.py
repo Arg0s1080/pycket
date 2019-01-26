@@ -2,6 +2,7 @@
 # -*- coding UTF-8 -*-
 # (ɔ) Iván Rincón 2018
 
+from datetime import datetime
 from os import getcwd, listdir
 from os.path import exists, join as p_join
 from shutil import copyfile
@@ -37,7 +38,7 @@ class CompileUI:
                         line = lines[i+2]
                     elif i == 6:
                         pass
-                        line = "# (ɔ) Iván Rincón 2018\n"
+                        line = "# (ɔ) Iván Rincón %d\n" % datetime.now().year
                     file.write(line)
                 print("- Modify %s header lines" % self.filename(self.ui_output))
 

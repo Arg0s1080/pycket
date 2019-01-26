@@ -4,7 +4,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 #
-# (ɔ) Iván Rincón 2018
+# (ɔ) Iván Rincón 2019
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
