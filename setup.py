@@ -13,7 +13,7 @@ from sys import argv, platform, version_info
 PARENT = realpath(dirname(__file__))
 
 getuid() and exit("This file must be run with root privileges.")
-platform != "linux" and exit("Pycked can only be installed on Linux")
+not "linux" in platform and exit("Pycked can only be installed on Linux")
 version_info[0] + version_info[1] / 10 < 3.5 and exit("Python version must be >= 3.5")
 
 if len(argv) > 0:
@@ -90,10 +90,9 @@ setup(
     url="https://github.com/Arg0s1080/pycket",
     keywords="system monitor scheduler ",
     platforms=['Linux'],
-    #install_requires=["pycrypto"],  # "PyQt5"
+    install_requires=["pycrypto"],  # "pyqt5"
     scripts=['launchers/pycket'],
     packages=["pycket", "pycket/common", "pycket/forms", "pycket/misc", "pycket/scripts", "pycket/ui", "statux"],
-    #packages=["pycket", "statux"],
     #include_package_data=True,
     classifiers=[
         "Development Status :: 3 - Alpha",
