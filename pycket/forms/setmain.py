@@ -73,6 +73,8 @@ class SetMainForm(QMainWindow):
         self.ui.pushButtonAtTimeNow.clicked.connect(self.pushbutton_at_time_now_clicked)
         self.ui.pushButtonAtTimePlus1H.clicked.connect(self.pushbutton_at_time_plus_1h)
         self.ui.pushButtonAtTimeMinus1H.clicked.connect(self.pushbutton_at_time_minus_1h)
+        self.ui.pushButtonAtTimePlus1M.clicked.connect(self.pushbutton_at_time_plus_1m)
+        self.ui.pushButtonAtTimeMinus1M.clicked.connect(self.pushbutton_at_time_minus_1m)
         self.ui.spinBoxCountdownHours.valueChanged.connect(self.spinbox_cd_hours_value_changed)
         self.ui.spinBoxCountdownMinutes.valueChanged.connect(self.spinbox_cd_minutes_value_changed)
         self.ui.spinBoxCountdownSeconds.valueChanged.connect(self.spinbox_cd_seconds_value_changed)

@@ -255,11 +255,16 @@ class MainForm(SetMainForm):
         self.set_time_edit(QDateTime.currentDateTime(), 60)
 
     def pushbutton_at_time_plus_1h(self):
-        self.config.read(MAIN_CFG)
         self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), 3600)
 
     def pushbutton_at_time_minus_1h(self):
         self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), -3600)
+
+    def pushbutton_at_time_plus_1m(self):
+        self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), 60)
+
+    def pushbutton_at_time_minus_1m(self):
+        self.set_time_edit(self.ui.dateTimeEditAtTime.dateTime(), -60)
 
     def action_settings_triggered(self):
         from pycket.forms.main_settings import ConfigForm
