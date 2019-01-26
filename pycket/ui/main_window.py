@@ -1061,11 +1061,15 @@ class Ui_MainWindow(object):
         self.actionAbout_2.setObjectName("actionAbout_2")
         self.actionAbout_Qt = QtWidgets.QAction(MainWindow)
         self.actionAbout_Qt.setObjectName("actionAbout_Qt")
+        self.actionRestoreSettings2Default = QtWidgets.QAction(MainWindow)
+        self.actionRestoreSettings2Default.setObjectName("actionRestoreSettings2Default")
         self.menuFile.addAction(self.actionClose)
         self.menuConfig.addAction(self.actionSettings)
         self.menuConfig.addSeparator()
         self.menuConfig.addAction(self.actionNotify)
         self.menuConfig.addAction(self.actionSendMail)
+        self.menuConfig.addSeparator()
+        self.menuConfig.addAction(self.actionRestoreSettings2Default)
         self.menuSee.addAction(self.actionAlways_on_top)
         self.menuHelp.addAction(self.actionAbout_2)
         self.menuHelp.addAction(self.actionAbout_Qt)
@@ -1229,5 +1233,7 @@ class Ui_MainWindow(object):
         self.actionAlways_on_top.setText(_translate("MainWindow", "&Always on top"))
         self.actionAbout_2.setText(_translate("MainWindow", "&About"))
         self.actionAbout_Qt.setText(_translate("MainWindow", "About &Qt"))
+        self.actionRestoreSettings2Default.setText(_translate("MainWindow", "Restore settings to default"))
 
-import resources_rc
+# import resources_rc
+import pycket.common.resources

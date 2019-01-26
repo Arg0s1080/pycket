@@ -2473,6 +2473,8 @@ background-color: rgb(170, 0, 0);
     <addaction name="separator"/>
     <addaction name="actionNotify"/>
     <addaction name="actionSendMail"/>
+    <addaction name="separator"/>
+    <addaction name="actionRestoreSettings2Default"/>
    </widget>
    <widget class="QMenu" name="menuSee">
     <property name="title">
@@ -2536,6 +2538,11 @@ background-color: rgb(170, 0, 0);
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About &amp;Qt</string>
+   </property>
+  </action>
+  <action name="actionRestoreSettings2Default">
+   <property name="text">
+    <string>Restore settings to default</string>
    </property>
   </action>
  </widget>
