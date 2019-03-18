@@ -172,4 +172,4 @@ class Ui_NotifySettingsDialog(object):
         self.labelSeconds.setText(_translate("NotifySettingsDialog", "seconds"))
         self.lineEditTimeFormat.setText(_translate("NotifySettingsDialog", "hh:mm:ss"))
 
-import images_rc
+import pycket.common.resources

@@ -1235,5 +1235,4 @@ class Ui_MainWindow(object):
         self.actionAbout_Qt.setText(_translate("MainWindow", "About &Qt"))
         self.actionRestoreSettings2Default.setText(_translate("MainWindow", "Restore settings to default"))
 
-# import resources_rc
 import pycket.common.resources
