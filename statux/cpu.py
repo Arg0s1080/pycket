@@ -11,7 +11,7 @@
 # For more information on this, and how to apply and follow theGNU GPL, see:
 # http://www.gnu.org/licenses
 #
-# (ɔ) Iván Rincón 2018
+# (ɔ) Iván Rincón 2019
 
 from time import sleep
 from os import listdir
@@ -27,7 +27,7 @@ _FREQUENCY_POLICY = "/sys/devices/system/cpu/cpufreq/"
 _MAX_FREQUENCY = None
 
 
-@cpu_ex_handler(_STAT, "CPU load")
+@ex_handler(_STAT, "CPU load")
 class Load:
     """ Class to get CPU Load Percentage.
 
@@ -101,12 +101,11 @@ class Load:
         return len(self._get_stat()) - 1
 
 
-@cpu_ex_handler(_STAT)
 def logical_cpus() -> int:
     return len(Load())
 
 
-@cpu_ex_handler(_CPUINFO)
+@ex_handler(_CPUINFO)
 def physical_cpus():
     """Return the number of physical processors"""
     # TODO: to get better
@@ -191,7 +190,7 @@ def frequency_percent(per_core=True, precision=2):
     return r if per_core else round(sum(r) / float(len(r)), precision)
 
 
-@cpu_ex_handler(_STAT)
+@ex_handler(_STAT)
 def boot_time(str_format=False):
     """Returns the time at which the system booted
 
@@ -212,7 +211,7 @@ def boot_time(str_format=False):
                 return r if not str_format else sformat(r)
 
 
-@cpu_ex_handler(_UPTIME)
+@ex_handler(_UPTIME)
 def uptime(str_format=False):
     """Returns the time elapsed since system boot time
 

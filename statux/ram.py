@@ -11,27 +11,34 @@
 # For more information on this, and how to apply and follow theGNU GPL, see:
 # http://www.gnu.org/licenses
 #
-# (ɔ) Iván Rincón 2018
+# (ɔ) Iván Rincón 2019
 
 
 from statux._conversions import set_bytes
+from statux._errors import ValueNotFoundError, ex_handler
 
-_STAT_PATH = "/proc/meminfo"
+_MEMINFO = "/proc/meminfo"
 
 
 def _get_val(*items) -> list:
-    with open(_STAT_PATH, "rb") as file:
-        stat_ = file.readlines()
+    with open(_MEMINFO, "rb") as file:
         values = []
-        for l in range(len(stat_)):
-            for i in range(len(items)):
-                if stat_[l].startswith(items[i]):
-                    values.insert(i, int(stat_[l].split()[-2]))
-            if len(values) == len(items):
+        indices = []
+        l_items = len(items)
+        for l in file:
+            for i, value in enumerate(items):
+                if l.startswith(value):
+                    values.append(int(l.split()[-2]))
+                    indices.append(i)
+            if len(values) == l_items:
                 break
+        if len(values) != l_items:
+            nf = [items[k].decode() for k in [j for j in list(range(l_items)) if j not in indices]]
+            raise ValueNotFoundError(" ".join(nf), _MEMINFO, 61)
         return values
 
 
+@ex_handler(_MEMINFO)
 def total(scale="MiB", precision=2):
     """Returns total RAM memory size
 
@@ -43,6 +50,7 @@ def total(scale="MiB", precision=2):
     return set_bytes(_get_val(b"MemTotal")[0], scale_out=scale, precision=precision)
 
 
+@ex_handler(_MEMINFO)
 def free(scale="MiB", precision=2):
     """Returns free RAM
 
@@ -54,6 +62,7 @@ def free(scale="MiB", precision=2):
     return set_bytes(_get_val(b"MemFree")[0], scale_out=scale, precision=precision)
 
 
+@ex_handler(_MEMINFO)
 def free_percent(precision=2) -> float:
     """Returns free RAM percent
 
@@ -67,6 +76,7 @@ def free_percent(precision=2) -> float:
     return round(values[0] / values[1] * 100, precision)
 
 
+@ex_handler(_MEMINFO)
 def available(scale="MiB", precision=2):
     """Returns available RAM
 
@@ -80,6 +90,7 @@ def available(scale="MiB", precision=2):
     return set_bytes(_get_val(b"MemAvailable")[0], scale_out=scale, precision=precision)
 
 
+@ex_handler(_MEMINFO)
 def available_percent(precision=2) -> float:
     """Returns available RAM percent
 
@@ -93,6 +104,7 @@ def available_percent(precision=2) -> float:
     return round(values[0] / values[1] * 100, precision)
 
 
+@ex_handler(_MEMINFO)
 def buff_cache(scale="MiB", precision=2):
     """Returns buffers, cached and slab memory
 
@@ -104,6 +116,7 @@ def buff_cache(scale="MiB", precision=2):
     return set_bytes(buff + cache + sre + sur, scale_out=scale, precision=precision)
 
 
+@ex_handler(_MEMINFO)
 def used(scale="MiB", precision=2):
     """Returns used RAM memory
 
@@ -118,6 +131,7 @@ def used(scale="MiB", precision=2):
     return set_bytes(tot - (buff + cached + slab + free_), scale_out=scale, precision=precision)
 
 
+@ex_handler(_MEMINFO)
 def used_percent(precision=2):
     """Returns used RAM percentage
 

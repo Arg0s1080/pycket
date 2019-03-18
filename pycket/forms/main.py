@@ -7,6 +7,7 @@ from pycket.misc.actions import execute_action
 from statux.battery import ac_adapter_online, capacity, remaining_time
 from statux.disks import bytes_read_write, free_space, total_size, used_space
 from statux.net import down_up_bytes, down_up_speed
+from statux._errors import StatuxError
 from sys import argv, exit
 
 
