@@ -40,7 +40,7 @@ class SMPTMail:
         if self.attachment is not None:
             if isfile(self.attachment):
                 with open(self.attachment, "rb") as file:
-                    piece = MIMEBase('application', 'octet-stream')
+                    piece = MIMEBase("application", "octet-stream")
                     piece.set_payload(file.read())
                     encoders.encode_base64(piece)
                     piece.add_header('Content-Disposition', "attachment; filename= %s" % self.attachment.split("/")[-1])
