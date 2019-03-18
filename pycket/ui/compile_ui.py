@@ -37,8 +37,10 @@ class CompileUI:
                     if 0 < i < 5:
                         line = lines[i+2]
                     elif i == 6:
-                        pass
                         line = "# (ɔ) Iván Rincón %d\n" % datetime.now().year
+                    elif line.startswith("import resources_rc") or line.startswith("import images_rc"):
+                        line = "import pycket.common.resources"
+                        print("- Modify %s by %s" % ("resources_rc", "pycket.common.resources"))
                     file.write(line)
                 print("- Modify %s header lines" % self.filename(self.ui_output))
 
