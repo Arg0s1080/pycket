@@ -9,6 +9,7 @@ Requirements
 -  Linux (probably >= 4.12)
 -  Python >= 3.5
 -  Python 3 binding for Qt5 (python3-pyqt5)
+-  pycrypto (``pip install pycrypto`` or ``apt install python3-crypto``)
 
 Install:
 --------
