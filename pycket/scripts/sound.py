@@ -1,3 +1,11 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+#
+# GNU General Public License v3.0
+# http://www.gnu.org/licenses
+#
+# (ɔ) Iván Rincón 2019
+
 from os import devnull
 from os.path import join
 from subprocess import Popen, STDOUT
