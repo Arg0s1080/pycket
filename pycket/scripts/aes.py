@@ -17,7 +17,7 @@ class AESManaged:
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
         return b64encode(iv + cipher.encrypt(msg)).decode()
 
-    def decrypt(self, encrypted_msg: str):
+    def decrypt(self, encrypted_msg: str) -> str:
         encrypted_msg = b64decode(encrypted_msg.encode())
         iv = encrypted_msg[:16]
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
@@ -27,5 +27,5 @@ class AESManaged:
         except UnicodeDecodeError:
             # Debug
             print("UnicodeDecodeError from decrypt")
-            return -1
+            raise
 
