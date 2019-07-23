@@ -580,7 +580,7 @@ class SetMainForm(QMainWindow):
         self.ui.spinBoxSystemLoadUnit.setMaximum(maximum)
         self.ui.spinBoxSystemLoadUnit.setMinimum(minimum)
 
-    def tr(self, source_text: str, context: Optional[int]=0, n: int = ...) -> str:
+    def tr(self, source_text: str, context: Optional[int] = 0, n: int = ...) -> str:
         return QCoreApplication.translate(name(self) if context else "SetMainForm", source_text)
 
     def check_action(self):
