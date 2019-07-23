@@ -36,3 +36,6 @@ if __name__ == '__main__':
                 confirmation()
         from pycket.scripts.uninstall import uninstall
         confirmation() and uninstall()
+    else:
+        # TODO: Make help
+        print("")
