@@ -16,7 +16,7 @@ getuid() and exit("This file must be run with root privileges.")
 not "linux" in platform and exit("Pycked can only be installed on Linux")
 version_info[0] + version_info[1] / 10 < 3.5 and exit("Python version must be >= 3.5")
 
-if len(argv) > 0:
+if len(argv) > 1:
     if argv[1] == "install":
         if "--record" not in argv:
             argv.append("--record")
@@ -90,7 +90,7 @@ setup(
     url="https://github.com/Arg0s1080/pycket",
     keywords="system monitor scheduler ",
     platforms=['Linux'],
-    install_requires=["pycrypto"],  # "pyqt5"
+    install_requires=["pycrypto"],  # "pyqt5" # pycrypto == python3-pycryptodome
     scripts=['launchers/pycket'],
     packages=["pycket", "pycket/common", "pycket/forms", "pycket/misc", "pycket/scripts", "pycket/ui", "statux"],
     #include_package_data=True,
