@@ -45,7 +45,7 @@ class SetMainForm(QMainWindow):
         self.index_radio2 = None
         self.index_combo = None
         self.title = None
-        self.minutes = None
+        self.scheduled_time = None
         self.spin_value = None
         self.check_for = None
         self.cpu_mon = None
