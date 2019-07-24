@@ -42,7 +42,7 @@ class MainForm(SetMainForm):
             self.title = self.ui.labelSystemLoadTitle.text()
             self.index = self.ui.comboBoxSystemLoad.currentIndex()
             self.spin_value = self.ui.spinBoxSystemLoadUnit.value()
-            self.scheduled_time = self.ui.spinBoxSystemLoadMinutes.value()
+            self.scheduled_time = self.ui.spinBoxSystemLoadMinutes.value() * 60  # minutes * 60
             self.check_for = self.ui.checkBoxSystemLoadFor.isChecked()
         elif self.condition == Condition.Network:  ##############################################
             self.alarm_count = 0
@@ -60,7 +60,7 @@ class MainForm(SetMainForm):
                 self.index_combo = self.ui.comboBoxNetworkSpeed.currentIndex()
                 self.title = self.tr("Download", 1) if self.index_combo == 0 else self.tr("Upload", 1)
                 self.spin_value = self.ui.spinBoxNetworkUnitSpeed.value()
-                self.scheduled_time = self.ui.spinBoxNetworkMinutes.value()
+                self.scheduled_time = self.ui.spinBoxNetworkMinutes.value() * 60  # minutes * 60
                 self.check_for = self.ui.checkBoxNetworkFor.isChecked()
             self.count_bytes = self.get_net_value()
         elif self.condition == Condition.Power: ####################################################
@@ -70,7 +70,7 @@ class MainForm(SetMainForm):
                 self.index = self.ui.comboBoxPowerACDC.currentIndex()
                 self.title = self.tr("Power", 1)
                 self.check_for = self.ui.checkBoxPowerFor.isChecked()
-                self.scheduled_time = self.ui.spinBoxPowerMinutes.value()
+                self.scheduled_time = self.ui.spinBoxPowerMinutes.value() * 60  # minutes * 60
             else:
                 self.index_radio = 1
                 self.index = self.ui.comboBoxPowerMoreLess.currentIndex()
@@ -102,7 +102,7 @@ class MainForm(SetMainForm):
                 self.scale = self.ui.comboBoxPttIOPSUnit.currentText().split("/")[0]
                 self.alarm_count = 0
                 self.check_for = self.ui.checkBoxPttFor.isChecked()
-                self.scheduled_time = self.ui.spinBoxPttMinutes.value()
+                self.scheduled_time = self.ui.spinBoxPttMinutes.value() * 60  # minutes * 60
 
         self.set_timer(1, self.timer)
         self.set_controls()
@@ -137,8 +137,8 @@ class MainForm(SetMainForm):
             if (self.index == 0 and value < self.spin_value) or (self.index == 1 and value > self.spin_value):
                 if self.check_for:
                     self.alarm_count += 1
-                    self.set_progressbar(self.alarm_count, self.scheduled_time)  # TODO: * 60
-                    if self.alarm_count >= self.scheduled_time:  # TODO: Multiply by 60
+                    self.set_progressbar(self.alarm_count, self.scheduled_time)
+                    if self.alarm_count >= self.scheduled_time:
                         self.set_finish(True)
                 else:
                     self.set_finish(True)
@@ -154,8 +154,8 @@ class MainForm(SetMainForm):
                         or (self.index == 1 and value > self.spin_value)):
                     if self.ui.checkBoxNetworkFor.isChecked():
                         self.alarm_count += 1
-                        self.set_progressbar(self.alarm_count, self.scheduled_time)  # TODO * 60
-                        if self.alarm_count >= self.scheduled_time:  # TODO: Multiply by 60
+                        self.set_progressbar(self.alarm_count, self.scheduled_time)
+                        if self.alarm_count >= self.scheduled_time:
                             self.set_finish(True)
                     else:
                         self.set_finish(True)
@@ -165,7 +165,8 @@ class MainForm(SetMainForm):
             else:  # is finished download/upload
                 if value >= self.spin_value:
                     self.set_finish(True)
-        elif self.condition == Condition.Power:  #################################################################
+        # Power: type of power (AC/DC), remaining time
+        elif self.condition == Condition.Power:
             if self.index_radio == 0:
                 online = ac_adapter_online()
                 value = "AC" if online else "DC"
@@ -173,8 +174,8 @@ class MainForm(SetMainForm):
                 if (self.index == 0 and online) or (self.index == 1 and not online):
                     if self.check_for:
                         self.alarm_count += 1
-                        self.set_progressbar(self.alarm_count, self.scheduled_time)  # TODO: Multiply by 60
-                        if self.alarm_count >= self.scheduled_time:  # TODO: * 60
+                        self.set_progressbar(self.alarm_count, self.scheduled_time)
+                        if self.alarm_count >= self.scheduled_time:
                             self.set_finish(True)
                     else:
                         self.set_finish(True)
@@ -191,7 +192,8 @@ class MainForm(SetMainForm):
                 self.ui.labelData.setText("%s: %s%s" % (self.title, value_data, self.scale))
                 if (self.index == 0 and value < self.spin_value) or (self.index == 1 and value > self.spin_value):
                     self.set_finish(True)
-        elif self.condition == Condition.Partitions:  ###########################################################
+        # Partitions: free, used, total space and speed rate
+        elif self.condition == Condition.Partitions:
             if self.ui.radioButtonPttSpace.isChecked():
                 if self.index_combo == 0:
                     value = free_space(self.partition, self.scale)
@@ -213,8 +215,8 @@ class MainForm(SetMainForm):
                 if (value < self.spin_value and self.index == 0) or (value > self.spin_value and self.index == 1):
                     if self.ui.checkBoxPttFor.isChecked():
                         self.alarm_count += 1
-                        self.set_progressbar(self.alarm_count, self.scheduled_time)  # TODO: Multiply by 60
-                        if self.alarm_count >= self.ui.spinBoxPttMinutes.value():  # TODO * 60
+                        self.set_progressbar(self.alarm_count, self.scheduled_time)
+                        if self.alarm_count >= self.scheduled_time:
                             self.set_finish(True)
                     else:
                         self.set_finish(True)
@@ -239,7 +241,7 @@ class MainForm(SetMainForm):
         self.index_radio2 = None
         self.check_for = None
         self.title = None
-        self.scheduled_time = None
+        self.scheduled_time = None  # scheduled seconds
         self.spin_value = None
         self.alarm_count = None
 
